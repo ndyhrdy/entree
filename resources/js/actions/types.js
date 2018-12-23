@@ -1,0 +1,3 @@
+export const STORES_FETCH = 'STORES_FETCH';
+export const STORES_POPULATE = 'STORES_POPULATE';
+export const STORES_SET_ERROR = 'STORES_SET_ERROR';
