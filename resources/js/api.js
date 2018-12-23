@@ -1,5 +1,9 @@
 import axios from "axios";
 
-export const api = axios.create({
-  baseURL: window.appConfig.baseURL,
+export const routes = {
+  authenticatedUser: '/user',
+};
+
+export default axios.create({
+  baseURL: window.appConfig.apiBaseURL,
 });

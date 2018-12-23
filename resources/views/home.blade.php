@@ -21,7 +21,8 @@
     
     <script>
         window.appConfig = {
-            baseURL: "{{ url('/') }}"
+            baseURL: "{{ url('/') }}",
+            apiBaseURL: "{{ url('/webapi') }}"
         }
     </script>
 </head>

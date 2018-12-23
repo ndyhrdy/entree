@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth', 'prefix' => '/webapi'], function ()
+{
+    Route::resource('/user', 'UserController');
+    
+});
+
+Route::get('{route}', 'HomeController@index')->where('route', '.*')->name('app');

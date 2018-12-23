@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 export class Navbar extends Component {
+  onLogout() {}
 
   render() {
+    const { user } = this.props;
+
     return (
       <nav className="navbar navbar-expand-md navbar-light navbar-laravel">
         <div className="container">
@@ -25,29 +28,36 @@ export class Navbar extends Component {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto" />
 
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item dropdown">
-                <a
-                  id="navbarDropdown"
-                  className="nav-link dropdown-toggle"
-                  href="#"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  v-pre="true">
-                  User Name <span className="caret" />
-                </a>
-
-                <div
-                  className="dropdown-menu dropdown-menu-right"
-                  aria-labelledby="navbarDropdown">
-                  <a className="dropdown-item" href="#" onClick={() => {}}>
-                    Logout
+            {user.fetching || !user.user ? (
+              <div className="navbar-text">Loading..</div>
+            ) : (
+              <ul className="navbar-nav ml-auto">
+                <li className="nav-item dropdown">
+                  <a
+                    id="navbarDropdown"
+                    className="nav-link dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    v-pre="true">
+                    {user.user.name} <span className="caret" />
                   </a>
-                </div>
-              </li>
-            </ul>
+
+                  <div
+                    className="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="navbarDropdown">
+                    <a
+                      className="dropdown-item"
+                      href="#"
+                      onClick={() => this.onLogout()}>
+                      Logout
+                    </a>
+                  </div>
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </nav>
@@ -55,15 +65,23 @@ export class Navbar extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  stores: state.stores,
+  user: state.user
+});
 
 const mapDispatchToProps = {};
 
 Navbar.propTypes = {
   stores: PropTypes.shape({
+    error: PropTypes.any,
     fetching: PropTypes.bool.isRequired,
-    error: PropTypes.any.isRequired,
-    stores: PropTypes.array.isRequired,
+    stores: PropTypes.array.isRequired
+  }).isRequired,
+  user: PropTypes.shape({
+    error: PropTypes.any,
+    fetching: PropTypes.bool.isRequired,
+    user: PropTypes.object
   }).isRequired
 };
 
