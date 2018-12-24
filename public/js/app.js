@@ -65867,9 +65867,48 @@ Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MOD
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__user__ = __webpack_require__("./resources/js/actions/user.js");
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__user__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__stores__ = __webpack_require__("./resources/js/actions/stores.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__stores__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__user__ = __webpack_require__("./resources/js/actions/user.js");
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__user__["a"]; });
 
+
+
+/***/ }),
+
+/***/ "./resources/js/actions/stores.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return fetchStores; });
+/* unused harmony export populateStores */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__types__ = __webpack_require__("./resources/js/actions/types.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__("./resources/js/api.js");
+
+
+
+var fetchStores = function fetchStores() {
+  return function (dispatch, getState) {
+    if (getState().stores.fetching) {
+      return;
+    }
+
+    dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["a" /* STORES_FETCH */] });
+
+    return __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].get(__WEBPACK_IMPORTED_MODULE_1__api__["b" /* routes */].stores).then(function (response) {
+      return dispatch(populateStores(response.data.data));
+    }).catch(function (error) {
+      return dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["c" /* STORES_SET_ERROR */], error: error });
+    });
+  };
+};
+
+var populateStores = function populateStores(stores) {
+  return {
+    type: __WEBPACK_IMPORTED_MODULE_0__types__["b" /* STORES_POPULATE */],
+    stores: stores
+  };
+};
 
 /***/ }),
 
@@ -65938,7 +65977,8 @@ var setAuthenticatedUser = function setAuthenticatedUser(user) {
 
 
 var routes = {
-  authenticatedUser: '/user'
+  authenticatedUser: '/user',
+  stores: '/stores'
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_axios___default.a.create({
@@ -66058,6 +66098,7 @@ var Main = function (_PureComponent) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.props.fetchAuthenticatedUser();
+      this.props.fetchStores();
     }
   }, {
     key: "render",
@@ -66088,7 +66129,8 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = {
-  fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_3__actions__["a" /* fetchAuthenticatedUser */]
+  fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_3__actions__["a" /* fetchAuthenticatedUser */],
+  fetchStores: __WEBPACK_IMPORTED_MODULE_3__actions__["b" /* fetchStores */]
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(Main));
@@ -66157,14 +66199,14 @@ var Navbar = function (_Component) {
               "data-target": "#navbarSupportedContent",
               "aria-controls": "navbarSupportedContent",
               "aria-expanded": "false",
-              "aria-label": "{{ __('Toggle navigation') }}" },
+              "aria-label": "Toggle navigation" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", { className: "navbar-toggler-icon" })
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
             { className: "collapse navbar-collapse", id: "navbarSupportedContent" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("ul", { className: "navbar-nav mr-auto" }),
-            user.fetching || !user.user ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            user.fetching || !user.data ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               { className: "navbar-text" },
               "Loading.."
@@ -66185,7 +66227,7 @@ var Navbar = function (_Component) {
                     "aria-haspopup": "true",
                     "aria-expanded": "false",
                     "v-pre": "true" },
-                  user.user.name,
+                  user.data.name,
                   " ",
                   __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", { className: "caret" })
                 ),
@@ -66229,12 +66271,12 @@ Navbar.propTypes = {
   stores: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
     error: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
     fetching: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool.isRequired,
-    stores: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired
+    data: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.array.isRequired
   }).isRequired,
   user: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
     error: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
     fetching: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool.isRequired,
-    user: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
+    data: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
   }).isRequired
 };
 
@@ -66395,7 +66437,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 var defaultState = {
-  stores: [],
+  data: [],
   fetching: false,
   error: null
 };
@@ -66408,7 +66450,7 @@ var defaultState = {
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["a" /* STORES_FETCH */]:
       return _extends({}, state, { fetching: true, error: null });
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["b" /* STORES_POPULATE */]:
-      return _extends({}, state, { stores: action.stores.slice(0), fetching: false });
+      return _extends({}, state, { data: action.stores.slice(0), fetching: false });
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["c" /* STORES_SET_ERROR */]:
       return _extends({}, state, { fetching: false, error: action.error });
 
@@ -66429,7 +66471,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 var defaultState = {
-  user: null,
+  data: null,
   fetching: false,
   error: null
 };
@@ -66443,7 +66485,7 @@ var defaultState = {
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["d" /* USER_FETCH */]:
       return _extends({}, state, { fetching: true, error: null });
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["e" /* USER_SET */]:
-      return _extends({}, state, { user: _extends({}, action.user), fetching: false });
+      return _extends({}, state, { data: _extends({}, action.user), fetching: false });
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["f" /* USER_SET_ERROR */]:
       return _extends({}, state, { fetching: false, error: action.error });
     default:

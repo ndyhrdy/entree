@@ -21,14 +21,14 @@ export class Navbar extends Component {
             data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent"
             aria-expanded="false"
-            aria-label="{{ __('Toggle navigation') }}">
+            aria-label="Toggle navigation">
             <span className="navbar-toggler-icon" />
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto" />
 
-            {user.fetching || !user.user ? (
+            {user.fetching || !user.data ? (
               <div className="navbar-text">Loading..</div>
             ) : (
               <ul className="navbar-nav ml-auto">
@@ -42,7 +42,7 @@ export class Navbar extends Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                     v-pre="true">
-                    {user.user.name} <span className="caret" />
+                    {user.data.name} <span className="caret" />
                   </a>
 
                   <div
@@ -76,12 +76,12 @@ Navbar.propTypes = {
   stores: PropTypes.shape({
     error: PropTypes.any,
     fetching: PropTypes.bool.isRequired,
-    stores: PropTypes.array.isRequired
+    data: PropTypes.array.isRequired
   }).isRequired,
   user: PropTypes.shape({
     error: PropTypes.any,
     fetching: PropTypes.bool.isRequired,
-    user: PropTypes.object
+    data: PropTypes.object
   }).isRequired
 };
 

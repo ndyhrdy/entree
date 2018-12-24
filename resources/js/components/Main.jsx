@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { fetchAuthenticatedUser } from "../actions";
+import { fetchAuthenticatedUser, fetchStores } from "../actions";
 
 import { Navbar } from ".";
 import { Home } from "../pages";
@@ -9,6 +9,7 @@ import { Home } from "../pages";
 export class Main extends PureComponent {
   componentDidMount() {
     this.props.fetchAuthenticatedUser();
+    this.props.fetchStores();
   }
 
   render() {
@@ -30,7 +31,8 @@ export class Main extends PureComponent {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {
-  fetchAuthenticatedUser
+  fetchAuthenticatedUser,
+  fetchStores
 };
 
 export default connect(

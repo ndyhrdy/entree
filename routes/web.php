@@ -16,6 +16,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth', 'prefix' => '/webapi'], function ()
 {
     Route::resource('/user', 'UserController');
+    Route::resource('/stores', 'StoreController');
     
 });
 
