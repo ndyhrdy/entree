@@ -20,6 +20,7 @@ class StoreTransformer extends TransformerAbstract
     public function transform(Store $store)
     {
         return [
+            'slug' => $store->slug,
             'name' => $store->name,
             'description' => $store->description,
             'createdAt' => $store->created_at->toIso8601String(),
