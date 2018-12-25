@@ -7,6 +7,11 @@ use League\Fractal\TransformerAbstract;
 
 class StoreTransformer extends TransformerAbstract
 {
+
+    protected $availableIncludes = [
+        'owner',
+    ];
+    
     /**
      * A Fractal transformer.
      *
@@ -17,6 +22,13 @@ class StoreTransformer extends TransformerAbstract
         return [
             'name' => $store->name,
             'description' => $store->description,
+            'createdAt' => $store->created_at->toIso8601String(),
         ];
     }
+
+    public function includeOwner(Store $store)
+    {
+        return $this->item($store->owner, new UserTransformer);
+    }
+    
 }

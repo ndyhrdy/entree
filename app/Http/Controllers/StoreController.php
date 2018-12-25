@@ -8,12 +8,13 @@ use Entree\Transformers\StoreTransformer;
 class StoreController extends Controller
 {
     
-    public function index()
+    public function index(Request $request)
     {
         $stores = auth()->user()->stores;
         return fractal()
             ->collection($stores)
             ->transformWith(new StoreTransformer)
+            ->parseIncludes(explode('|', $request->input('with')))
             ->respond();
     }
     

@@ -4,7 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { fetchAuthenticatedUser, fetchStores } from "../actions";
 
 import { Navbar } from ".";
-import { Home } from "../pages";
+import { Home, Stores } from "../pages";
 
 export class Main extends PureComponent {
   componentDidMount() {
@@ -18,7 +18,8 @@ export class Main extends PureComponent {
         <div>
           <Navbar />
           <Switch>
-            <Route path="/" component={Home} />
+            <Route exact path="/" component={Home} />
+            <Route path="/stores" component={Stores} />
 
             <Redirect to="/" />
           </Switch>

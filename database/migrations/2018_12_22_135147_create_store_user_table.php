@@ -18,6 +18,7 @@ class CreateStoreUserTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('invited_by')->nullable();
             $table->dateTime('accepted_at')->nullable();
+            $table->dateTime('last_switched_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

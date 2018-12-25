@@ -9,7 +9,7 @@ export const fetchStores = () => (dispatch, getState) => {
   dispatch({ type: STORES_FETCH });
 
   return api
-    .get(routes.stores)
+    .get(routes.stores, { params: { with: "owner" } })
     .then(response => {
       return dispatch(populateStores(response.data.data));
     })

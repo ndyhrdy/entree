@@ -17,19 +17,21 @@ class StoresTableSeeder extends Seeder
         DB::table('stores')->truncate();
         
         $users = User::all();
-        factory(Entree\Store\Store::class, ceil($users->count() / 2))->create()
+        factory(Entree\Store\Store::class, ceil($users->count() / 2))->make()
             ->each(function ($store) use ($users)
             {
-                $owner = null;
-                $users->random(rand(1, 5))
-                    ->each(function ($user, $index) use ($store, $owner)
+                $storeUsers = $users->random(rand(1, 5));
+                $owner = $storeUsers->first();
+                $store->owner_id = $owner->id;
+                $store->created_by = $owner->id;
+                $store->save();
+
+                $storeUsers->each(function ($user, $index) use ($store, $owner)
                     {
-                        if ($index == 0) {
-                            $owner = $user;
-                        }
                         $store->users()->attach($user, [
-                            'invited_by' => $index > 0 ? $user->id : null,
-                            'accepted_at' => $index > 0 ? Carbon::now() : null,
+                            'invited_by' => $owner->id != $user->id ? $owner->id : null,
+                            'accepted_at' => $owner->id != $user->id ? Carbon::now() : null,
+                            'last_switched_at' => Carbon::now()->subDays(rand(0, 30)),
                         ]);
                     });
             });
