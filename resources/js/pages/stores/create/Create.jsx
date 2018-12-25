@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, Prompt } from "react-router-dom";
 
-import { populateStores } from "../../../actions";
+import { populateStores, fetchAuthenticatedUser } from "../../../actions";
 import api, { routes } from "../../../api";
 import { FormSection } from "../../../components";
 
@@ -36,9 +36,15 @@ export class StoresCreate extends Component {
         .then(response => {
           const newStore = { ...response.data.data };
           this.props.populateStores([...this.props.stores, newStore]);
-          return this.setState({ isDirty: false }, () =>
-            this.props.history.push("/stores/" + newStore.slug + "/invite")
-          );
+          this.props.fetchAuthenticatedUser({
+            callback: () => {
+              return this.setState({ isDirty: false }, () =>
+                this.props.history.push(
+                  "/coworkers?_flow=create-store&_alert=create-store-success"
+                )
+              );
+            }
+          });
         })
         .catch(
           error =>
@@ -314,9 +320,10 @@ export class StoresCreate extends Component {
 
 const mapStateToProps = state => ({ stores: state.stores.data });
 
-const mapDispatchToProps = { populateStores };
+const mapDispatchToProps = { fetchAuthenticatedUser, populateStores };
 
 StoresCreate.propTypes = {
+  fetchAuthenticatedUser: PropTypes.func.isRequired,
   populateStores: PropTypes.func.isRequired
 };
 

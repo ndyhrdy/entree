@@ -2,11 +2,16 @@
 
 namespace Entree\Transformers;
 
-use League\Fractal\TransformerAbstract;
 use Entree\User;
+use League\Fractal\TransformerAbstract;
 
 class UserTransformer extends TransformerAbstract
 {
+
+    protected $availableIncludes = [
+        'activeStore',
+    ];
+    
     /**
      * A Fractal transformer.
      *
@@ -20,4 +25,11 @@ class UserTransformer extends TransformerAbstract
             'name' => $user->name,
         ];
     }
+
+    public function includeActiveStore(User $user)
+    {
+        $store = $user->activeStore();
+        return $store ? $this->item($store, new StoreTransformer) : null;
+    }
+    
 }

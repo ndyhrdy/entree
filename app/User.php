@@ -28,9 +28,19 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function activeStore()
+    {
+        return optional($this->storeUsers()->orderBy('last_switched_at', 'desc')->first())->store;
+    }
+
     public function stores()
     {
         return $this->belongsToMany('Entree\Store\Store')->withTimestamps();
+    }
+
+    public function storeUsers()
+    {
+        return $this->hasMany('Entree\Store\StoreUser');
     }
     
 }

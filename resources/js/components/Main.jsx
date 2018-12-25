@@ -4,7 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { fetchAuthenticatedUser, fetchStores } from "../actions";
 
 import { Navbar } from ".";
-import { Home, Stores } from "../pages";
+import { Home, Stores, Coworkers } from "../pages";
 
 export class Main extends PureComponent {
   componentDidMount() {
@@ -20,6 +20,7 @@ export class Main extends PureComponent {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/stores" component={Stores} />
+            <Route path="/coworkers" component={Coworkers} />
 
             <Redirect to="/" />
           </Switch>

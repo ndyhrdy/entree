@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 export class Navbar extends Component {
   onLogout() {}
@@ -11,9 +12,16 @@ export class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-md navbar-light navbar-laravel">
         <div className="container">
-          <a className="navbar-brand" href="/">
-            Entree
-          </a>
+          <Link className="navbar-brand" to="/">
+            {user.data && user.data.activeStore ? (
+              <span>
+                {user.data.activeStore.data.name}{" "}
+                <span className="small text-muted">on Entree</span>
+              </span>
+            ) : (
+              "Entree"
+            )}
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

@@ -16,9 +16,7 @@ export default class Home extends PureComponent {
       <div className="container py-5">
         <div className="row">
           {menus.map((menu, index) => (
-            <div
-            key={"menu-item-" + index}
-            className="col-md-4">
+            <div key={"menu-item-" + index} className="col-md-4">
               <Link
                 className="btn btn-light btn-block text-left p-3 border mb-4"
                 to={menu.route}>
@@ -53,9 +51,9 @@ const menus = [
     route: "/stores"
   },
   {
-    title: "Users & Permissions",
-    subtitle: "Manage staff and their permissions",
-    requiredCapability: "users.view",
-    route: "/users-permissions"
-  },
+    title: "Coworkers",
+    subtitle: "Invite and manage your coworkers",
+    requiredCapability: "staff.view",
+    route: "/coworkers"
+  }
 ];

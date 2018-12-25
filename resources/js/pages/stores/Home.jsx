@@ -30,7 +30,7 @@ export class StoresHome extends Component {
 
     return (
       <div className="container py-5">
-        <h3 className="mb-4">Your Stores</h3>
+        <h1 className="mb-4">Your Stores</h1>
 
         <div className="card">
           <div className="card-header">

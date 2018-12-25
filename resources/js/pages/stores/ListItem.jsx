@@ -1,11 +1,13 @@
 import React, { Fragment, PureComponent } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 class StoresListItem extends PureComponent {
   render() {
     const {
+      slug,
       name,
       description,
       createdAt,
@@ -16,7 +18,7 @@ class StoresListItem extends PureComponent {
     return (
       <tr>
         <td>
-          <div className="h5 m-0">{name}</div>
+          <div className="h5 m-0"><Link to={"/stores/" + slug }>{name}</Link></div>
           <div className="text-muted small">{description}</div>
         </td>
         <td>
