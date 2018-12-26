@@ -1,36 +1,16 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+import React, { PureComponent } from 'react'
+import { Redirect, Route, Switch } from "react-router-dom";
 
-import { fetchStores } from "../../actions";
+import Home from './Home';
 
-export class Coworkers extends Component {
-  constructor(props) {
-    super(props);
-  }
-
+export default class Coworkers extends PureComponent {
   render() {
     return (
-      <div className="container py-5">
-        <div className="mb-4">
-          <h1>Your Coworkers</h1>
-        </div>
-      </div>
-    );
+      <Switch>
+        <Route exact path="/coworkers" component={Home} />
+
+        <Redirect to="/coworkers" />
+      </Switch>
+    )
   }
 }
-
-const mapStateToProps = state => ({
-  loading: state.stores.fetching || state.user.fetching
-});
-
-const mapDispatchToProps = { fetchStores };
-
-Coworkers.propTypes = {
-  fetchStores: PropTypes.func.isRequired
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Coworkers);

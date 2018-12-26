@@ -21,6 +21,11 @@ class Store extends Model
     {
         return $this->belongsTo('Entree\User', 'owner_id');
     }
+
+    public function storeUsers()
+    {
+        return $this->hasMany('Entree\Store\StoreUser');
+    }
     
     public function users()
     {

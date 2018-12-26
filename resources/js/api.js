@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const routes = {
   authenticatedUser: '/user',
+  coworkers: '/coworkers',
   stores: '/stores',
 };
 

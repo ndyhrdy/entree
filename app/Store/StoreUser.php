@@ -17,4 +17,9 @@ class StoreUser extends Pivot
         return $this->belongsTo('Entree\Store\Store');
     }
   
+    public function user()
+    {
+        return $this->belongsTo('Entree\User');
+    }
+  
 }
