@@ -12,13 +12,13 @@ export default class CoworkersListItem extends PureComponent {
             "You"
           ) : (
             <Fragment>
-              <div>{name}</div>
-              <div className="small text-muted">{email}</div>
+              <div>{name || email}</div>
+              { !!name && <div className="small text-muted">{email}</div> }
             </Fragment>
           )}
         </td>
         {acceptedAt || isSelf ? (
-          <td>{moment(acceptedAt).fromNow()}</td>
+          <td>{moment(acceptedAt || createdAt).fromNow()}</td>
         ) : (
           <td>
             <div>Invitation sent</div>

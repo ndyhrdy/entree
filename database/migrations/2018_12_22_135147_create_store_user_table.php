@@ -14,11 +14,15 @@ class CreateStoreUserTable extends Migration
     public function up()
     {
         Schema::create('store_user', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('store_id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('invited_by')->nullable();
+            $table->string('invite_email')->nullable();
+            $table->string('invite_token')->nullable();
             $table->dateTime('accepted_at')->nullable();
             $table->dateTime('last_switched_at')->nullable();
+            $table->dateTime('last_invitation_sent_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

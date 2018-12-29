@@ -3,11 +3,12 @@ import PropTypes from "prop-types";
 
 class Alert extends PureComponent {
   render() {
-    const { children, type } = this.props;
+    const { children, type, className } = this.props;
     return (
       <div className={[
         'alert',
         'alert-' + type,
+        className,
       ].join(' ')}>
         { children }
       </div>
@@ -17,6 +18,7 @@ class Alert extends PureComponent {
 
 Alert.propTypes = {
   type: PropTypes.oneOf(['light', 'warning', 'danger', 'info']).isRequired,
+  className: PropTypes.string,
 };
 
 export default Alert;

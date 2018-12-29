@@ -80730,11 +80730,11 @@ thunk.withExtraArgument = createThunkMiddleware;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return createStore; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return createStore; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return combineReducers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return bindActionCreators; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return applyMiddleware; });
-/* unused harmony export compose */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return compose; });
 /* unused harmony export __DO_NOT_USE__ActionTypes */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_symbol_observable__ = __webpack_require__("./node_modules/symbol-observable/es/index.js");
 
@@ -82947,7 +82947,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MOD
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return fetchCoworkers; });
-/* unused harmony export populateCoworkers */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return populateCoworkers; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__types__ = __webpack_require__("./resources/js/actions/types.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__("./resources/js/api.js");
 
@@ -82984,9 +82984,10 @@ var populateCoworkers = function populateCoworkers(coworkers) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coworkers__ = __webpack_require__("./resources/js/actions/coworkers.js");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__coworkers__["a"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_0__coworkers__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores__ = __webpack_require__("./resources/js/actions/stores.js");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["a"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["b"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__("./resources/js/actions/user.js");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__user__["a"]; });
 
@@ -83221,11 +83222,12 @@ var Alert = function (_PureComponent) {
     value: function render() {
       var _props = this.props,
           children = _props.children,
-          type = _props.type;
+          type = _props.type,
+          className = _props.className;
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         'div',
-        { className: ['alert', 'alert-' + type].join(' ') },
+        { className: ['alert', 'alert-' + type, className].join(' ') },
         children
       );
     }
@@ -83235,7 +83237,8 @@ var Alert = function (_PureComponent) {
 }(__WEBPACK_IMPORTED_MODULE_0_react__["PureComponent"]);
 
 Alert.propTypes = {
-  type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOf(['light', 'warning', 'danger', 'info']).isRequired
+  type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.oneOf(['light', 'warning', 'danger', 'info']).isRequired,
+  className: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Alert);
@@ -83585,9 +83588,11 @@ Navbar.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* unused harmony export Home */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_router_dom__ = __webpack_require__("./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__("./node_modules/react-redux/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__("./node_modules/react-router-dom/es/index.js");
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83595,6 +83600,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -83617,7 +83624,16 @@ var Home = function (_PureComponent) {
     key: "render",
     value: function render() {
       var menus = this.state.menus;
+      var user = this.props.user;
 
+
+      if (!user.data || user.fetching) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "container py-5" },
+          "Loading.."
+        );
+      }
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
@@ -83626,11 +83642,11 @@ var Home = function (_PureComponent) {
           "div",
           { className: "row" },
           menus.map(function (menu, index) {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            return menu.requiresActiveStore && !user.data.activeStore ? null : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               { key: "menu-item-" + index, className: "col-md-4" },
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                __WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Link */],
+                __WEBPACK_IMPORTED_MODULE_2_react_router_dom__["b" /* Link */],
                 {
                   className: "btn btn-light btn-block text-left p-3 border mb-4",
                   to: menu.route },
@@ -83655,28 +83671,37 @@ var Home = function (_PureComponent) {
   return Home;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["PureComponent"]);
 
-/* harmony default export */ __webpack_exports__["a"] = (Home);
+var mapStateToProps = function mapStateToProps(state) {
+  return { user: state.user };
+};
 
+var mapDispatchToProps = {};
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(Home));
 
 var menus = [{
   title: "Account Settings",
   subtitle: "Modify settings for your account",
   requiredCapability: "settings.view",
+  requiresActiveStore: false,
   route: "/settings"
 }, {
   title: "Inventory",
   subtitle: "Manage items for current store",
   requiredCapability: "items.view",
+  requiresActiveStore: true,
   route: "/inventory"
 }, {
   title: "Stores",
   subtitle: "Create, manage and delete stores",
   requiredCapability: "stores.view",
+  requiresActiveStore: false,
   route: "/stores"
 }, {
   title: "Coworkers",
   subtitle: "Invite and manage your coworkers",
   requiredCapability: "staff.view",
+  requiresActiveStore: true,
   route: "/coworkers"
 }];
 
@@ -83741,11 +83766,13 @@ var Coworkers = function (_PureComponent) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__("./node_modules/prop-types/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__("./node_modules/react-redux/es/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_querystring__ = __webpack_require__("./node_modules/querystring-es3/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_querystring___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_querystring__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__actions__ = __webpack_require__("./resources/js/actions/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__("./resources/js/components/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__List__ = __webpack_require__("./resources/js/pages/coworkers/List.jsx");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__("./node_modules/react-router-dom/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_querystring__ = __webpack_require__("./node_modules/querystring-es3/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_querystring___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_querystring__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions__ = __webpack_require__("./resources/js/actions/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components__ = __webpack_require__("./resources/js/components/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__List__ = __webpack_require__("./resources/js/pages/coworkers/List.jsx");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__InviteForm__ = __webpack_require__("./resources/js/pages/coworkers/InviteForm.jsx");
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83763,13 +83790,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
+
 var CoworkersHome = function (_Component) {
   _inherits(CoworkersHome, _Component);
 
   function CoworkersHome(props) {
     _classCallCheck(this, CoworkersHome);
 
-    return _possibleConstructorReturn(this, (CoworkersHome.__proto__ || Object.getPrototypeOf(CoworkersHome)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (CoworkersHome.__proto__ || Object.getPrototypeOf(CoworkersHome)).call(this, props));
+
+    _this.state = {
+      hasInvited: false
+    };
+    return _this;
   }
 
   _createClass(CoworkersHome, [{
@@ -83780,11 +83814,13 @@ var CoworkersHome = function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           user = _props.user,
           search = _props.location.search;
 
-      var query = Object(__WEBPACK_IMPORTED_MODULE_3_querystring__["parse"])(search);
+      var query = Object(__WEBPACK_IMPORTED_MODULE_4_querystring__["parse"])(search.substr(1));
 
       if (!user.data || user.fetching) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -83793,19 +83829,21 @@ var CoworkersHome = function (_Component) {
           "Loading.."
         );
       }
+      if (!user.data.activeStore.data) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["d" /* Redirect */], { to: "/" });
+      }
 
       var _props$coworkers = this.props.coworkers,
           data = _props$coworkers.data,
           fetching = _props$coworkers.fetching,
           error = _props$coworkers.error;
 
-
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
         { className: "container py-5" },
-        query._alert === "create-store-success" && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_5__components__["a" /* Alert */],
-          { type: "info" },
+        query._alert === "create-store-success" && !this.state.hasInvited && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          __WEBPACK_IMPORTED_MODULE_6__components__["a" /* Alert */],
+          { type: "info", className: "mb-4" },
           "Nice! You made a store on Entree. Invite your coworkers by adding their emails, and they will be notified to join",
           " ",
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -83817,11 +83855,25 @@ var CoworkersHome = function (_Component) {
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "div",
-          { className: "mb-4" },
+          { className: "mb-5" },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "h1",
             null,
             "Your Coworkers"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "row mt-4" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              { className: "col-md-6 mb-5" },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__InviteForm__["a" /* default */], {
+                onInviteSuccess: function onInviteSuccess(coworkersList) {
+                  _this2.props.populateCoworkers(coworkersList);
+                  _this2.setState({ hasInvited: true });
+                }
+              })
+            )
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
@@ -83831,11 +83883,23 @@ var CoworkersHome = function (_Component) {
               { className: "card-header" },
               __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "d-flex justify-content-between align-items-center" })
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6__List__["a" /* default */], {
-              data: data,
-              fetching: fetching,
-              error: error
-            })
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__List__["a" /* default */], { data: data, fetching: fetching, error: error })
+          )
+        ),
+        query._flow === "create-store" && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "d-flex justify-content-end align-items-center" },
+          this.state.hasInvited && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+            { to: "/", className: "btn btn-link" },
+            "Take me Home"
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+            {
+              to: "/items?_flow=create-store",
+              className: "btn" + (this.state.hasInvited ? " btn-primary" : "btn-secondary") },
+            this.state.hasInvited ? "Add Items" : "Skip"
           )
         )
       );
@@ -83852,13 +83916,139 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = { fetchCoworkers: __WEBPACK_IMPORTED_MODULE_4__actions__["b" /* fetchCoworkers */] };
+var mapDispatchToProps = { fetchCoworkers: __WEBPACK_IMPORTED_MODULE_5__actions__["b" /* fetchCoworkers */], populateCoworkers: __WEBPACK_IMPORTED_MODULE_5__actions__["d" /* populateCoworkers */] };
 
 CoworkersHome.propTypes = {
   fetchCoworkers: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(CoworkersHome));
+
+/***/ }),
+
+/***/ "./resources/js/pages/coworkers/InviteForm.jsx":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash__ = __webpack_require__("./node_modules/lodash/lodash.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_lodash__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__api__ = __webpack_require__("./resources/js/api.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+var InviteForm = function (_Component) {
+  _inherits(InviteForm, _Component);
+
+  function InviteForm(props) {
+    _classCallCheck(this, InviteForm);
+
+    var _this = _possibleConstructorReturn(this, (InviteForm.__proto__ || Object.getPrototypeOf(InviteForm)).call(this, props));
+
+    _this.defaultState = {
+      data: {
+        email: ""
+      },
+      saving: false,
+      error: null
+    };
+    _this.state = _extends({}, _this.defaultState);
+    return _this;
+  }
+
+  _createClass(InviteForm, [{
+    key: "onSubmit",
+    value: function onSubmit() {
+      var _this2 = this;
+
+      this.setState({ saving: true, error: false }, function () {
+        return __WEBPACK_IMPORTED_MODULE_2__api__["a" /* default */].post(__WEBPACK_IMPORTED_MODULE_2__api__["b" /* routes */].coworkers, _this2.state.data).then(function (response) {
+          _this2.props.onInviteSuccess(response.data.data);
+          _this2.setState(_extends({}, _this2.defaultState));
+        }).catch(function (error) {
+          return _this2.setState({
+            error: error.response ? error.response.data : error,
+            saving: false
+          });
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var _state = this.state,
+          data = _state.data,
+          saving = _state.saving,
+          error = _state.error;
+
+      var errorMessage = error ? error.errors && error.errors.email ? error.errors.email[0] : error.message || Object(__WEBPACK_IMPORTED_MODULE_1_lodash__["toString"])(error) : null;
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_0_react__["Fragment"],
+        null,
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "h4",
+          null,
+          "Invite a Coworker"
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "p",
+          null,
+          "Don't handle everything by yourself! Get your coworker here to help you out managing your store. Type in their email address below, and we'll take care of the rest."
+        ),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "form-inline" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+            type: "email",
+            className: "form-control" + (errorMessage ? " is-invalid" : ""),
+            placeholder: "Email address",
+            value: data.email,
+            style: { flex: 1 },
+            disabled: saving,
+            onChange: function onChange(e) {
+              return _this3.setState({ data: _extends({}, data, { email: e.target.value }) });
+            }
+          }),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "button",
+            {
+              className: "btn btn-primary ml-2",
+              onClick: function onClick() {
+                return _this3.onSubmit();
+              },
+              disabled: saving },
+            "Send Invitation"
+          )
+        ),
+        !!errorMessage && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "small text-danger mt-2" },
+          errorMessage
+        )
+      );
+    }
+  }]);
+
+  return InviteForm;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (InviteForm);
 
 /***/ }),
 
@@ -84007,9 +84197,9 @@ var CoworkersListItem = function (_PureComponent) {
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               null,
-              name
+              name || email
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            !!name && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               { className: "small text-muted" },
               email
@@ -84019,7 +84209,7 @@ var CoworkersListItem = function (_PureComponent) {
         acceptedAt || isSelf ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "td",
           null,
-          __WEBPACK_IMPORTED_MODULE_1_moment___default()(acceptedAt).fromNow()
+          __WEBPACK_IMPORTED_MODULE_1_moment___default()(acceptedAt || createdAt).fromNow()
         ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "td",
           null,
@@ -84925,7 +85115,7 @@ var mapStateToProps = function mapStateToProps(state) {
   return { stores: state.stores.data };
 };
 
-var mapDispatchToProps = { fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_4__actions__["a" /* fetchAuthenticatedUser */], populateStores: __WEBPACK_IMPORTED_MODULE_4__actions__["d" /* populateStores */] };
+var mapDispatchToProps = { fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_4__actions__["a" /* fetchAuthenticatedUser */], populateStores: __WEBPACK_IMPORTED_MODULE_4__actions__["e" /* populateStores */] };
 
 StoresCreate.propTypes = {
   fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
@@ -85072,7 +85262,8 @@ var defaultState = {
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["d" /* createStore */])(__WEBPACK_IMPORTED_MODULE_2__reducers__["a" /* default */], Object(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk__["a" /* default */])));
+var composer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || __WEBPACK_IMPORTED_MODULE_0_redux__["d" /* compose */];
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_redux__["e" /* createStore */])(__WEBPACK_IMPORTED_MODULE_2__reducers__["a" /* default */], composer(Object(__WEBPACK_IMPORTED_MODULE_0_redux__["a" /* applyMiddleware */])(__WEBPACK_IMPORTED_MODULE_1_redux_thunk__["a" /* default */]))));
 
 /***/ }),
 

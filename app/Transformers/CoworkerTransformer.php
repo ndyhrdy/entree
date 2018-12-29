@@ -15,10 +15,12 @@ class CoworkerTransformer extends TransformerAbstract
     public function transform(StoreUser $coworker)
     {
         return [
-            'name' => $coworker->user->name,
-            'email' => $coworker->user->email,
+            'id' => $coworker->user ? $coworker->user->id : null,
+            'name' => $coworker->user ? $coworker->user->name : null,
+            'email' => $coworker->user ? $coworker->user->email : $coworker->invite_email,
             'createdAt' => $coworker->created_at->toIso8601String(),
             'acceptedAt' => $coworker->accepted_at ? $coworker->accepted_at->toIso8601String() : null,
+            'lastInvitationSentAt' => $coworker->last_invitation_sent_at ? $coworker->last_invitation_sent_at->toIso8601String() : null,
         ];
     }
 }
