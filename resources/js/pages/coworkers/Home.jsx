@@ -31,7 +31,7 @@ export class CoworkersHome extends Component {
     if (!user.data || user.fetching) {
       return <div className="container py-5">Loading..</div>;
     }
-    if (!user.data.activeStore.data) {
+    if (!this.props.activeStore.data) {
       return <Redirect to="/" />;
     }
 
@@ -42,7 +42,7 @@ export class CoworkersHome extends Component {
           <Alert type="info" className="mb-4">
             Nice! You made a store on Entree. Invite your coworkers by adding
             their emails, and they will be notified to join{" "}
-            <strong>{user.data.activeStore.data.name}</strong>.
+            <strong>{this.props.activeStore.data.name}</strong>.
           </Alert>
         )}
 
@@ -88,7 +88,8 @@ export class CoworkersHome extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  coworkers: state.coworkers
+  coworkers: state.coworkers,
+  activeStore: state.activeStore,
 });
 
 const mapDispatchToProps = { fetchCoworkers, populateCoworkers };

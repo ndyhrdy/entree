@@ -1,7 +1,11 @@
 import { USER_FETCH, USER_SET, USER_SET_ERROR } from "./types";
 import api, { routes } from "../api";
+import { setActiveStore } from "./stores";
 
-export const fetchAuthenticatedUser = ({ callback } = {}) => (dispatch, getState) => {
+export const fetchAuthenticatedUser = ({ callback } = {}) => (
+  dispatch,
+  getState
+) => {
   if (getState().user.fetching) {
     return;
   }
@@ -10,7 +14,10 @@ export const fetchAuthenticatedUser = ({ callback } = {}) => (dispatch, getState
   return api
     .get(routes.authenticatedUser)
     .then(response => {
-      dispatch(setAuthenticatedUser(response.data.data));
+      let { data } = response.data;
+      dispatch(setActiveStore(data.activeStore ? data.activeStore.data : null));
+      data.activeStore && delete data.activeStore;
+      dispatch(setAuthenticatedUser(data));
       callback && callback(response);
       return;
     })

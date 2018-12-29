@@ -13,7 +13,7 @@ export class Home extends PureComponent {
 
   render() {
     const { menus } = this.state;
-    const { user } = this.props;
+    const { activeStore, user } = this.props;
 
     if (!user.data || user.fetching) {
       return <div className="container py-5">Loading..</div>;
@@ -23,7 +23,7 @@ export class Home extends PureComponent {
       <div className="container py-5">
         <div className="row">
           {menus.map((menu, index) =>
-            menu.requiresActiveStore && !user.data.activeStore ? null : (
+            menu.requiresActiveStore && !activeStore.data ? null : (
               <div key={"menu-item-" + index} className="col-md-4">
                 <Link
                   className="btn btn-light btn-block text-left p-3 border mb-4"
@@ -40,7 +40,7 @@ export class Home extends PureComponent {
   }
 }
 
-const mapStateToProps = state => ({ user: state.user });
+const mapStateToProps = state => ({ user: state.user, activeStore: state.activeStore });
 
 const mapDispatchToProps = {};
 

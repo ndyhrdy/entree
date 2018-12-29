@@ -31,5 +31,10 @@ class Store extends Model
     {
         return $this->belongsToMany('Entree\User')->withTimestamps();
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
     
 }

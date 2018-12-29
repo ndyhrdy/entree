@@ -1,4 +1,10 @@
-import { STORES_FETCH, STORES_POPULATE, STORES_SET_ERROR } from "./types";
+import {
+  STORES_FETCH,
+  STORES_POPULATE,
+  STORES_SET_ERROR,
+  ACTIVE_STORE_SET,
+  ACTIVE_STORE_SWITCH
+} from "./types";
 import api, { routes } from "../api";
 
 export const fetchStores = () => (dispatch, getState) => {
@@ -21,4 +27,20 @@ export const fetchStores = () => (dispatch, getState) => {
 export const populateStores = stores => ({
   type: STORES_POPULATE,
   stores
+});
+
+export const switchActiveStore = store => (dispatch, getState) => {
+  if (getState().activeStore.switching) {
+    return;
+  }
+  dispatch({ type: ACTIVE_STORE_SWITCH });
+
+  return api.patch(routes.stores + '/' + store.slug, { context: 'switch'})
+    .then(() => { window.location.href = window.appConfig.baseURL; })
+    .catch(error => console.log(error));
+};
+
+export const setActiveStore = store => ({
+  type: ACTIVE_STORE_SET,
+  store
 });

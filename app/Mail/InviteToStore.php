@@ -36,6 +36,7 @@ class InviteToStore extends Mailable
             ->with([
                 'storeName' => $this->coworker->store->name,
                 'token' => $this->coworker->invite_token,
-            ]);
+            ])
+            ->subject('Join ' . $this->coworker->store->name . ' on ' . config('app.name'));
     }
 }

@@ -8,3 +8,5 @@ export const COWORKERS_SET_ERROR = 'COWORKERS_SET_ERROR';
 export const USER_FETCH = 'USER_FETCH';
 export const USER_SET = 'USER_SET';
 export const USER_SET_ERROR = 'USER_SET_ERROR';
+export const ACTIVE_STORE_SET = 'ACTIVE_STORE_SET';
+export const ACTIVE_STORE_SWITCH = 'ACTIVE_STORE_SWITCH';

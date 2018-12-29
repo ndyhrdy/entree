@@ -1,21 +1,24 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
+
+import { switchActiveStore } from "../../actions";
+import Stores from "./Stores";
 
 export class Navbar extends Component {
   onLogout() {}
 
   render() {
-    const { user } = this.props;
+    const { activeStore, stores, user } = this.props;
 
     return (
       <nav className="navbar navbar-expand-md navbar-light navbar-laravel">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            {user.data && user.data.activeStore ? (
+            {activeStore.data ? (
               <span>
-                {user.data.activeStore.data.name}{" "}
+                {activeStore.data.name}{" "}
                 <span className="small text-muted">on Entree</span>
               </span>
             ) : (
@@ -56,6 +59,12 @@ export class Navbar extends Component {
                   <div
                     className="dropdown-menu dropdown-menu-right"
                     aria-labelledby="navbarDropdown">
+                    <Stores
+                      stores={stores}
+                      onSwitch={store => this.props.switchActiveStore(store)}
+                    />
+
+                    <div className="dropdown-divider" />
                     <a
                       className="dropdown-item"
                       href="#"
@@ -75,10 +84,11 @@ export class Navbar extends Component {
 
 const mapStateToProps = state => ({
   stores: state.stores,
-  user: state.user
+  user: state.user,
+  activeStore: state.activeStore
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = { switchActiveStore };
 
 Navbar.propTypes = {
   stores: PropTypes.shape({
@@ -93,7 +103,9 @@ Navbar.propTypes = {
   }).isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Navbar);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Navbar)
+);

@@ -1,4 +1,4 @@
-import { USER_FETCH, USER_SET, USER_SET_ERROR } from "../actions/types";
+import { USER_FETCH, USER_SET, USER_SET_ERROR, USER_SET_ACTIVE_STORE } from "../actions/types";
 
 const defaultState = {
   data: null,
