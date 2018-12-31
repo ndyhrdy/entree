@@ -1,4 +1,9 @@
-import { COWORKERS_FETCH, COWORKERS_POPULATE, COWORKERS_SET_ERROR } from "./types";
+import {
+  COWORKERS_FETCH,
+  COWORKERS_POPULATE,
+  COWORKERS_SET_ERROR,
+  COWORKERS_SEARCH
+} from "./types";
 import api, { routes } from "../api";
 
 export const fetchCoworkers = () => (dispatch, getState) => {
@@ -21,4 +26,9 @@ export const fetchCoworkers = () => (dispatch, getState) => {
 export const populateCoworkers = coworkers => ({
   type: COWORKERS_POPULATE,
   coworkers
+});
+
+export const searchCoworkers = term => ({
+  type: COWORKERS_SEARCH,
+  term
 });

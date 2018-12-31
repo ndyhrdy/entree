@@ -13,7 +13,7 @@ export class Navbar extends Component {
     const { activeStore, stores, user } = this.props;
 
     return (
-      <nav className="navbar navbar-expand-md navbar-light navbar-laravel">
+      <nav className="navbar navbar-expand-md bg-dark navbar-dark navbar-laravel">
         <div className="container">
           <Link className="navbar-brand" to="/">
             {activeStore.data ? (

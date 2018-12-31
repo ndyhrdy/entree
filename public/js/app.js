@@ -5964,6 +5964,1014 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/fuse.js/dist/fuse.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/*!
+ * Fuse.js v3.3.0 - Lightweight fuzzy-search (http://fusejs.io)
+ * 
+ * Copyright (c) 2012-2017 Kirollos Risk (http://kiro.me)
+ * All Rights Reserved. Apache Software License 2.0
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define("Fuse", [], factory);
+	else if(typeof exports === 'object')
+		exports["Fuse"] = factory();
+	else
+		root["Fuse"] = factory();
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (obj) {
+  return !Array.isArray ? Object.prototype.toString.call(obj) === '[object Array]' : Array.isArray(obj);
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var bitapRegexSearch = __webpack_require__(5);
+var bitapSearch = __webpack_require__(7);
+var patternAlphabet = __webpack_require__(4);
+
+var Bitap = function () {
+  function Bitap(pattern, _ref) {
+    var _ref$location = _ref.location,
+        location = _ref$location === undefined ? 0 : _ref$location,
+        _ref$distance = _ref.distance,
+        distance = _ref$distance === undefined ? 100 : _ref$distance,
+        _ref$threshold = _ref.threshold,
+        threshold = _ref$threshold === undefined ? 0.6 : _ref$threshold,
+        _ref$maxPatternLength = _ref.maxPatternLength,
+        maxPatternLength = _ref$maxPatternLength === undefined ? 32 : _ref$maxPatternLength,
+        _ref$isCaseSensitive = _ref.isCaseSensitive,
+        isCaseSensitive = _ref$isCaseSensitive === undefined ? false : _ref$isCaseSensitive,
+        _ref$tokenSeparator = _ref.tokenSeparator,
+        tokenSeparator = _ref$tokenSeparator === undefined ? / +/g : _ref$tokenSeparator,
+        _ref$findAllMatches = _ref.findAllMatches,
+        findAllMatches = _ref$findAllMatches === undefined ? false : _ref$findAllMatches,
+        _ref$minMatchCharLeng = _ref.minMatchCharLength,
+        minMatchCharLength = _ref$minMatchCharLeng === undefined ? 1 : _ref$minMatchCharLeng;
+
+    _classCallCheck(this, Bitap);
+
+    this.options = {
+      location: location,
+      distance: distance,
+      threshold: threshold,
+      maxPatternLength: maxPatternLength,
+      isCaseSensitive: isCaseSensitive,
+      tokenSeparator: tokenSeparator,
+      findAllMatches: findAllMatches,
+      minMatchCharLength: minMatchCharLength
+    };
+
+    this.pattern = this.options.isCaseSensitive ? pattern : pattern.toLowerCase();
+
+    if (this.pattern.length <= maxPatternLength) {
+      this.patternAlphabet = patternAlphabet(this.pattern);
+    }
+  }
+
+  _createClass(Bitap, [{
+    key: 'search',
+    value: function search(text) {
+      if (!this.options.isCaseSensitive) {
+        text = text.toLowerCase();
+      }
+
+      // Exact match
+      if (this.pattern === text) {
+        return {
+          isMatch: true,
+          score: 0,
+          matchedIndices: [[0, text.length - 1]]
+        };
+      }
+
+      // When pattern length is greater than the machine word length, just do a a regex comparison
+      var _options = this.options,
+          maxPatternLength = _options.maxPatternLength,
+          tokenSeparator = _options.tokenSeparator;
+
+      if (this.pattern.length > maxPatternLength) {
+        return bitapRegexSearch(text, this.pattern, tokenSeparator);
+      }
+
+      // Otherwise, use Bitap algorithm
+      var _options2 = this.options,
+          location = _options2.location,
+          distance = _options2.distance,
+          threshold = _options2.threshold,
+          findAllMatches = _options2.findAllMatches,
+          minMatchCharLength = _options2.minMatchCharLength;
+
+      return bitapSearch(text, this.pattern, this.patternAlphabet, {
+        location: location,
+        distance: distance,
+        threshold: threshold,
+        findAllMatches: findAllMatches,
+        minMatchCharLength: minMatchCharLength
+      });
+    }
+  }]);
+
+  return Bitap;
+}();
+
+// let x = new Bitap("od mn war", {})
+// let result = x.search("Old Man's War")
+// console.log(result)
+
+module.exports = Bitap;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var isArray = __webpack_require__(0);
+
+var deepValue = function deepValue(obj, path, list) {
+  if (!path) {
+    // If there's no path left, we've gotten to the object we care about.
+    list.push(obj);
+  } else {
+    var dotIndex = path.indexOf('.');
+    var firstSegment = path;
+    var remaining = null;
+
+    if (dotIndex !== -1) {
+      firstSegment = path.slice(0, dotIndex);
+      remaining = path.slice(dotIndex + 1);
+    }
+
+    var value = obj[firstSegment];
+
+    if (value !== null && value !== undefined) {
+      if (!remaining && (typeof value === 'string' || typeof value === 'number')) {
+        list.push(value.toString());
+      } else if (isArray(value)) {
+        // Search each item in the array.
+        for (var i = 0, len = value.length; i < len; i += 1) {
+          deepValue(value[i], remaining, list);
+        }
+      } else if (remaining) {
+        // An object. Recurse further.
+        deepValue(value, remaining, list);
+      }
+    }
+  }
+
+  return list;
+};
+
+module.exports = function (obj, path) {
+  return deepValue(obj, path, []);
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function () {
+  var matchmask = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var minMatchCharLength = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  var matchedIndices = [];
+  var start = -1;
+  var end = -1;
+  var i = 0;
+
+  for (var len = matchmask.length; i < len; i += 1) {
+    var match = matchmask[i];
+    if (match && start === -1) {
+      start = i;
+    } else if (!match && start !== -1) {
+      end = i - 1;
+      if (end - start + 1 >= minMatchCharLength) {
+        matchedIndices.push([start, end]);
+      }
+      start = -1;
+    }
+  }
+
+  // (i-1 - start) + 1 => i - start
+  if (matchmask[i - 1] && i - start >= minMatchCharLength) {
+    matchedIndices.push([start, i - 1]);
+  }
+
+  return matchedIndices;
+};
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (pattern) {
+  var mask = {};
+  var len = pattern.length;
+
+  for (var i = 0; i < len; i += 1) {
+    mask[pattern.charAt(i)] = 0;
+  }
+
+  for (var _i = 0; _i < len; _i += 1) {
+    mask[pattern.charAt(_i)] |= 1 << len - _i - 1;
+  }
+
+  return mask;
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var SPECIAL_CHARS_REGEX = /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g;
+
+module.exports = function (text, pattern) {
+  var tokenSeparator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : / +/g;
+
+  var regex = new RegExp(pattern.replace(SPECIAL_CHARS_REGEX, '\\$&').replace(tokenSeparator, '|'));
+  var matches = text.match(regex);
+  var isMatch = !!matches;
+  var matchedIndices = [];
+
+  if (isMatch) {
+    for (var i = 0, matchesLen = matches.length; i < matchesLen; i += 1) {
+      var match = matches[i];
+      matchedIndices.push([text.indexOf(match), match.length - 1]);
+    }
+  }
+
+  return {
+    // TODO: revisit this score
+    score: isMatch ? 0.5 : 1,
+    isMatch: isMatch,
+    matchedIndices: matchedIndices
+  };
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = function (pattern, _ref) {
+  var _ref$errors = _ref.errors,
+      errors = _ref$errors === undefined ? 0 : _ref$errors,
+      _ref$currentLocation = _ref.currentLocation,
+      currentLocation = _ref$currentLocation === undefined ? 0 : _ref$currentLocation,
+      _ref$expectedLocation = _ref.expectedLocation,
+      expectedLocation = _ref$expectedLocation === undefined ? 0 : _ref$expectedLocation,
+      _ref$distance = _ref.distance,
+      distance = _ref$distance === undefined ? 100 : _ref$distance;
+
+  var accuracy = errors / pattern.length;
+  var proximity = Math.abs(expectedLocation - currentLocation);
+
+  if (!distance) {
+    // Dodge divide by zero error.
+    return proximity ? 1.0 : accuracy;
+  }
+
+  return accuracy + proximity / distance;
+};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var bitapScore = __webpack_require__(6);
+var matchedIndices = __webpack_require__(3);
+
+module.exports = function (text, pattern, patternAlphabet, _ref) {
+  var _ref$location = _ref.location,
+      location = _ref$location === undefined ? 0 : _ref$location,
+      _ref$distance = _ref.distance,
+      distance = _ref$distance === undefined ? 100 : _ref$distance,
+      _ref$threshold = _ref.threshold,
+      threshold = _ref$threshold === undefined ? 0.6 : _ref$threshold,
+      _ref$findAllMatches = _ref.findAllMatches,
+      findAllMatches = _ref$findAllMatches === undefined ? false : _ref$findAllMatches,
+      _ref$minMatchCharLeng = _ref.minMatchCharLength,
+      minMatchCharLength = _ref$minMatchCharLeng === undefined ? 1 : _ref$minMatchCharLeng;
+
+  var expectedLocation = location;
+  // Set starting location at beginning text and initialize the alphabet.
+  var textLen = text.length;
+  // Highest score beyond which we give up.
+  var currentThreshold = threshold;
+  // Is there a nearby exact match? (speedup)
+  var bestLocation = text.indexOf(pattern, expectedLocation);
+
+  var patternLen = pattern.length;
+
+  // a mask of the matches
+  var matchMask = [];
+  for (var i = 0; i < textLen; i += 1) {
+    matchMask[i] = 0;
+  }
+
+  if (bestLocation !== -1) {
+    var score = bitapScore(pattern, {
+      errors: 0,
+      currentLocation: bestLocation,
+      expectedLocation: expectedLocation,
+      distance: distance
+    });
+    currentThreshold = Math.min(score, currentThreshold);
+
+    // What about in the other direction? (speed up)
+    bestLocation = text.lastIndexOf(pattern, expectedLocation + patternLen);
+
+    if (bestLocation !== -1) {
+      var _score = bitapScore(pattern, {
+        errors: 0,
+        currentLocation: bestLocation,
+        expectedLocation: expectedLocation,
+        distance: distance
+      });
+      currentThreshold = Math.min(_score, currentThreshold);
+    }
+  }
+
+  // Reset the best location
+  bestLocation = -1;
+
+  var lastBitArr = [];
+  var finalScore = 1;
+  var binMax = patternLen + textLen;
+
+  var mask = 1 << patternLen - 1;
+
+  for (var _i = 0; _i < patternLen; _i += 1) {
+    // Scan for the best match; each iteration allows for one more error.
+    // Run a binary search to determine how far from the match location we can stray
+    // at this error level.
+    var binMin = 0;
+    var binMid = binMax;
+
+    while (binMin < binMid) {
+      var _score3 = bitapScore(pattern, {
+        errors: _i,
+        currentLocation: expectedLocation + binMid,
+        expectedLocation: expectedLocation,
+        distance: distance
+      });
+
+      if (_score3 <= currentThreshold) {
+        binMin = binMid;
+      } else {
+        binMax = binMid;
+      }
+
+      binMid = Math.floor((binMax - binMin) / 2 + binMin);
+    }
+
+    // Use the result from this iteration as the maximum for the next.
+    binMax = binMid;
+
+    var start = Math.max(1, expectedLocation - binMid + 1);
+    var finish = findAllMatches ? textLen : Math.min(expectedLocation + binMid, textLen) + patternLen;
+
+    // Initialize the bit array
+    var bitArr = Array(finish + 2);
+
+    bitArr[finish + 1] = (1 << _i) - 1;
+
+    for (var j = finish; j >= start; j -= 1) {
+      var currentLocation = j - 1;
+      var charMatch = patternAlphabet[text.charAt(currentLocation)];
+
+      if (charMatch) {
+        matchMask[currentLocation] = 1;
+      }
+
+      // First pass: exact match
+      bitArr[j] = (bitArr[j + 1] << 1 | 1) & charMatch;
+
+      // Subsequent passes: fuzzy match
+      if (_i !== 0) {
+        bitArr[j] |= (lastBitArr[j + 1] | lastBitArr[j]) << 1 | 1 | lastBitArr[j + 1];
+      }
+
+      if (bitArr[j] & mask) {
+        finalScore = bitapScore(pattern, {
+          errors: _i,
+          currentLocation: currentLocation,
+          expectedLocation: expectedLocation,
+          distance: distance
+        });
+
+        // This match will almost certainly be better than any existing match.
+        // But check anyway.
+        if (finalScore <= currentThreshold) {
+          // Indeed it is
+          currentThreshold = finalScore;
+          bestLocation = currentLocation;
+
+          // Already passed `loc`, downhill from here on in.
+          if (bestLocation <= expectedLocation) {
+            break;
+          }
+
+          // When passing `bestLocation`, don't exceed our current distance from `expectedLocation`.
+          start = Math.max(1, 2 * expectedLocation - bestLocation);
+        }
+      }
+    }
+
+    // No hope for a (better) match at greater error levels.
+    var _score2 = bitapScore(pattern, {
+      errors: _i + 1,
+      currentLocation: expectedLocation,
+      expectedLocation: expectedLocation,
+      distance: distance
+    });
+
+    // console.log('score', score, finalScore)
+
+    if (_score2 > currentThreshold) {
+      break;
+    }
+
+    lastBitArr = bitArr;
+  }
+
+  // console.log('FINAL SCORE', finalScore)
+
+  // Count exact matches (those with a score of 0) to be "almost" exact
+  return {
+    isMatch: bestLocation >= 0,
+    score: finalScore === 0 ? 0.001 : finalScore,
+    matchedIndices: matchedIndices(matchMask, minMatchCharLength)
+  };
+};
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Bitap = __webpack_require__(1);
+var deepValue = __webpack_require__(2);
+var isArray = __webpack_require__(0);
+
+var Fuse = function () {
+  function Fuse(list, _ref) {
+    var _ref$location = _ref.location,
+        location = _ref$location === undefined ? 0 : _ref$location,
+        _ref$distance = _ref.distance,
+        distance = _ref$distance === undefined ? 100 : _ref$distance,
+        _ref$threshold = _ref.threshold,
+        threshold = _ref$threshold === undefined ? 0.6 : _ref$threshold,
+        _ref$maxPatternLength = _ref.maxPatternLength,
+        maxPatternLength = _ref$maxPatternLength === undefined ? 32 : _ref$maxPatternLength,
+        _ref$caseSensitive = _ref.caseSensitive,
+        caseSensitive = _ref$caseSensitive === undefined ? false : _ref$caseSensitive,
+        _ref$tokenSeparator = _ref.tokenSeparator,
+        tokenSeparator = _ref$tokenSeparator === undefined ? / +/g : _ref$tokenSeparator,
+        _ref$findAllMatches = _ref.findAllMatches,
+        findAllMatches = _ref$findAllMatches === undefined ? false : _ref$findAllMatches,
+        _ref$minMatchCharLeng = _ref.minMatchCharLength,
+        minMatchCharLength = _ref$minMatchCharLeng === undefined ? 1 : _ref$minMatchCharLeng,
+        _ref$id = _ref.id,
+        id = _ref$id === undefined ? null : _ref$id,
+        _ref$keys = _ref.keys,
+        keys = _ref$keys === undefined ? [] : _ref$keys,
+        _ref$shouldSort = _ref.shouldSort,
+        shouldSort = _ref$shouldSort === undefined ? true : _ref$shouldSort,
+        _ref$getFn = _ref.getFn,
+        getFn = _ref$getFn === undefined ? deepValue : _ref$getFn,
+        _ref$sortFn = _ref.sortFn,
+        sortFn = _ref$sortFn === undefined ? function (a, b) {
+      return a.score - b.score;
+    } : _ref$sortFn,
+        _ref$tokenize = _ref.tokenize,
+        tokenize = _ref$tokenize === undefined ? false : _ref$tokenize,
+        _ref$matchAllTokens = _ref.matchAllTokens,
+        matchAllTokens = _ref$matchAllTokens === undefined ? false : _ref$matchAllTokens,
+        _ref$includeMatches = _ref.includeMatches,
+        includeMatches = _ref$includeMatches === undefined ? false : _ref$includeMatches,
+        _ref$includeScore = _ref.includeScore,
+        includeScore = _ref$includeScore === undefined ? false : _ref$includeScore,
+        _ref$verbose = _ref.verbose,
+        verbose = _ref$verbose === undefined ? false : _ref$verbose;
+
+    _classCallCheck(this, Fuse);
+
+    this.options = {
+      location: location,
+      distance: distance,
+      threshold: threshold,
+      maxPatternLength: maxPatternLength,
+      isCaseSensitive: caseSensitive,
+      tokenSeparator: tokenSeparator,
+      findAllMatches: findAllMatches,
+      minMatchCharLength: minMatchCharLength,
+      id: id,
+      keys: keys,
+      includeMatches: includeMatches,
+      includeScore: includeScore,
+      shouldSort: shouldSort,
+      getFn: getFn,
+      sortFn: sortFn,
+      verbose: verbose,
+      tokenize: tokenize,
+      matchAllTokens: matchAllTokens
+    };
+
+    this.setCollection(list);
+  }
+
+  _createClass(Fuse, [{
+    key: 'setCollection',
+    value: function setCollection(list) {
+      this.list = list;
+      return list;
+    }
+  }, {
+    key: 'search',
+    value: function search(pattern) {
+      this._log('---------\nSearch pattern: "' + pattern + '"');
+
+      var _prepareSearchers2 = this._prepareSearchers(pattern),
+          tokenSearchers = _prepareSearchers2.tokenSearchers,
+          fullSearcher = _prepareSearchers2.fullSearcher;
+
+      var _search2 = this._search(tokenSearchers, fullSearcher),
+          weights = _search2.weights,
+          results = _search2.results;
+
+      this._computeScore(weights, results);
+
+      if (this.options.shouldSort) {
+        this._sort(results);
+      }
+
+      return this._format(results);
+    }
+  }, {
+    key: '_prepareSearchers',
+    value: function _prepareSearchers() {
+      var pattern = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+
+      var tokenSearchers = [];
+
+      if (this.options.tokenize) {
+        // Tokenize on the separator
+        var tokens = pattern.split(this.options.tokenSeparator);
+        for (var i = 0, len = tokens.length; i < len; i += 1) {
+          tokenSearchers.push(new Bitap(tokens[i], this.options));
+        }
+      }
+
+      var fullSearcher = new Bitap(pattern, this.options);
+
+      return { tokenSearchers: tokenSearchers, fullSearcher: fullSearcher };
+    }
+  }, {
+    key: '_search',
+    value: function _search() {
+      var tokenSearchers = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+      var fullSearcher = arguments[1];
+
+      var list = this.list;
+      var resultMap = {};
+      var results = [];
+
+      // Check the first item in the list, if it's a string, then we assume
+      // that every item in the list is also a string, and thus it's a flattened array.
+      if (typeof list[0] === 'string') {
+        // Iterate over every item
+        for (var i = 0, len = list.length; i < len; i += 1) {
+          this._analyze({
+            key: '',
+            value: list[i],
+            record: i,
+            index: i
+          }, {
+            resultMap: resultMap,
+            results: results,
+            tokenSearchers: tokenSearchers,
+            fullSearcher: fullSearcher
+          });
+        }
+
+        return { weights: null, results: results };
+      }
+
+      // Otherwise, the first item is an Object (hopefully), and thus the searching
+      // is done on the values of the keys of each item.
+      var weights = {};
+      for (var _i = 0, _len = list.length; _i < _len; _i += 1) {
+        var item = list[_i];
+        // Iterate over every key
+        for (var j = 0, keysLen = this.options.keys.length; j < keysLen; j += 1) {
+          var key = this.options.keys[j];
+          if (typeof key !== 'string') {
+            weights[key.name] = {
+              weight: 1 - key.weight || 1
+            };
+            if (key.weight <= 0 || key.weight > 1) {
+              throw new Error('Key weight has to be > 0 and <= 1');
+            }
+            key = key.name;
+          } else {
+            weights[key] = {
+              weight: 1
+            };
+          }
+
+          this._analyze({
+            key: key,
+            value: this.options.getFn(item, key),
+            record: item,
+            index: _i
+          }, {
+            resultMap: resultMap,
+            results: results,
+            tokenSearchers: tokenSearchers,
+            fullSearcher: fullSearcher
+          });
+        }
+      }
+
+      return { weights: weights, results: results };
+    }
+  }, {
+    key: '_analyze',
+    value: function _analyze(_ref2, _ref3) {
+      var key = _ref2.key,
+          _ref2$arrayIndex = _ref2.arrayIndex,
+          arrayIndex = _ref2$arrayIndex === undefined ? -1 : _ref2$arrayIndex,
+          value = _ref2.value,
+          record = _ref2.record,
+          index = _ref2.index;
+      var _ref3$tokenSearchers = _ref3.tokenSearchers,
+          tokenSearchers = _ref3$tokenSearchers === undefined ? [] : _ref3$tokenSearchers,
+          _ref3$fullSearcher = _ref3.fullSearcher,
+          fullSearcher = _ref3$fullSearcher === undefined ? [] : _ref3$fullSearcher,
+          _ref3$resultMap = _ref3.resultMap,
+          resultMap = _ref3$resultMap === undefined ? {} : _ref3$resultMap,
+          _ref3$results = _ref3.results,
+          results = _ref3$results === undefined ? [] : _ref3$results;
+
+      // Check if the texvaluet can be searched
+      if (value === undefined || value === null) {
+        return;
+      }
+
+      var exists = false;
+      var averageScore = -1;
+      var numTextMatches = 0;
+
+      if (typeof value === 'string') {
+        this._log('\nKey: ' + (key === '' ? '-' : key));
+
+        var mainSearchResult = fullSearcher.search(value);
+        this._log('Full text: "' + value + '", score: ' + mainSearchResult.score);
+
+        if (this.options.tokenize) {
+          var words = value.split(this.options.tokenSeparator);
+          var scores = [];
+
+          for (var i = 0; i < tokenSearchers.length; i += 1) {
+            var tokenSearcher = tokenSearchers[i];
+
+            this._log('\nPattern: "' + tokenSearcher.pattern + '"');
+
+            // let tokenScores = []
+            var hasMatchInText = false;
+
+            for (var j = 0; j < words.length; j += 1) {
+              var word = words[j];
+              var tokenSearchResult = tokenSearcher.search(word);
+              var obj = {};
+              if (tokenSearchResult.isMatch) {
+                obj[word] = tokenSearchResult.score;
+                exists = true;
+                hasMatchInText = true;
+                scores.push(tokenSearchResult.score);
+              } else {
+                obj[word] = 1;
+                if (!this.options.matchAllTokens) {
+                  scores.push(1);
+                }
+              }
+              this._log('Token: "' + word + '", score: ' + obj[word]);
+              // tokenScores.push(obj)
+            }
+
+            if (hasMatchInText) {
+              numTextMatches += 1;
+            }
+          }
+
+          averageScore = scores[0];
+          var scoresLen = scores.length;
+          for (var _i2 = 1; _i2 < scoresLen; _i2 += 1) {
+            averageScore += scores[_i2];
+          }
+          averageScore = averageScore / scoresLen;
+
+          this._log('Token score average:', averageScore);
+        }
+
+        var finalScore = mainSearchResult.score;
+        if (averageScore > -1) {
+          finalScore = (finalScore + averageScore) / 2;
+        }
+
+        this._log('Score average:', finalScore);
+
+        var checkTextMatches = this.options.tokenize && this.options.matchAllTokens ? numTextMatches >= tokenSearchers.length : true;
+
+        this._log('\nCheck Matches: ' + checkTextMatches);
+
+        // If a match is found, add the item to <rawResults>, including its score
+        if ((exists || mainSearchResult.isMatch) && checkTextMatches) {
+          // Check if the item already exists in our results
+          var existingResult = resultMap[index];
+          if (existingResult) {
+            // Use the lowest score
+            // existingResult.score, bitapResult.score
+            existingResult.output.push({
+              key: key,
+              arrayIndex: arrayIndex,
+              value: value,
+              score: finalScore,
+              matchedIndices: mainSearchResult.matchedIndices
+            });
+          } else {
+            // Add it to the raw result list
+            resultMap[index] = {
+              item: record,
+              output: [{
+                key: key,
+                arrayIndex: arrayIndex,
+                value: value,
+                score: finalScore,
+                matchedIndices: mainSearchResult.matchedIndices
+              }]
+            };
+
+            results.push(resultMap[index]);
+          }
+        }
+      } else if (isArray(value)) {
+        for (var _i3 = 0, len = value.length; _i3 < len; _i3 += 1) {
+          this._analyze({
+            key: key,
+            arrayIndex: _i3,
+            value: value[_i3],
+            record: record,
+            index: index
+          }, {
+            resultMap: resultMap,
+            results: results,
+            tokenSearchers: tokenSearchers,
+            fullSearcher: fullSearcher
+          });
+        }
+      }
+    }
+  }, {
+    key: '_computeScore',
+    value: function _computeScore(weights, results) {
+      this._log('\n\nComputing score:\n');
+
+      for (var i = 0, len = results.length; i < len; i += 1) {
+        var output = results[i].output;
+        var scoreLen = output.length;
+
+        var currScore = 1;
+        var bestScore = 1;
+
+        for (var j = 0; j < scoreLen; j += 1) {
+          var weight = weights ? weights[output[j].key].weight : 1;
+          var score = weight === 1 ? output[j].score : output[j].score || 0.001;
+          var nScore = score * weight;
+
+          if (weight !== 1) {
+            bestScore = Math.min(bestScore, nScore);
+          } else {
+            output[j].nScore = nScore;
+            currScore *= nScore;
+          }
+        }
+
+        results[i].score = bestScore === 1 ? currScore : bestScore;
+
+        this._log(results[i]);
+      }
+    }
+  }, {
+    key: '_sort',
+    value: function _sort(results) {
+      this._log('\n\nSorting....');
+      results.sort(this.options.sortFn);
+    }
+  }, {
+    key: '_format',
+    value: function _format(results) {
+      var finalOutput = [];
+
+      if (this.options.verbose) {
+        this._log('\n\nOutput:\n\n', JSON.stringify(results));
+      }
+
+      var transformers = [];
+
+      if (this.options.includeMatches) {
+        transformers.push(function (result, data) {
+          var output = result.output;
+          data.matches = [];
+
+          for (var i = 0, len = output.length; i < len; i += 1) {
+            var item = output[i];
+
+            if (item.matchedIndices.length === 0) {
+              continue;
+            }
+
+            var obj = {
+              indices: item.matchedIndices,
+              value: item.value
+            };
+            if (item.key) {
+              obj.key = item.key;
+            }
+            if (item.hasOwnProperty('arrayIndex') && item.arrayIndex > -1) {
+              obj.arrayIndex = item.arrayIndex;
+            }
+            data.matches.push(obj);
+          }
+        });
+      }
+
+      if (this.options.includeScore) {
+        transformers.push(function (result, data) {
+          data.score = result.score;
+        });
+      }
+
+      for (var i = 0, len = results.length; i < len; i += 1) {
+        var result = results[i];
+
+        if (this.options.id) {
+          result.item = this.options.getFn(result.item, this.options.id)[0];
+        }
+
+        if (!transformers.length) {
+          finalOutput.push(result.item);
+          continue;
+        }
+
+        var data = {
+          item: result.item
+        };
+
+        for (var j = 0, _len2 = transformers.length; j < _len2; j += 1) {
+          transformers[j](result, data);
+        }
+
+        finalOutput.push(data);
+      }
+
+      return finalOutput;
+    }
+  }, {
+    key: '_log',
+    value: function _log() {
+      if (this.options.verbose) {
+        var _console;
+
+        (_console = console).log.apply(_console, arguments);
+      }
+    }
+  }]);
+
+  return Fuse;
+}();
+
+module.exports = Fuse;
+
+/***/ })
+/******/ ]);
+});
+//# sourceMappingURL=fuse.js.map
+
+/***/ }),
+
 /***/ "./node_modules/history/es/DOMUtils.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -82948,6 +83956,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MOD
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return fetchCoworkers; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return populateCoworkers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return searchCoworkers; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__types__ = __webpack_require__("./resources/js/actions/types.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__api__ = __webpack_require__("./resources/js/api.js");
 
@@ -82964,7 +83973,7 @@ var fetchCoworkers = function fetchCoworkers() {
     return __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].get(__WEBPACK_IMPORTED_MODULE_1__api__["b" /* routes */].coworkers).then(function (response) {
       return dispatch(populateCoworkers(response.data.data));
     }).catch(function (error) {
-      return dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["e" /* COWORKERS_SET_ERROR */], error: error });
+      return dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["f" /* COWORKERS_SET_ERROR */], error: error });
     });
   };
 };
@@ -82973,6 +83982,13 @@ var populateCoworkers = function populateCoworkers(coworkers) {
   return {
     type: __WEBPACK_IMPORTED_MODULE_0__types__["d" /* COWORKERS_POPULATE */],
     coworkers: coworkers
+  };
+};
+
+var searchCoworkers = function searchCoworkers(term) {
+  return {
+    type: __WEBPACK_IMPORTED_MODULE_0__types__["e" /* COWORKERS_SEARCH */],
+    term: term
   };
 };
 
@@ -82985,11 +84001,12 @@ var populateCoworkers = function populateCoworkers(coworkers) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__coworkers__ = __webpack_require__("./resources/js/actions/coworkers.js");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__coworkers__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_0__coworkers__["b"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_0__coworkers__["c"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores__ = __webpack_require__("./resources/js/actions/stores.js");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["a"]; });
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["b"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["c"]; });
-/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["d"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["c"]; });
+/* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_1__stores__["d"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__user__ = __webpack_require__("./resources/js/actions/user.js");
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_2__user__["a"]; });
 
@@ -83017,19 +84034,19 @@ var fetchStores = function fetchStores() {
       return;
     }
 
-    dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["f" /* STORES_FETCH */] });
+    dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["g" /* STORES_FETCH */] });
 
     return __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].get(__WEBPACK_IMPORTED_MODULE_1__api__["b" /* routes */].stores, { params: { with: "owner" } }).then(function (response) {
       return dispatch(populateStores(response.data.data));
     }).catch(function (error) {
-      return dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["h" /* STORES_SET_ERROR */], error: error });
+      return dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["i" /* STORES_SET_ERROR */], error: error });
     });
   };
 };
 
 var populateStores = function populateStores(stores) {
   return {
-    type: __WEBPACK_IMPORTED_MODULE_0__types__["g" /* STORES_POPULATE */],
+    type: __WEBPACK_IMPORTED_MODULE_0__types__["h" /* STORES_POPULATE */],
     stores: stores
   };
 };
@@ -83062,15 +84079,16 @@ var setActiveStore = function setActiveStore(store) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return STORES_FETCH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return STORES_POPULATE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return STORES_SET_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return STORES_FETCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return STORES_POPULATE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return STORES_SET_ERROR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return COWORKERS_FETCH; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return COWORKERS_POPULATE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return COWORKERS_SET_ERROR; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return USER_FETCH; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return USER_SET; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return USER_SET_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return COWORKERS_SET_ERROR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return COWORKERS_SEARCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return USER_FETCH; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return USER_SET; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return USER_SET_ERROR; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ACTIVE_STORE_SET; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return ACTIVE_STORE_SWITCH; });
 var STORES_FETCH = 'STORES_FETCH';
@@ -83079,6 +84097,7 @@ var STORES_SET_ERROR = 'STORES_SET_ERROR';
 var COWORKERS_FETCH = 'COWORKERS_FETCH';
 var COWORKERS_POPULATE = 'COWORKERS_POPULATE';
 var COWORKERS_SET_ERROR = 'COWORKERS_SET_ERROR';
+var COWORKERS_SEARCH = 'COWORKERS_SEARCH';
 
 var USER_FETCH = 'USER_FETCH';
 var USER_SET = 'USER_SET';
@@ -83110,7 +84129,7 @@ var fetchAuthenticatedUser = function fetchAuthenticatedUser() {
       return;
     }
 
-    dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["i" /* USER_FETCH */] });
+    dispatch({ type: __WEBPACK_IMPORTED_MODULE_0__types__["j" /* USER_FETCH */] });
     return __WEBPACK_IMPORTED_MODULE_1__api__["a" /* default */].get(__WEBPACK_IMPORTED_MODULE_1__api__["b" /* routes */].authenticatedUser).then(function (response) {
       var data = response.data.data;
 
@@ -83120,14 +84139,14 @@ var fetchAuthenticatedUser = function fetchAuthenticatedUser() {
       callback && callback(response);
       return;
     }).catch(function (error) {
-      return { type: __WEBPACK_IMPORTED_MODULE_0__types__["k" /* USER_SET_ERROR */], error: error };
+      return { type: __WEBPACK_IMPORTED_MODULE_0__types__["l" /* USER_SET_ERROR */], error: error };
     });
   };
 };
 
 var setAuthenticatedUser = function setAuthenticatedUser(user) {
   return {
-    type: __WEBPACK_IMPORTED_MODULE_0__types__["j" /* USER_SET */],
+    type: __WEBPACK_IMPORTED_MODULE_0__types__["k" /* USER_SET */],
     user: user
   };
 };
@@ -83496,7 +84515,7 @@ var Navbar = function (_Component) {
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "nav",
-        { className: "navbar navbar-expand-md navbar-light navbar-laravel" },
+        { className: "navbar navbar-expand-md bg-dark navbar-dark navbar-laravel" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "div",
           { className: "container" },
@@ -83598,7 +84617,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = { switchActiveStore: __WEBPACK_IMPORTED_MODULE_4__actions__["g" /* switchActiveStore */] };
+var mapDispatchToProps = { switchActiveStore: __WEBPACK_IMPORTED_MODULE_4__actions__["h" /* switchActiveStore */] };
 
 Navbar.propTypes = {
   stores: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
@@ -83696,6 +84715,81 @@ var NavbarStores = function (_PureComponent) {
 
 /***/ }),
 
+/***/ "./resources/js/components/StoreDependentView.jsx":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export StoreDependentView */
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__("./node_modules/react/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__("./node_modules/react-redux/es/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_router_dom__ = __webpack_require__("./node_modules/react-router-dom/es/index.js");
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var StoreDependentView = function (_Component) {
+  _inherits(StoreDependentView, _Component);
+
+  function StoreDependentView() {
+    _classCallCheck(this, StoreDependentView);
+
+    return _possibleConstructorReturn(this, (StoreDependentView.__proto__ || Object.getPrototypeOf(StoreDependentView)).apply(this, arguments));
+  }
+
+  _createClass(StoreDependentView, [{
+    key: "render",
+    value: function render() {
+      var _props = this.props,
+          user = _props.user,
+          activeStore = _props.activeStore,
+          children = _props.children,
+          loadingView = _props.loadingView;
+
+
+      if (!user.data || user.fetching) {
+        return loadingView || __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "div",
+          { className: "container py-5" },
+          "Loading.."
+        );
+      }
+      if (!activeStore.data) {
+        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router_dom__["d" /* Redirect */], { to: "/" });
+      }
+
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        __WEBPACK_IMPORTED_MODULE_0_react__["Fragment"],
+        null,
+        children
+      );
+    }
+  }]);
+
+  return StoreDependentView;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user,
+    activeStore: state.activeStore
+  };
+};
+
+var mapDispatchToProps = {};
+
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(StoreDependentView));
+
+/***/ }),
+
 /***/ "./resources/js/components/index.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -83708,10 +84802,36 @@ var NavbarStores = function (_PureComponent) {
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_2__Navbar_Navbar__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FormSection__ = __webpack_require__("./resources/js/components/FormSection.jsx");
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_3__FormSection__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__StoreDependentView__ = __webpack_require__("./resources/js/components/StoreDependentView.jsx");
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_4__StoreDependentView__["a"]; });
 
 
 
 
+
+
+/***/ }),
+
+/***/ "./resources/js/helpers.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return fuzzySearch; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fuse_js__ = __webpack_require__("./node_modules/fuse.js/dist/fuse.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_fuse_js___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_fuse_js__);
+
+
+var fuzzySearch = function fuzzySearch(_ref) {
+  var list = _ref.list,
+      _ref$keys = _ref.keys,
+      keys = _ref$keys === undefined ? ["name"] : _ref$keys,
+      term = _ref.term;
+
+  var fuse = new __WEBPACK_IMPORTED_MODULE_0_fuse_js___default.a(list, {
+    keys: keys
+  });
+  return fuse.search(term);
+};
 
 /***/ }),
 
@@ -83902,10 +85022,10 @@ var Coworkers = function (_PureComponent) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_router_dom__ = __webpack_require__("./node_modules/react-router-dom/es/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_querystring__ = __webpack_require__("./node_modules/querystring-es3/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_querystring___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_querystring__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions__ = __webpack_require__("./resources/js/actions/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components__ = __webpack_require__("./resources/js/components/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__List__ = __webpack_require__("./resources/js/pages/coworkers/List.jsx");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__InviteForm__ = __webpack_require__("./resources/js/pages/coworkers/InviteForm.jsx");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components__ = __webpack_require__("./resources/js/components/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__actions__ = __webpack_require__("./resources/js/actions/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__InviteForm__ = __webpack_require__("./resources/js/pages/coworkers/InviteForm.jsx");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__List__ = __webpack_require__("./resources/js/pages/coworkers/List.jsx");
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83913,6 +85033,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -83949,22 +85070,9 @@ var CoworkersHome = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props,
-          user = _props.user,
-          search = _props.location.search;
+      var search = this.props.location.search;
 
       var query = Object(__WEBPACK_IMPORTED_MODULE_4_querystring__["parse"])(search.substr(1));
-
-      if (!user.data || user.fetching) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "container py-5" },
-          "Loading.."
-        );
-      }
-      if (!this.props.activeStore.data) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_router_dom__["d" /* Redirect */], { to: "/" });
-      }
 
       var _props$coworkers = this.props.coworkers,
           data = _props$coworkers.data,
@@ -83972,67 +85080,62 @@ var CoworkersHome = function (_Component) {
           error = _props$coworkers.error;
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "div",
-        { className: "container py-5" },
-        query._alert === "create-store-success" && !this.state.hasInvited && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_6__components__["a" /* Alert */],
-          { type: "info", className: "mb-4" },
-          "Nice! You made a store on Entree. Invite your coworkers by adding their emails, and they will be notified to join",
-          " ",
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "strong",
-            null,
-            this.props.activeStore.data.name
-          ),
-          "."
-        ),
+        __WEBPACK_IMPORTED_MODULE_5__components__["e" /* StoreDependentView */],
+        null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "div",
-          { className: "mb-5" },
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "h1",
-            null,
-            "Your Coworkers"
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "div",
-            { className: "row mt-4" },
+          { className: "container py-5" },
+          query._alert === "create-store-success" && !this.state.hasInvited && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_5__components__["a" /* Alert */],
+            { type: "info", className: "mb-4" },
+            "Nice! You made a store on Entree. Invite your coworkers by adding their emails, and they will be notified to join",
+            " ",
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              "div",
-              { className: "col-md-6 mb-5" },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__InviteForm__["a" /* default */], {
-                onInviteSuccess: function onInviteSuccess(coworkersList) {
-                  _this2.props.populateCoworkers(coworkersList);
-                  _this2.setState({ hasInvited: true });
-                }
-              })
-            )
-          ),
-          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "div",
-            { className: "card" },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              "div",
-              { className: "card-header" },
-              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", { className: "d-flex justify-content-between align-items-center" })
+              "strong",
+              null,
+              this.props.activeStore.data.name
             ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__List__["a" /* default */], { data: data, fetching: fetching, error: error })
-          )
-        ),
-        query._flow === "create-store" && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "div",
-          { className: "d-flex justify-content-end align-items-center" },
-          this.state.hasInvited && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
-            { to: "/", className: "btn btn-link" },
-            "Take me Home"
+            "."
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
-            {
-              to: "/items?_flow=create-store",
-              className: "btn" + (this.state.hasInvited ? " btn-primary" : "btn-secondary") },
-            this.state.hasInvited ? "Add Items" : "Skip"
+            "div",
+            { className: "mb-5" },
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "h1",
+              null,
+              "Your Coworkers"
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "div",
+              { className: "row mt-4" },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "col-md-6 mb-5" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__InviteForm__["a" /* default */], {
+                  onInviteSuccess: function onInviteSuccess(coworkersList) {
+                    _this2.props.populateCoworkers(coworkersList);
+                    _this2.setState({ hasInvited: true });
+                  }
+                })
+              )
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__List__["a" /* default */], null)
+          ),
+          query._flow === "create-store" && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "div",
+            { className: "d-flex justify-content-end align-items-center" },
+            this.state.hasInvited && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+              { to: "/", className: "btn btn-link" },
+              "Take me Home"
+            ),
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              __WEBPACK_IMPORTED_MODULE_3_react_router_dom__["b" /* Link */],
+              {
+                to: "/items?_flow=create-store",
+                className: "btn" + (this.state.hasInvited ? " btn-primary" : "btn-secondary") },
+              this.state.hasInvited ? "Add Items" : "Skip"
+            )
           )
         )
       );
@@ -84050,7 +85153,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-var mapDispatchToProps = { fetchCoworkers: __WEBPACK_IMPORTED_MODULE_5__actions__["b" /* fetchCoworkers */], populateCoworkers: __WEBPACK_IMPORTED_MODULE_5__actions__["d" /* populateCoworkers */] };
+var mapDispatchToProps = { fetchCoworkers: __WEBPACK_IMPORTED_MODULE_6__actions__["b" /* fetchCoworkers */], populateCoworkers: __WEBPACK_IMPORTED_MODULE_6__actions__["d" /* populateCoworkers */] };
 
 CoworkersHome.propTypes = {
   fetchCoworkers: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
@@ -84196,7 +85299,9 @@ var InviteForm = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__("./node_modules/prop-types/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__("./node_modules/react-redux/es/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ListItem__ = __webpack_require__("./resources/js/pages/coworkers/ListItem.jsx");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions__ = __webpack_require__("./resources/js/actions/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers__ = __webpack_require__("./resources/js/helpers.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ListItem__ = __webpack_require__("./resources/js/pages/coworkers/ListItem.jsx");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -84206,6 +85311,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
 
 
 
@@ -84226,40 +85334,66 @@ var CoworkersList = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var users = this.props.data;
+      var coworkers = this.props.coworkers;
 
+      var data = coworkers.term.length > 0 ? Object(__WEBPACK_IMPORTED_MODULE_4__helpers__["a" /* fuzzySearch */])({ list: coworkers.data, term: coworkers.term, keys: ['name', 'email'] }) : coworkers.data;
 
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "table",
-        { className: "table table-hover" },
+        "div",
+        { className: "card" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "thead",
-          null,
+          "div",
+          { className: "card-header" },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            "tr",
-            null,
+            "div",
+            { className: "d-flex justify-content-between align-items-center" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              "th",
-              null,
-              "User"
-            ),
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-              "th",
-              { style: { width: 300 } },
-              "Joined"
+              "div",
+              { className: "form-inline" },
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
+                type: "text",
+                onChange: function onChange(e) {
+                  return _this2.props.searchCoworkers(e.target.value);
+                },
+                className: "form-control",
+                placeholder: "Search coworkers..",
+                value: coworkers.term
+              })
             )
           )
         ),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          "tbody",
-          null,
-          users.map(function (user, index) {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__ListItem__["a" /* default */], _extends({
-              key: "coworker-item-" + index
-            }, user, {
-              isSelf: user.id === _this2.props.user.id
-            }));
-          })
+          "table",
+          { className: "table table-hover" },
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "thead",
+            null,
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              "tr",
+              null,
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "th",
+                null,
+                "User"
+              ),
+              __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "th",
+                { style: { width: 300 } },
+                "Joined"
+              )
+            )
+          ),
+          __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            "tbody",
+            null,
+            data.map(function (coworker, index) {
+              return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__ListItem__["a" /* default */], _extends({
+                key: "coworker-item-" + index
+              }, coworker, {
+                isSelf: coworker.id === _this2.props.user.id
+              }));
+            })
+          )
         )
       );
     }
@@ -84270,11 +85404,12 @@ var CoworkersList = function (_Component) {
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
+    coworkers: state.coworkers,
     user: state.user.data
   };
 };
 
-var mapDispatchToProps = {};
+var mapDispatchToProps = { searchCoworkers: __WEBPACK_IMPORTED_MODULE_3__actions__["f" /* searchCoworkers */] };
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(CoworkersList));
 
@@ -85246,7 +86381,7 @@ var mapStateToProps = function mapStateToProps(state) {
   return { stores: state.stores.data };
 };
 
-var mapDispatchToProps = { fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_4__actions__["a" /* fetchAuthenticatedUser */], populateStores: __WEBPACK_IMPORTED_MODULE_4__actions__["e" /* populateStores */], setActiveStore: __WEBPACK_IMPORTED_MODULE_4__actions__["f" /* setActiveStore */] };
+var mapDispatchToProps = { fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_4__actions__["a" /* fetchAuthenticatedUser */], populateStores: __WEBPACK_IMPORTED_MODULE_4__actions__["e" /* populateStores */], setActiveStore: __WEBPACK_IMPORTED_MODULE_4__actions__["g" /* setActiveStore */] };
 
 StoresCreate.propTypes = {
   fetchAuthenticatedUser: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
@@ -85302,7 +86437,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 var defaultState = {
   data: [],
   fetching: false,
-  error: null
+  error: null,
+  term: ''
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (function () {
@@ -85314,8 +86450,10 @@ var defaultState = {
       return _extends({}, state, { fetching: true, error: null });
     case __WEBPACK_IMPORTED_MODULE_0__actions_types__["d" /* COWORKERS_POPULATE */]:
       return _extends({}, state, { fetching: false, data: [].concat(_toConsumableArray(action.coworkers)) });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["e" /* COWORKERS_SET_ERROR */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["f" /* COWORKERS_SET_ERROR */]:
       return _extends({}, state, { fetching: false, error: _extends({}, action.error) });
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["e" /* COWORKERS_SEARCH */]:
+      return _extends({}, state, { term: action.term });
     default:
       return _extends({}, state);
   }
@@ -85368,11 +86506,11 @@ var defaultState = {
   var action = arguments[1];
 
   switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["f" /* STORES_FETCH */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["g" /* STORES_FETCH */]:
       return _extends({}, state, { fetching: true, error: null });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["g" /* STORES_POPULATE */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["h" /* STORES_POPULATE */]:
       return _extends({}, state, { data: action.stores.slice(0), fetching: false });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["h" /* STORES_SET_ERROR */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["i" /* STORES_SET_ERROR */]:
       return _extends({}, state, { fetching: false, error: action.error });
 
     default:
@@ -85401,13 +86539,12 @@ var defaultState = {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
   var action = arguments[1];
 
-
   switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["i" /* USER_FETCH */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["j" /* USER_FETCH */]:
       return _extends({}, state, { fetching: true, error: null });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["j" /* USER_SET */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["k" /* USER_SET */]:
       return _extends({}, state, { data: _extends({}, action.user), fetching: false });
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["k" /* USER_SET_ERROR */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["l" /* USER_SET_ERROR */]:
       return _extends({}, state, { fetching: false, error: action.error });
     default:
       return state;
