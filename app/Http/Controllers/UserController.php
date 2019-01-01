@@ -18,7 +18,7 @@ class UserController extends Controller
         return fractal()
             ->item($user)
             ->transformWith(new UserTransformer)
-            ->parseIncludes(['activeStore'])
+            ->parseIncludes(['activeStore', 'activeStore.owner'])
             ->respond();
     }
     

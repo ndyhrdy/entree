@@ -15,7 +15,8 @@ class CoworkerTransformer extends TransformerAbstract
     public function transform(StoreUser $coworker)
     {
         return [
-            'id' => $coworker->user ? $coworker->user->id : null,
+            'slug' => $coworker->slug,
+            'userId' => $coworker->user ? $coworker->user->id : null,
             'name' => $coworker->user ? $coworker->user->name : null,
             'email' => $coworker->user ? $coworker->user->email : $coworker->invite_email,
             'createdAt' => $coworker->created_at->toIso8601String(),

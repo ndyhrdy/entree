@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { fetchStores } from "../../actions";
+import { StoreDependentView } from "../../components";
 import List from "./List";
 
 export class StoresHome extends Component {
@@ -29,45 +30,47 @@ export class StoresHome extends Component {
     } = this.props;
 
     return (
-      <div className="container py-5">
-        <h1 className="mb-4">Your Stores</h1>
+      <StoreDependentView>
+        <div className="container py-5">
+          <h1 className="mb-4">Your Stores</h1>
 
-        <div className="card">
-          <div className="card-header">
-            <div className="d-flex justify-content-between align-items-center">
-              <nav className="nav nav-pills small">
-                {filters.map((filter, index) => (
-                  <a
-                    key={"stores-filter-" + index}
-                    href="#"
-                    onClick={e => {
-                      e.preventDefault();
-                      this.filter(filter.filterBy);
-                    }}
-                    className={
-                      "nav-item nav-link" +
-                      (filter.filterBy === filterBy ? " active" : "")
-                    }>
-                    {filter.label}
-                  </a>
-                ))}
-              </nav>
-              <div>
-                <Link to="/stores/new" className="btn btn-primary">
-                  Add Store
-                </Link>
+          <div className="card">
+            <div className="card-header">
+              <div className="d-flex justify-content-between align-items-center">
+                <nav className="nav nav-pills small">
+                  {filters.map((filter, index) => (
+                    <a
+                      key={"stores-filter-" + index}
+                      href="#"
+                      onClick={e => {
+                        e.preventDefault();
+                        this.filter(filter.filterBy);
+                      }}
+                      className={
+                        "nav-item nav-link" +
+                        (filter.filterBy === filterBy ? " active" : "")
+                      }>
+                      {filter.label}
+                    </a>
+                  ))}
+                </nav>
+                <div>
+                  <Link to="/stores/new" className="btn btn-primary">
+                    Add Store
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
 
-          <List
-            data={data}
-            fetching={fetching}
-            error={error}
-            filterBy={filterBy}
-          />
+            <List
+              data={data}
+              fetching={fetching}
+              error={error}
+              filterBy={filterBy}
+            />
+          </div>
         </div>
-      </div>
+      </StoreDependentView>
     );
   }
 }

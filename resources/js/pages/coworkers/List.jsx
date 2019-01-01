@@ -2,16 +2,24 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { searchCoworkers } from "../../actions";
+import { fetchCoworkers, searchCoworkers } from "../../actions";
 import { fuzzySearch } from "../../helpers";
 import ListItem from "./ListItem";
 
 export class CoworkersList extends Component {
+  componentDidMount() {
+    this.props.fetchCoworkers();
+  }
+
   render() {
     const { coworkers } = this.props;
     const data =
       coworkers.term.length > 0
-        ? fuzzySearch({ list: coworkers.data, term: coworkers.term, keys: ['name', 'email'] })
+        ? fuzzySearch({
+            list: coworkers.data,
+            term: coworkers.term,
+            keys: ["name", "email"]
+          })
         : coworkers.data;
 
     return (
@@ -33,15 +41,25 @@ export class CoworkersList extends Component {
           <thead>
             <tr>
               <th>User</th>
-              <th style={{ width: 300 }}>Joined</th>
+              <th style={{ width: 250 }}>Joined</th>
             </tr>
           </thead>
           <tbody>
+            {coworkers.fetching && coworkers.data.length === 0 && (
+              <tr>
+                <td colSpan={2} className="text-center">
+                  Loading your coworkers..
+                </td>
+              </tr>
+            )}
             {data.map((coworker, index) => (
               <ListItem
                 key={"coworker-item-" + index}
                 {...coworker}
-                isSelf={coworker.id === this.props.user.id}
+                isSelf={coworker.userId === this.props.user.id}
+                isOwner={
+                  coworker.userId === this.props.activeStore.owner.data.id
+                }
               />
             ))}
           </tbody>
@@ -51,12 +69,17 @@ export class CoworkersList extends Component {
   }
 }
 
+CoworkersList.propTypes = {
+  fetchCoworkers: PropTypes.func.isRequired
+};
+
 const mapStateToProps = state => ({
   coworkers: state.coworkers,
-  user: state.user.data
+  user: state.user.data,
+  activeStore: state.activeStore.data
 });
 
-const mapDispatchToProps = { searchCoworkers };
+const mapDispatchToProps = { fetchCoworkers, searchCoworkers };
 
 export default connect(
   mapStateToProps,

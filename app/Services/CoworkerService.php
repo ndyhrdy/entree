@@ -13,7 +13,6 @@ class CoworkerService
   public function getCoworkersList(\Entree\Store\Store $store)
   {
     return $store->storeUsers()
-      ->withoutGlobalScope('accepted_invitation')
       ->with('user')
       ->orderBy('created_at', 'desc')
       ->get();
@@ -36,6 +35,7 @@ class CoworkerService
     $registeredUser = \Entree\User::where('email', $email)->first();
 
     $storeUser = new \Entree\Store\StoreUser;
+    $storeUser->slug = str_random(12);
     $storeUser->user_id = $registeredUser ? $registeredUser->id : null;
     $storeUser->invited_by = $invitingUser->id;
     $storeUser->invite_email = $email;
@@ -48,6 +48,11 @@ class CoworkerService
     $storeUser->save();
 
     return true;
+  }
+
+  public function removeCoworker(\Entree\Store\StoreUser $coworker)
+  {
+    return $coworker->delete();
   }
   
 }

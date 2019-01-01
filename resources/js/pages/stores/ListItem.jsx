@@ -18,7 +18,7 @@ class StoresListItem extends PureComponent {
     return (
       <tr>
         <td>
-          <div className="h5 m-0"><Link to={"/stores/" + slug }>{name}</Link></div>
+          <div><Link to={"/stores/" + slug }>{name}</Link></div>
           <div className="text-muted small">{description}</div>
         </td>
         <td>

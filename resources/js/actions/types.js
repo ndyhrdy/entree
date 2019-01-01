@@ -11,3 +11,6 @@ export const USER_SET = 'USER_SET';
 export const USER_SET_ERROR = 'USER_SET_ERROR';
 export const ACTIVE_STORE_SET = 'ACTIVE_STORE_SET';
 export const ACTIVE_STORE_SWITCH = 'ACTIVE_STORE_SWITCH';
+
+export const PROMPT_SHOW = 'PROMPT_SHOW';
+export const PROMPT_HIDE = 'PROMPT_HIDE';

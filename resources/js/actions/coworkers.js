@@ -7,14 +7,18 @@ import {
 import api, { routes } from "../api";
 
 export const fetchCoworkers = () => (dispatch, getState) => {
-  if (getState().coworkers.fetching) {
+  if (getState().coworkers.fetching || !getState().activeStore.data) {
     return;
   }
 
   dispatch({ type: COWORKERS_FETCH });
 
   return api
-    .get(routes.coworkers)
+    .get(routes.coworkers, {
+      params: {
+        store: getState().activeStore.data.slug
+      }
+    })
     .then(response => {
       return dispatch(populateCoworkers(response.data.data));
     })

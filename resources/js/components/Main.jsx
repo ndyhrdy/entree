@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { fetchAuthenticatedUser, fetchStores } from "../actions";
 
-import { Navbar } from ".";
+import { Navbar, Prompt } from ".";
 import { Home, Stores, Coworkers } from "../pages";
 
 export class Main extends PureComponent {
@@ -24,13 +24,17 @@ export class Main extends PureComponent {
 
             <Redirect to="/" />
           </Switch>
+
+          { this.props.prompt.shown && <Prompt /> }
         </div>
       </BrowserRouter>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  prompt: state.prompt,
+});
 
 const mapDispatchToProps = {
   fetchAuthenticatedUser,

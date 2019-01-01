@@ -18,11 +18,12 @@ class CoworkerController extends Controller
         $this->coworkerService = new CoworkerService;
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        $coworkers = $this->coworkerService->getCoworkersList(
-            auth()->user()->activeStore()
-        );
+        $store = $request->store ? 
+            \Entree\Store\Store::whereSlug($request->store)->first() : 
+            auth()->user()->activeStore();
+        $coworkers = $this->coworkerService->getCoworkersList($store);
         return fractal()
             ->collection($coworkers)
             ->transformWith(new CoworkerTransformer)
@@ -48,7 +49,13 @@ class CoworkerController extends Controller
             ], 422);
         }
 
-        return $this->index();
+        return $this->index($request);
+    }
+
+    public function destroy(Request $request, StoreUser $coworker)
+    {
+        $this->coworkerService->removeCoworker($coworker);
+        return $this->index($request);
     }
     
 }

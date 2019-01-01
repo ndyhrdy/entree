@@ -15,6 +15,7 @@ class CreateStoreUserTable extends Migration
     {
         Schema::create('store_user', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('slug')->unique();
             $table->unsignedInteger('store_id');
             $table->unsignedInteger('user_id')->nullable();
             $table->unsignedInteger('invited_by')->nullable();

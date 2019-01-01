@@ -28,11 +28,14 @@ class StoresTableSeeder extends Seeder
 
                 $storeUsers->each(function ($user, $index) use ($store, $owner)
                     {
-                        $store->users()->attach($user, [
-                            'invited_by' => $owner->id != $user->id ? $owner->id : null,
-                            'accepted_at' => $owner->id != $user->id ? Carbon::now() : null,
-                            'last_switched_at' => Carbon::now()->subDays(rand(0, 30)),
-                        ]);
+                        $storeUser = new \Entree\Store\StoreUser;
+                        $storeUser->slug = str_random(12);
+                        $storeUser->user_id = $user->id;
+                        $storeUser->invited_by = $owner->id != $user->id ? $owner->id : null;
+                        $storeUser->accepted_at = $owner->id != $user->id ? Carbon::now() : null;
+                        $storeUser->last_switched_at = Carbon::now()->subDays(rand(0, 30));
+
+                        $store->storeUsers()->save($storeUser);
                     });
             });
     }

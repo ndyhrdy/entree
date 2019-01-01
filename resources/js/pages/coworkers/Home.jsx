@@ -5,10 +5,10 @@ import { Link } from "react-router-dom";
 import { parse } from "querystring";
 
 import { Alert } from "../../components";
-import { fetchCoworkers, populateCoworkers } from "../../actions";
+import { populateCoworkers } from "../../actions";
 import { StoreDependentView } from "../../components";
 import InviteForm from "./InviteForm";
-import List from "./List";
+import CoworkersList from "./List";
 
 export class CoworkersHome extends Component {
   constructor(props) {
@@ -18,17 +18,12 @@ export class CoworkersHome extends Component {
     };
   }
 
-  componentDidMount() {
-    this.props.fetchCoworkers();
-  }
-
   render() {
     const {
       location: { search }
     } = this.props;
     const query = parse(search.substr(1));
 
-    const { data, fetching, error } = this.props.coworkers;
     return (
       <StoreDependentView>
         <div className="container py-5">
@@ -54,7 +49,7 @@ export class CoworkersHome extends Component {
               </div>
             </div>
 
-            <List />
+            <CoworkersList />
 
           </div>
           {query._flow === "create-store" && (
@@ -86,10 +81,10 @@ const mapStateToProps = state => ({
   activeStore: state.activeStore
 });
 
-const mapDispatchToProps = { fetchCoworkers, populateCoworkers };
+const mapDispatchToProps = { populateCoworkers };
 
 CoworkersHome.propTypes = {
-  fetchCoworkers: PropTypes.func.isRequired
+  populateCoworkers: PropTypes.func.isRequired
 };
 
 export default connect(

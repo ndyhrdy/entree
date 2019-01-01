@@ -17,15 +17,6 @@ class StoreUser extends Model
         'last_invitation_sent_at',
         'accepted_at',
     ];
-
-    public static function boot()
-    {
-        parent::boot();
-        static::addGlobalScope('accepted_invitation', function (Builder $builder)
-        {
-            $builder->whereNull('invited_by')->orWhereNotNull('accepted_at');
-        });
-    }
   
     public function store()
     {
@@ -35,6 +26,11 @@ class StoreUser extends Model
     public function user()
     {
         return $this->belongsTo('Entree\User');
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
   
 }
