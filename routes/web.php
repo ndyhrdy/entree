@@ -21,4 +21,5 @@ Route::group(['middleware' => 'auth', 'prefix' => '/webapi'], function ()
     
 });
 
+Route::get('/accept-invitation', 'CoworkerController@acceptInvitation');
 Route::get('{route}', 'HomeController@index')->where('route', '.*')->name('app');

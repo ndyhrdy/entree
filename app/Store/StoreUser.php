@@ -32,5 +32,10 @@ class StoreUser extends Model
     {
         return 'slug';
     }
+
+    public function scopeInvitations($query)
+    {
+        return $query->whereNotNull('invite_token')->whereNull('accepted_at');
+    }
   
 }

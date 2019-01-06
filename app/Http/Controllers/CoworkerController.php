@@ -7,6 +7,7 @@ use Entree\Store\StoreUser;
 use Illuminate\Http\Request;
 use Entree\Services\CoworkerService;
 use Entree\Transformers\CoworkerTransformer;
+use Entree\Exceptions\CoworkerInvitationException;
 
 class CoworkerController extends Controller
 {
@@ -14,12 +15,12 @@ class CoworkerController extends Controller
     private $coworkerService;
     
     public function __construct() {
-        $this->middleware('auth');
         $this->coworkerService = new CoworkerService;
     }
     
     public function index(Request $request)
     {
+        $this->middleware('auth');
         $store = $request->store ? 
             \Entree\Store\Store::whereSlug($request->store)->first() : 
             auth()->user()->activeStore();
@@ -39,6 +40,7 @@ class CoworkerController extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth');
         $store = $request->user()->activeStore();
         try {
             $this->coworkerService->addInvitation($store, $request->user(), $request->email);
@@ -54,8 +56,19 @@ class CoworkerController extends Controller
 
     public function destroy(Request $request, StoreUser $coworker)
     {
+        $this->middleware('auth');
         $this->coworkerService->removeCoworker($coworker);
         return $this->index($request);
+    }
+
+    public function acceptInvitation(Request $request)
+    {
+        try {
+            $this->coworkerService->validateInvitation($request->input('invite-id'), $request->user());
+            return redirect(url('/', ['_flow' => 'invitation-accepted']));
+        } catch (CoworkerInvitationException $e) {
+            return $e->render($request);
+        }
     }
     
 }

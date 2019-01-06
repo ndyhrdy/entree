@@ -45,10 +45,10 @@ export class CoworkersListItem extends PureComponent {
         </td>
         <td>
           <div>
-            {acceptedAt || isSelf ? (
+            {acceptedAt || isSelf || isOwner ? (
               <div>
                 {moment(acceptedAt || createdAt).fromNow()}
-                {!isSelf && <RemoveButton />}
+                {!isSelf && !isOwner && <RemoveButton />}
               </div>
             ) : (
               <Fragment>

@@ -85809,11 +85809,11 @@ var CoworkersListItem = function (_PureComponent) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             "div",
             null,
-            acceptedAt || isSelf ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            acceptedAt || isSelf || isOwner ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               "div",
               null,
               __WEBPACK_IMPORTED_MODULE_2_moment___default()(acceptedAt || createdAt).fromNow(),
-              !isSelf && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(RemoveButton, null)
+              !isSelf && !isOwner && __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(RemoveButton, null)
             ) : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_0_react__["Fragment"],
               null,

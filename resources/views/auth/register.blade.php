@@ -4,6 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            @if(isset($invitation))
+                <div class="alert alert-info">
+                    One more step! Fill out the form below to accept your invitation.
+                </div>
+            @endif
+        
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
@@ -11,6 +17,10 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
+                        @if(isset($invitation))
+                            <input type="hidden" name="_flow" value="{{ Request::input('_flow') ?: old('_flow') }}">
+                            <input type="hidden" name="_invite-id" value="{{ Request::input('invite-id') ?: old('invite-id') }}">
+                        @endif
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
@@ -29,7 +39,7 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
+                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') ?: $invitation ? $invitation->invite_email : '' }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">

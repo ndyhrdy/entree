@@ -2,11 +2,15 @@
 
 namespace Entree\Http\Controllers\Auth;
 
+use Auth;
 use Entree\User;
 use Entree\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
+use Entree\Services\CoworkerService;
 
 class RegisterController extends Controller
 {
@@ -68,5 +72,39 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    /**
+     * Show the application registration form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showRegistrationForm(Request $request)
+    {
+        $data = [];
+        if ($request->input('_flow') == 'accept-invitation' && $request->input('invite-id')) {
+            $coworkerService = new CoworkerService;
+            $data = array_merge($data, ['invitation' => $coworkerService->getInvitation($request->input('invite-id'))]);
+        }
+        return view('auth.register', $data);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Entree\User  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        if ($request->input('_flow') == 'accept-invitation' && $request->input('_invite-id')) {
+            $coworkerService = new CoworkerService;
+            $coworkerService->acceptInvitation($request->input('_invite-id'), $user->email);
+            
+            Auth::login($user);
+        }
+
+        return redirect($this->redirectPath());
     }
 }
