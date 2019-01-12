@@ -18,6 +18,7 @@ class UnitTransformer extends TransformerAbstract
             'name' => $unit->name,
             'pluralName' => $unit->plural_name,
             'shortName' => $unit->short_name,
+            'isDefault' => (bool) $unit->is_default,
         ];
     }
 }

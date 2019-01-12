@@ -19,7 +19,8 @@ class StoreService
 
   public function getActiveStoreForUser(\Entree\User $user)
   {
-    return $user->storeUsers()->orderBy('last_switched_at', 'desc')->first();
+    $storeUser = $user->storeUsers()->orderBy('last_switched_at', 'desc')->first();
+    return $storeUser ? $storeUser->store : null;
   }
 
   public function createStore(array $data, \Entree\User $creator)
