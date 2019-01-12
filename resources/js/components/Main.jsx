@@ -4,7 +4,7 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { fetchAuthenticatedUser, fetchStores } from "../actions";
 
 import { Navbar, Prompt } from ".";
-import { Home, Stores, Coworkers } from "../pages";
+import { Home, Stores, Coworkers, Inventory } from "../pages";
 
 export class Main extends PureComponent {
   componentDidMount() {
@@ -21,11 +21,12 @@ export class Main extends PureComponent {
             <Route exact path="/" component={Home} />
             <Route path="/stores" component={Stores} />
             <Route path="/coworkers" component={Coworkers} />
+            <Route path="/inventory" component={Inventory} />
 
             <Redirect to="/" />
           </Switch>
 
-          { this.props.prompt.shown && <Prompt /> }
+          {this.props.prompt.shown && <Prompt />}
         </div>
       </BrowserRouter>
     );
@@ -33,7 +34,7 @@ export class Main extends PureComponent {
 }
 
 const mapStateToProps = state => ({
-  prompt: state.prompt,
+  prompt: state.prompt
 });
 
 const mapDispatchToProps = {
