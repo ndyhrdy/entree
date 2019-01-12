@@ -5,9 +5,9 @@ import { Link, withRouter } from "react-router-dom";
 
 import { switchActiveStore } from "../../actions";
 import Stores from "./Stores";
+import Logout from "./Logout";
 
 export class Navbar extends Component {
-  onLogout() {}
 
   render() {
     const { activeStore, stores, user } = this.props;
@@ -65,12 +65,7 @@ export class Navbar extends Component {
                     />
 
                     <div className="dropdown-divider" />
-                    <a
-                      className="dropdown-item"
-                      href="#"
-                      onClick={() => this.onLogout()}>
-                      Logout
-                    </a>
+                    <Logout />
                   </div>
                 </li>
               </ul>

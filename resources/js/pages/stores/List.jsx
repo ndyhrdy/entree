@@ -6,11 +6,11 @@ export class StoresList extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      filterFunction: () => true
+      filterFunction: this.getFilterFunction(null)
     };
   }
 
-  updateFilter(filterBy) {
+  getFilterFunction(filterBy) {
     switch (filterBy) {
       case "owned":
         return store => store.owner.data.id === this.props.user.id;
@@ -21,7 +21,9 @@ export class StoresList extends PureComponent {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.filterBy !== this.props.filterBy) {
-      this.updateFilter(nextProps.filterBy);
+      this.setState({
+        filterFunction: this.getFilterFunction(nextProps.filterBy)
+      });
     }
   }
 

@@ -1,4 +1,4 @@
-import { USER_FETCH, USER_SET, USER_SET_ERROR } from "../actions/types";
+import { USER_FETCH, USER_SET, USER_SET_ERROR, USER_CLEAR } from "../actions/types";
 
 const defaultState = {
   data: null,
@@ -14,6 +14,8 @@ export default (state = defaultState, action) => {
       return { ...state, data: { ...action.user }, fetching: false };
     case USER_SET_ERROR:
       return { ...state, fetching: false, error: action.error };
+    case USER_CLEAR:
+      return { ...state, data: null };
     default:
       return state;
   }

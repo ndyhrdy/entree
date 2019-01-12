@@ -1,4 +1,4 @@
-import { USER_FETCH, USER_SET, USER_SET_ERROR } from "./types";
+import { USER_FETCH, USER_SET, USER_SET_ERROR, USER_CLEAR } from "./types";
 import api, { routes } from "../api";
 import { setActiveStore } from "./stores";
 
@@ -29,4 +29,8 @@ export const fetchAuthenticatedUser = ({ callback } = {}) => (
 export const setAuthenticatedUser = user => ({
   type: USER_SET,
   user
+});
+
+export const clearUser = () => ({
+  type: USER_CLEAR
 });
