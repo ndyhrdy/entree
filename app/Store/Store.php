@@ -26,6 +26,11 @@ class Store extends Model
     {
         return $this->hasMany('Entree\Store\StoreUser');
     }
+
+    public function units()
+    {
+        return $this->hasMany('Entree\Item\Unit');
+    }
     
     public function users()
     {
