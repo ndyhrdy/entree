@@ -4,6 +4,7 @@ export const routes = {
   authenticatedUser: '/user',
   coworkers: '/coworkers',
   stores: '/stores',
+  units: '/units',
 };
 
 export default axios.create({

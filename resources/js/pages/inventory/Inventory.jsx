@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect, Route, Switch } from "react-router-dom";
+import InventoryUnits from './units/Units';
 
 export default class Inventory extends PureComponent {
   render() {
@@ -15,6 +16,12 @@ export default class Inventory extends PureComponent {
             </nav>
           </div>
         </div>
+
+        <Switch>
+          <Route path="/inventory/units" component={InventoryUnits} />
+          
+          <Redirect to="/inventory/units" />
+        </Switch>
       </div>
     )
   }

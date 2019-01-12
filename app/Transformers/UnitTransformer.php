@@ -19,6 +19,9 @@ class UnitTransformer extends TransformerAbstract
             'pluralName' => $unit->plural_name,
             'shortName' => $unit->short_name,
             'isDefault' => (bool) $unit->is_default,
+
+            'createdAt' => $unit->created_at->toIso8601String(),
+            'isCreatedAutomatically' => $unit->created_by === null,
         ];
     }
 }
