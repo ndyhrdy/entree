@@ -35,16 +35,6 @@ class UnitController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -52,7 +42,20 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $storeService = new \Entree\Services\StoreService;
+            $unit = $this->unitService->createUnitForStore(
+                $storeService->getActiveStoreForUser(auth()->user()),
+                $request->all(),
+                auth()->user()
+            );
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response([
+                'message' => 'Invalid data',
+                'errors' => $exception->errors(),
+            ], 422);
+        }
+        return $this->index();
     }
 
     /**
@@ -63,7 +66,10 @@ class UnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        return fractal()
+            ->item($unit)
+            ->transformWith(new UnitTransformer)
+            ->respond();
     }
 
     /**

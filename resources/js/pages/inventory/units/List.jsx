@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { Add as AddIcon } from "styled-icons/material";
 
 import { fetchUnits } from "../../../actions";
 import InventoryUnitsListItem from "./ListItem";
@@ -21,7 +22,7 @@ export class InventoryUnitsList extends Component {
               <div />
               <div>
                 <Link to="/inventory/units/new" className="btn btn-primary">
-                  Add Unit
+                  <AddIcon size={24} /> Add Unit
                 </Link>
               </div>
             </div>

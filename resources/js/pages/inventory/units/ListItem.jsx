@@ -3,12 +3,19 @@ import moment from "moment";
 
 export default class InventoryUnitsListItem extends PureComponent {
   render() {
-    const { name, shortName, createdAt, isCreatedAutomatically } = this.props;
+    const {
+      name,
+      isDefault,
+      shortName,
+      createdAt,
+      isCreatedAutomatically
+    } = this.props;
 
     return (
       <tr>
         <td>
           {shortName}
+          {isDefault && <span className="ml-2 badge badge-success">Default</span>}
           <div className="small text-muted">{name}</div>
         </td>
         <td>
