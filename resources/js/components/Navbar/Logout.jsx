@@ -17,7 +17,8 @@ export class NavbarLogout extends Component {
         .post(window.appConfig.baseURL + "/logout")
         .then(() => {
           this.props.clearUser();
-          window.location.href = window.appConfig.baseURL + "/login?_flow=logged-out";
+          window.location.href =
+            window.appConfig.baseURL + "/login?_flow=logged-out";
           return;
         })
         .catch(() => this.setState({ posting: false }))
