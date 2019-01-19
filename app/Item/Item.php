@@ -27,17 +27,17 @@ class Item extends Model
 
     public function unit()
     {
-        $this->belongsTo('Entree\Item\Unit');
+        return $this->belongsTo('Entree\Item\Unit');
     }
 
     public function unit2()
     {
-        $this->belongsTo('Entree\Item\Unit', 'unit_2_id');
+        return $this->belongsTo('Entree\Item\Unit', 'unit_2_id');
     }
 
     public function unit3()
     {
-        $this->belongsTo('Entree\Item\Unit', 'unit_3_id');
+        return $this->belongsTo('Entree\Item\Unit', 'unit_3_id');
     }
 
 }

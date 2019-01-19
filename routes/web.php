@@ -15,11 +15,12 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth', 'prefix' => '/webapi'], function ()
 {
-    Route::resource('/coworkers', 'CoworkerController');
-    Route::resource('/stores', 'StoreController');
-    Route::resource('/units', 'UnitController');
-    Route::resource('/user', 'UserController');
+    Route::resource('/coworkers',   'CoworkerController');
+    Route::resource('/items',       'ItemController');
+    Route::resource('/stores',      'StoreController');
+    Route::resource('/units',       'UnitController');
+    Route::resource('/user',        'UserController');
 });
 
-Route::get('/accept-invitation', 'CoworkerController@acceptInvitation');
-Route::get('{route}', 'HomeController@index')->where('route', '.*')->name('app');
+Route::get('/accept-invitation',    'CoworkerController@acceptInvitation');
+Route::get('{route}',               'HomeController@index')->where('route', '.*')->name('app');

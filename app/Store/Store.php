@@ -17,6 +17,11 @@ class Store extends Model
         return ['slug' => ['source' => 'name']];
     }
 
+    public function items()
+    {
+        return $this->hasMany('Entree\Item\Item');
+    }
+
     public function owner()
     {
         return $this->belongsTo('Entree\User', 'owner_id');
