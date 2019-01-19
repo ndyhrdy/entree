@@ -27,12 +27,12 @@ export class Home extends PureComponent {
 
     return (
       <div className="container py-5">
-        <div className="row align-items-stretch">
+        <div className="row no-gutters align-items-stretch">
           {menus.map((menu, index) =>
             menu.requiresActiveStore && !activeStore.data ? null : (
               <div key={"menu-item-" + index} className="col-md-4">
                 <Link
-                  className="btn btn-light btn-block p-3 border mb-4"
+                  className="btn btn-light btn-block p-3 mb-4"
                   to={menu.route}>
                   <div className="d-flex">
                     {menu.iconComponent}

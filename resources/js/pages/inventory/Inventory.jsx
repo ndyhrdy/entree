@@ -12,6 +12,7 @@ export default class Inventory extends PureComponent {
           </div>
           <div className="container">
             <nav className="nav nav-tabs" style={{ marginBottom: -1 }}>
+              <NavLink to="/inventory/items" className="nav-item nav-link">All Items</NavLink>
               <NavLink to="/inventory/units" className="nav-item nav-link">Units of Measurement</NavLink>
             </nav>
           </div>
