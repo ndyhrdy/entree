@@ -1,5 +1,10 @@
 import api, { routes } from "../api";
-import { ITEMS_FETCH, ITEMS_POPULATE, ITEMS_SET_ERROR } from "./types";
+import {
+  ITEMS_FETCH,
+  ITEMS_POPULATE,
+  ITEMS_SET_ERROR,
+  ITEMS_SEARCH
+} from "./types";
 
 export const fetchItems = () => (dispatch, getState) => {
   if (getState().items.fetching) {
@@ -15,6 +20,11 @@ export const fetchItems = () => (dispatch, getState) => {
       return dispatch({ type: ITEMS_SET_ERROR, error });
     });
 };
+
+export const searchItems = term => ({
+  type: ITEMS_SEARCH,
+  term
+});
 
 export const populateItems = items => ({
   type: ITEMS_POPULATE,

@@ -18,8 +18,18 @@ export default class InventoryItemsListItem extends PureComponent {
     return (
       <tr>
         <td>
-          {name}
-          <div className="small text-muted">SKU {sku}</div>
+          <div className="d-flex">
+            <img
+              src={"https://picsum.photos/50?nonce=" + sku}
+              alt={name}
+              className="rounded mr-3"
+              style={{ height: 50, width: 50 }}
+            />
+            <div>
+              {name}
+              <div className="small text-muted">SKU {sku}</div>
+            </div>
+          </div>
         </td>
         <td>{unitName}</td>
         <td>
