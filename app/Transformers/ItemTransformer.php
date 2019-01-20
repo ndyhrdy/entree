@@ -26,6 +26,8 @@ class ItemTransformer extends TransformerAbstract
             'slug' => $item->slug,
             'sku' => $item->sku,
             'name' => $item->name,
+            
+            'createdAt' => $item->created_at->toIso8601String(),
         ];
     }
 

@@ -10,6 +10,10 @@ class Item extends Model
 {
     use Sluggable, SoftDeletes;
 
+    protected $dates = [
+        'deleted_at'
+    ];
+
     public function sluggable()
     {
         return ['slug' => ['source' => ['sku', 'name']]];

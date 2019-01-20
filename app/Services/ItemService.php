@@ -7,7 +7,7 @@ class ItemService
 
   public function getItemsForStore(\Entree\Store\Store $store)
   {
-    return $store->items;
+    return $store->items()->with(['createdBy', 'unit'])->get();
   }
   
 }
