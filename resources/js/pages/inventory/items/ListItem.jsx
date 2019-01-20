@@ -1,7 +1,19 @@
 import React, { PureComponent } from "react";
 import moment from "moment";
+import {
+  Create as EditIcon,
+  Delete as DeleteIcon,
+  MoreVert as MenuIcon
+} from "styled-icons/material";
 
 export default class InventoryItemsListItem extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      highlighted: false
+    };
+  }
+
   render() {
     const {
       name,
@@ -14,9 +26,12 @@ export default class InventoryItemsListItem extends PureComponent {
       },
       createdAt
     } = this.props;
+    const { highlighted } = this.state;
 
     return (
-      <tr>
+      <tr
+        onMouseEnter={() => this.setState({ highlighted: true })}
+        onMouseLeave={() => this.setState({ highlighted: false })}>
         <td>
           <div className="d-flex">
             <img
@@ -33,8 +48,33 @@ export default class InventoryItemsListItem extends PureComponent {
         </td>
         <td>{unitName}</td>
         <td>
-          {moment(createdAt).fromNow()}
-          <div className="text-muted small">{createdByName}</div>
+          <div className="d-flex justify-content-between">
+            <div>
+              {moment(createdAt).fromNow()}
+              <div className="text-muted small">{createdByName}</div>
+            </div>
+            <div className="dropdown">
+              <a
+                href="#"
+                className={
+                  "dropdown-toggle" +
+                  (highlighted ? " text-muted" : " text-white")
+                }
+                data-toggle="dropdown">
+                <MenuIcon size={30} />
+              </a>
+              <div
+                className="dropdown-menu dropdown-menu-right"
+                style={{ marginTop: 12 }}>
+                <button className="dropdown-item d-flex align-items-center" type="button">
+                  <EditIcon size={16} className="mr-2" /> <span>Edit</span>
+                </button>
+                <button className="dropdown-item d-flex align-items-center text-danger" type="button">
+                  <DeleteIcon size={16} className="mr-2" /> <span>Move to Trash</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     );

@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
+import { ExpandMore } from "styled-icons/material";
 
 import { switchActiveStore } from "../../actions";
 import Stores from "./Stores";
 import Logout from "./Logout";
 
 export class Navbar extends Component {
-
   render() {
     const { activeStore, stores, user } = this.props;
 
@@ -53,7 +53,7 @@ export class Navbar extends Component {
                     aria-haspopup="true"
                     aria-expanded="false"
                     v-pre="true">
-                    {user.data.name} <span className="caret" />
+                    {user.data.name} <ExpandMore size={18} />
                   </a>
 
                   <div
@@ -61,6 +61,7 @@ export class Navbar extends Component {
                     aria-labelledby="navbarDropdown">
                     <Stores
                       stores={stores}
+                      activeStore={activeStore.data}
                       onSwitch={store => this.props.switchActiveStore(store)}
                     />
 
