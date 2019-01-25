@@ -7,9 +7,9 @@ import {
   populateStores,
   fetchAuthenticatedUser,
   setActiveStore
-} from "../../../actions";
-import api, { routes } from "../../../api";
-import { FormSection } from "../../../components";
+} from "@/actions";
+import api, { routes } from "@/api";
+import { FormSection } from "@/components";
 
 export class StoresCreate extends Component {
   constructor(props) {

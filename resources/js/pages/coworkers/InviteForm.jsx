@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { toString } from "lodash";
 
-import api, { routes } from "../../api";
+import api, { routes } from "@/api";
 
 export default class InviteForm extends Component {
   constructor(props) {

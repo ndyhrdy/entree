@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { fetchCoworkers, searchCoworkers } from "../../actions";
-import { fuzzySearch } from "../../helpers";
+import { fetchCoworkers, searchCoworkers } from "@/actions";
+import { fuzzySearch } from "@/helpers";
 import ListItem from "./ListItem";
 
 export class CoworkersList extends Component {

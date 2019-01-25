@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { parse } from "querystring";
 
-import { Alert } from "../../components";
-import { populateCoworkers } from "../../actions";
-import { StoreDependentView } from "../../components";
+import { populateCoworkers } from "@/actions";
+import { Alert, StoreDependentView } from "@/components";
 import InviteForm from "./InviteForm";
 import CoworkersList from "./List";
 

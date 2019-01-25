@@ -2,7 +2,7 @@ import React, { Fragment, PureComponent } from "react";
 import { connect } from "react-redux";
 import moment from "moment";
 
-import { showPrompt, hidePrompt, populateCoworkers } from "../../actions";
+import { showPrompt, hidePrompt, populateCoworkers } from "@/actions";
 import CoworkersConfirmDelete from "./ConfirmDelete";
 
 export class CoworkersListItem extends PureComponent {

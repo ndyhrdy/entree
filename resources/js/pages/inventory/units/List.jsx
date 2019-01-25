@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
 
-import { fetchUnits } from "../../../actions";
+import { fetchUnits } from "@/actions";
 import InventoryUnitsListItem from "./ListItem";
 
 export class InventoryUnitsList extends Component {

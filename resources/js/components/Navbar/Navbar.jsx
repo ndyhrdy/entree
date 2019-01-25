@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
 import { Apps as AppsIcon, ExpandMore } from "styled-icons/material";
 
-import { switchActiveStore } from "../../actions";
+import { switchActiveStore } from "@/actions";
 import Stores from "./Stores";
 import Logout from "./Logout";
 

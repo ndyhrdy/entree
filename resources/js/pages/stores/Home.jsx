@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { fetchStores } from "../../actions";
-import { StoreDependentView } from "../../components";
+import { fetchStores } from "@/actions";
+import { StoreDependentView } from "@/components";
 import List from "./List";
 
 export class StoresHome extends Component {

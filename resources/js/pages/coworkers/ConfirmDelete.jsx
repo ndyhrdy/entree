@@ -1,7 +1,7 @@
 import React, { Fragment, PureComponent } from "react";
 import PropTypes from "prop-types";
 
-import api, { routes } from "../../api";
+import api, { routes } from "@/api";
 
 export default class CoworkersConfirmDelete extends PureComponent {
   constructor(props) {

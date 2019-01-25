@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link, Prompt } from "react-router-dom";
 
-import api, { routes } from "../../../api";
-import { populateUnits } from "../../../actions";
+import api, { routes } from "@/api";
+import { populateUnits } from "@/actions";
 
 export class InventoryUnitsCreate extends Component {
   constructor(props) {

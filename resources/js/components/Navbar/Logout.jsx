@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { clearUser } from "../../actions";
+import { clearUser } from "@/actions";
 
 export class NavbarLogout extends Component {
   constructor(props) {
