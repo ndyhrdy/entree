@@ -21,6 +21,7 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.5",
         "moment": "^2.23.0",
+        "numeral": "^2.0.6",
         "popper.js": "^1.12",
         "react": "^16.7.0",
         "react-dom": "^16.7.0",

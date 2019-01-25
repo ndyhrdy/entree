@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import moment from "moment";
+import numeral from "numeral";
 import {
   Create as EditIcon,
   Delete as DeleteIcon,
@@ -24,7 +25,9 @@ export default class InventoryItemsListItem extends PureComponent {
       createdBy: {
         data: { name: createdByName }
       },
-      createdAt
+      createdAt,
+      currentQuantity,
+      lastMutation: { data: lastMutation }
     } = this.props;
     const { highlighted } = this.state;
 
@@ -46,7 +49,22 @@ export default class InventoryItemsListItem extends PureComponent {
             </div>
           </div>
         </td>
-        <td>{unitName}</td>
+        <td className="text-right">
+          {numeral(currentQuantity).format(highlighted ? "0,0.[0000]" : "0.[0]a")}
+          <div className="small text-muted">{unitName}</div>
+        </td>
+        <td className="text-right">
+          {lastMutation
+            ? numeral(lastMutation.quantity).format(
+                highlighted ? "0,0.[0000]" : "0.[0]a"
+              )
+            : "No transactions yet"}
+          {!!lastMutation && (
+            <div className="small text-muted">
+              {moment(lastMutation.createdAt).fromNow()}
+            </div>
+          )}
+        </td>
         <td>
           <div className="d-flex justify-content-between">
             <div>
@@ -66,11 +84,16 @@ export default class InventoryItemsListItem extends PureComponent {
               <div
                 className="dropdown-menu dropdown-menu-right"
                 style={{ marginTop: 12 }}>
-                <button className="dropdown-item d-flex align-items-center" type="button">
+                <button
+                  className="dropdown-item d-flex align-items-center"
+                  type="button">
                   <EditIcon size={16} className="mr-2" /> <span>Edit</span>
                 </button>
-                <button className="dropdown-item d-flex align-items-center text-danger" type="button">
-                  <DeleteIcon size={16} className="mr-2" /> <span>Move to Trash</span>
+                <button
+                  className="dropdown-item d-flex align-items-center text-danger"
+                  type="button">
+                  <DeleteIcon size={16} className="mr-2" />{" "}
+                  <span>Move to Trash</span>
                 </button>
               </div>
             </div>

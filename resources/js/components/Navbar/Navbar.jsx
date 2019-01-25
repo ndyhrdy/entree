@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import { ExpandMore } from "styled-icons/material";
+import { Apps as AppsIcon, ExpandMore } from "styled-icons/material";
 
 import { switchActiveStore } from "../../actions";
 import Stores from "./Stores";
@@ -15,7 +15,8 @@ export class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-md bg-dark navbar-dark navbar-laravel">
         <div className="container">
-          <Link className="navbar-brand" to="/">
+          <div className="navbar-brand" to="/">
+            <Link to="/"><AppsIcon size={20} className="mr-2 mb-1 text-white" /></Link>
             {activeStore.data ? (
               <span>
                 {activeStore.data.name}{" "}
@@ -24,7 +25,7 @@ export class Navbar extends Component {
             ) : (
               "Entree"
             )}
-          </Link>
+          </div>
           <button
             className="navbar-toggler"
             type="button"

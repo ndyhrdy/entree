@@ -48,7 +48,8 @@ export class InventoryItemsList extends Component {
             <thead>
               <tr>
                 <th>Item</th>
-                <th style={{ width: 150 }}>Quantity</th>
+                <th className="text-right" style={{ width: 150 }}>Quantity</th>
+                <th className="text-right" style={{ width: 150 }}>Last Transaction</th>
                 <th style={{ width: 250 }}>Created</th>
               </tr>
             </thead>

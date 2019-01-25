@@ -9,10 +9,14 @@ class ItemTransformer extends TransformerAbstract
 {
 
     protected $availableIncludes = [
-        'unit',
+        'createdBy',
+        'lastMutation',
         'unit2',
         'unit3',
-        'createdBy',
+    ];
+
+    protected $defaultIncludes = [
+        'unit',
     ];
     
     /**
@@ -26,9 +30,15 @@ class ItemTransformer extends TransformerAbstract
             'slug' => $item->slug,
             'sku' => $item->sku,
             'name' => $item->name,
+            'currentQuantity' => $item->currentQuantity(),
             
             'createdAt' => $item->created_at->toIso8601String(),
         ];
+    }
+
+    public function includeLastMutation(Item $item)
+    {
+        return $item->lastMutation ? $this->item($item->lastMutation, new MutationTransformer) : null;
     }
 
     public function includeUnit(Item $item)

@@ -14,6 +14,10 @@ class Item extends Model
         'deleted_at'
     ];
 
+    protected $with = [
+        'unit', 'createdBy',
+    ];
+
     public function sluggable()
     {
         return ['slug' => ['source' => ['sku', 'name']]];
@@ -22,6 +26,21 @@ class Item extends Model
     public function createdBy()
     {
         return $this->belongsTo('Entree\User', 'created_by');
+    }
+
+    public function currentQuantity()
+    {
+        return optional($this->lastMutation)->ending_quantity ?: 0;
+    }
+
+    public function lastMutation()
+    {
+        return $this->hasOne('Entree\Item\Mutation')->orderBy('created_at', 'desc');
+    }
+
+    public function mutations()
+    {
+        return $this->hasMany('Entree\Item\Mutation');
     }
 
     public function store()

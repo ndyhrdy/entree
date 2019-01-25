@@ -37,7 +37,7 @@ class ItemController extends Controller
                 )
             ->transformWith(new ItemTransformer)
             ->parseIncludes([
-                'unit', 'createdBy'
+                'createdBy', 'lastMutation',
             ])
             ->respond();
     }
