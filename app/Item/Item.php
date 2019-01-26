@@ -28,6 +28,11 @@ class Item extends Model
         return $this->belongsTo('Entree\User', 'created_by');
     }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     public function currentQuantity()
     {
         return optional($this->lastMutation)->ending_quantity ?: 0;

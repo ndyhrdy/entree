@@ -4,6 +4,7 @@ namespace Entree\Transformers;
 
 use Entree\Item\Item;
 use League\Fractal\TransformerAbstract;
+use League\Fractal\ParamBag;
 
 class ItemTransformer extends TransformerAbstract
 {
@@ -11,6 +12,7 @@ class ItemTransformer extends TransformerAbstract
     protected $availableIncludes = [
         'createdBy',
         'lastMutation',
+        'mutations',
         'unit2',
         'unit3',
     ];
@@ -30,6 +32,7 @@ class ItemTransformer extends TransformerAbstract
             'slug' => $item->slug,
             'sku' => $item->sku,
             'name' => $item->name,
+            'description' => strlen(trim($item->description)) > 0 ? $item->description : 'No description',
             'currentQuantity' => $item->currentQuantity(),
             
             'createdAt' => $item->created_at->toIso8601String(),
@@ -39,6 +42,11 @@ class ItemTransformer extends TransformerAbstract
     public function includeLastMutation(Item $item)
     {
         return $item->lastMutation ? $this->item($item->lastMutation, new MutationTransformer) : null;
+    }
+
+    public function includeMutations(Item $item)
+    {
+        return $this->collection($item->mutations, new MutationTransformer);
     }
 
     public function includeUnit(Item $item)

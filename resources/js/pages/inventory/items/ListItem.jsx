@@ -1,11 +1,8 @@
-import React, { PureComponent } from "react";
+import React, { Fragment, PureComponent } from "react";
 import moment from "moment";
 import numeral from "numeral";
-import {
-  Create as EditIcon,
-  Delete as DeleteIcon,
-  MoreVert as MenuIcon
-} from "styled-icons/material";
+import { Link } from "react-router-dom";
+import { Create as EditIcon } from "styled-icons/material";
 
 export default class InventoryItemsListItem extends PureComponent {
   constructor(props) {
@@ -19,6 +16,7 @@ export default class InventoryItemsListItem extends PureComponent {
     const {
       name,
       sku,
+      slug,
       unit: {
         data: { shortName: unitName }
       },
@@ -27,7 +25,7 @@ export default class InventoryItemsListItem extends PureComponent {
       },
       createdAt,
       currentQuantity,
-      lastMutation: { data: lastMutation }
+      lastMutation
     } = this.props;
     const { highlighted } = this.state;
 
@@ -44,24 +42,57 @@ export default class InventoryItemsListItem extends PureComponent {
               style={{ height: 50, width: 50 }}
             />
             <div>
-              {name}
-              <div className="small text-muted">SKU {sku}</div>
+              <Link to={"/inventory/items/summary/" + slug}>{name}</Link>
+              <div className="small">
+                <span className="text-muted mr-2">SKU {sku}</span>
+                {highlighted && (
+                  <Fragment>
+                    <Link
+                      className="text-dark mr-2"
+                      to={"/inventory/adjustment/" + slug}>
+                      Adjust Stock
+                    </Link>
+                    <Link
+                      className="text-dark mr-2"
+                      to={"/inventory/purchase/" + slug}>
+                      Purchase
+                    </Link>
+                    <Link
+                      className="text-dark mr-2"
+                      to={"/inventory/production/" + slug}>
+                      Produce
+                    </Link>
+                    <Link
+                      className="text-dark mr-2"
+                      to={"/inventory/items/" + slug + "/edit"}>
+                      Edit
+                    </Link>
+                  </Fragment>
+                )}
+              </div>
             </div>
           </div>
         </td>
         <td className="text-right">
-          {numeral(currentQuantity).format(highlighted ? "0,0.[0000]" : "0.[0]a")}
+          {numeral(currentQuantity).format(
+            highlighted ? "0,0.[0000]" : "0.[0]a"
+          )}
+          {highlighted && (
+            <Link to={"/inventory/adjustment/" + slug}>
+              <EditIcon size={16} className="ml-1" />
+            </Link>
+          )}
           <div className="small text-muted">{unitName}</div>
         </td>
         <td className="text-right">
           {lastMutation
-            ? numeral(lastMutation.quantity).format(
+            ? numeral(lastMutation.data.quantity).format(
                 highlighted ? "0,0.[0000]" : "0.[0]a"
               )
             : "No transactions yet"}
           {!!lastMutation && (
             <div className="small text-muted">
-              {moment(lastMutation.createdAt).fromNow()}
+              {moment(lastMutation.data.createdAt).fromNow()}
             </div>
           )}
         </td>
@@ -70,32 +101,6 @@ export default class InventoryItemsListItem extends PureComponent {
             <div>
               {moment(createdAt).fromNow()}
               <div className="text-muted small">{createdByName}</div>
-            </div>
-            <div className="dropdown">
-              <a
-                href="#"
-                className={
-                  "dropdown-toggle" +
-                  (highlighted ? " text-muted" : " text-white")
-                }
-                data-toggle="dropdown">
-                <MenuIcon size={30} />
-              </a>
-              <div
-                className="dropdown-menu dropdown-menu-right"
-                style={{ marginTop: 12 }}>
-                <button
-                  className="dropdown-item d-flex align-items-center"
-                  type="button">
-                  <EditIcon size={16} className="mr-2" /> <span>Edit</span>
-                </button>
-                <button
-                  className="dropdown-item d-flex align-items-center text-danger"
-                  type="button">
-                  <DeleteIcon size={16} className="mr-2" />{" "}
-                  <span>Move to Trash</span>
-                </button>
-              </div>
             </div>
           </div>
         </td>

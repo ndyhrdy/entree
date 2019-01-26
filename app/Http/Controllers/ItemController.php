@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Entree\Services\ItemService;
 use Entree\Services\StoreService;
 use Entree\Transformers\ItemTransformer;
+use Entree\Transformers\MutationTransformer;
 
 class ItemController extends Controller
 {
@@ -67,11 +68,21 @@ class ItemController extends Controller
      * Display the specified resource.
      *
      * @param  \Entree\Item\Item  $item
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Item $item)
+    public function show(Item $item, Request $request)
     {
-        //
+        if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
+            return abort(403, 'Unauthenticated');
+        }
+        return fractal()
+            ->item($this->itemService->loadDefaultItemData($item))
+            ->transformWith(new ItemTransformer)
+            ->parseIncludes([
+                'mutations', 'createdBy'
+            ])
+            ->respond();
     }
 
     /**

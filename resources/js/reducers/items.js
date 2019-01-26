@@ -13,10 +13,7 @@ const defaultState = {
   data: [],
   error: null,
   fetching: false,
-  fetchingSelection: false,
   lastLoadTimestamp: null,
-  selection: null,
-  selectionError: null,
   term: ""
 };
 
@@ -27,32 +24,48 @@ export default (state = defaultState, action) => {
     case ITEMS_POPULATE:
       return {
         ...state,
-        data: [...action.items],
+        data: [
+          ...action.items.map(item => ({
+            ...item,
+            fetching: false,
+            error: null
+          }))
+        ],
         fetching: false,
-        lastLoadTimestamp: moment(),
-        selection: null
+        lastLoadTimestamp: moment()
       };
     case ITEMS_SET_ERROR:
       return { ...state, fetching: false, error: action.error };
+
     case ITEMS_SEARCH:
       return { ...state, term: action.term };
+
     case ITEMS_SELECT:
       return {
         ...state,
-        selection: { ...action.selection },
-        fetchingSelection: true
+        data: [...state.data].map(item =>
+          item.slug === action.selection.slug
+            ? { ...item, fetching: true, error: false }
+            : item
+        )
       };
     case ITEMS_FILL_SELECTION:
       return {
         ...state,
-        selection: { ...action.item },
-        fetchingSelection: false
+        data: [...state.data].map(item =>
+          item.slug === action.item.slug
+            ? { ...item, ...action.item, fetching: false }
+            : item
+        )
       };
     case ITEMS_SET_SELECTION_ERROR:
       return {
         ...state,
-        fetchingSelection: false,
-        selectionError: action.error
+        data: [...state.data].map(item =>
+          item.slug === action.item.slug
+            ? { ...item, fetching: false, error: action.error }
+            : item
+        )
       };
     default:
       return state;

@@ -16,6 +16,7 @@ class MutationTransformer extends TransformerAbstract
     {
         return [
             'quantity' => $mutation->quantity,
+            'endingQuantity' => $mutation->ending_quantity,
 
             'createdAt' => $mutation->created_at->toIso8601String(),
         ];

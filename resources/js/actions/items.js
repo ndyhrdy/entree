@@ -3,7 +3,10 @@ import {
   ITEMS_FETCH,
   ITEMS_POPULATE,
   ITEMS_SET_ERROR,
-  ITEMS_SEARCH
+  ITEMS_SEARCH,
+  ITEMS_SELECT,
+  ITEMS_FILL_SELECTION,
+  ITEMS_SET_SELECTION_ERROR
 } from "./types";
 
 export const fetchItems = () => (dispatch, getState) => {
@@ -14,10 +17,12 @@ export const fetchItems = () => (dispatch, getState) => {
   return api
     .get(routes.items)
     .then(response => {
-      return dispatch(populateItems(response.data.data));
+      dispatch(populateItems(response.data.data));
+      return Promise.resolve(response.data.data);
     })
     .catch(error => {
-      return dispatch({ type: ITEMS_SET_ERROR, error });
+      dispatch({ type: ITEMS_SET_ERROR, error });
+      return Promise.reject(error);
     });
 };
 
@@ -29,4 +34,18 @@ export const searchItems = term => ({
 export const populateItems = items => ({
   type: ITEMS_POPULATE,
   items
+});
+
+export const selectItem = item => (dispatch, getState) => {
+  dispatch({ type: ITEMS_SELECT, selection: item });
+
+  return api
+    .get(routes.items + "/" + item.slug)
+    .then(response => dispatch(fillItemSelection(response.data.data)))
+    .catch(error => dispatch({ type: ITEMS_SET_SELECTION_ERROR, item, error }));
+};
+
+export const fillItemSelection = item => ({
+  type: ITEMS_FILL_SELECTION,
+  item
 });

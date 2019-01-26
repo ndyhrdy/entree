@@ -15,7 +15,7 @@ export class InventoryUnitsList extends Component {
     const { data, fetching, error } = this.props.units;
 
     return (
-      <div className="container py-5">
+      <div className="container py-4">
         <div className="card">
           <div className="card-header">
             <div className="d-flex justify-content-between align-items-center">

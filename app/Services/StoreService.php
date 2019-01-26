@@ -65,5 +65,10 @@ class StoreService
 
     return $storeUser->store;
   }
+
+  public function storeHasItem(\Entree\Store\Store $store, \Entree\Item\Item $item)
+  {
+    return $store->items()->whereId($item->id)->count() > 0;
+  }
   
 }

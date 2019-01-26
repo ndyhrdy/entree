@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+use Faker\Factory;
 use Entree\Item\Item;
 use Entree\Item\Mutation;
 use Illuminate\Database\Seeder;
@@ -14,10 +16,12 @@ class MutationsTableSeeder extends Seeder
     public function run()
     {
         DB::table('mutations')->truncate();
-        Item::with(['lastMutation', 'unit', 'unit2', 'unit3'])->get()->each(function (Item $item)
+        $faker = Factory::create();
+        Item::with(['lastMutation', 'unit', 'unit2', 'unit3'])->get()->each(function (Item $item) use ($faker)
         {
             $numberOfMutations = rand(0, 50);
             $currentQuantity = $item->currentQuantity();
+            $transactionDate = $faker->dateTimeBetween('-6 months', '-5 months');
             for ($i = 0; $i < $numberOfMutations; $i++) { 
                 $unitWeights = [
                     rand(50, 100),                      // base unit
@@ -42,8 +46,11 @@ class MutationsTableSeeder extends Seeder
                     'base_unit_quantity' => $quantity * ($isBaseUnit ? 1 : $item->$ratioField),
                     'starting_quantity' => $currentQuantity,
                     'ending_quantity' => $endingQuantity,
+                    'created_at' => $transactionDate,
+                    'updated_at' => $transactionDate,
                 ]);
                 $currentQuantity = $endingQuantity;
+                $transactionDate = $faker->dateTimeBetween($transactionDate, Carbon::instance($transactionDate)->addWeeks('1 week'));
             }
         });
     }

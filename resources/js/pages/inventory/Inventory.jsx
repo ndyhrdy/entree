@@ -8,7 +8,7 @@ export default class Inventory extends PureComponent {
     return (
       <div>
         <div className="bg-white border-bottom">
-          <div className="container py-5">
+          <div className="container py-3">
             <h1>Inventory</h1>
           </div>
           <div className="container">
