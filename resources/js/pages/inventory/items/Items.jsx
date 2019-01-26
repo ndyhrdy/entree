@@ -9,7 +9,7 @@ export default class InventoryItems extends PureComponent {
     return (
       <Switch>
         <Route exact path="/inventory/items" component={InventoryItemsList} />
-        <Route exact path="/inventory/items/summary/:slug" component={InventoryItemsSummary} />
+        <Route exact path="/inventory/items/:slug" component={InventoryItemsSummary} />
 
         <Redirect to="/inventory/items" />
       </Switch>

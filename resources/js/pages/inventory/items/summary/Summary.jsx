@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { fetchItems, selectItem } from "@/actions";
 import Description from "./Description";
 import QuantityGraph from "./QuantityGraph";
+import RecentTransactions from "./RecentTransactions";
 
 export class InventoryItemsSummary extends Component {
   constructor(props) {
@@ -39,19 +40,16 @@ export class InventoryItemsSummary extends Component {
 
     return (
       <div className="container py-4">
-        <ol className="breadcrumb mb-4">
-          <li className="breadcrumb-item">
-            <Link to="/inventory/items" replace>
-              All Items
-            </Link>
-          </li>
-          <li className="breadcrumb-item active">
-            {item ? item.name : "Loading.."}
-          </li>
-        </ol>
-
         {item ? (
           <Fragment>
+            <ol className="breadcrumb mb-4">
+              <li className="breadcrumb-item">
+                <Link to="/inventory/items" replace>
+                  All Items
+                </Link>
+              </li>
+              <li className="breadcrumb-item active">{item.name}</li>
+            </ol>
             <div className="mb-4">
               <h3>{item.name}</h3>
               <div>
@@ -60,23 +58,42 @@ export class InventoryItemsSummary extends Component {
             </div>
             <div className="row">
               <div className="col-md-3">
-                <Description {...item} />
+                <div className="mb-3 bg-white rounded pt-4 pb-1 px-3">
+                  <Description {...item} />
+                </div>
                 <div className="bg-white rounded py-4 mb-4">
                   <div className="mx-3 mb-3 text-muted small">Actions</div>
-                  <Link className="d-block px-3 py-2 border-light border-top" to={"/inventory/adjustment/" + item.slug}>
+                  <Link
+                    className="d-block px-3 py-2 border-top"
+                    to={"/inventory/adjustment/" + item.slug}>
                     Adjust Stock
                   </Link>
-                  <Link className="d-block px-3 py-2 border-light border-top" to={"/inventory/purchase/" + item.slug}>Purchase</Link>
-                  <Link className="d-block px-3 py-2 border-light border-top" to={"/inventory/production/" + item.slug}>Produce</Link>
-                  <Link className="d-block px-3 py-2 border-light border-top" to={"/inventory/items/" + item.slug + "/edit"}>
+                  <Link
+                    className="d-block px-3 py-2 border-top"
+                    to={"/inventory/purchase/" + item.slug}>
+                    Purchase
+                  </Link>
+                  <Link
+                    className="d-block px-3 py-2 border-top"
+                    to={"/inventory/production/" + item.slug}>
+                    Produce
+                  </Link>
+                  <Link
+                    className="d-block px-3 py-2 border-top"
+                    to={"/inventory/items/" + item.slug + "/edit"}>
                     Edit
                   </Link>
                 </div>
               </div>
               <div className="col-md-9">
-                <div>
-                  <h4>Stock Monitor</h4>
+                <div className="mb-3 bg-white rounded pt-4 pb-1 px-3">
                   <QuantityGraph {...item} />
+                </div>
+                <div className="mb-3 d-flex align-items-stretch">
+                  <div className="bg-white rounded py-4 mr-2" style={{ flex: 1 }}>
+                    <RecentTransactions {...item} />
+                  </div>
+                  <div className="bg-white rounded py-4 ml-2" style={{ flex: 1 }} />
                 </div>
               </div>
             </div>

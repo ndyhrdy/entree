@@ -42,7 +42,7 @@ export default class InventoryItemsListItem extends PureComponent {
               style={{ height: 50, width: 50 }}
             />
             <div>
-              <Link to={"/inventory/items/summary/" + slug}>{name}</Link>
+              <Link to={"/inventory/items/" + slug}>{name}</Link>
               <div className="small">
                 <span className="text-muted mr-2">SKU {sku}</span>
                 {highlighted && (

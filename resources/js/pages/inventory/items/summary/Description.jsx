@@ -23,14 +23,14 @@ export default class Description extends PureComponent {
     ];
 
     return (
-      <div className="bg-white rounded pt-4 pb-1 px-3 mb-4">
+      <Fragment>
         {fields.map((field, index) => (
           <div className="mb-3" key={"description-item-" + index}>
             <div className="text-muted small">{field.label}</div>
             <div>{field.value}</div>
           </div>
         ))}
-      </div>
+      </Fragment>
     );
   }
 }

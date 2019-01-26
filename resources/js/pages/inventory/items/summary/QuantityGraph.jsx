@@ -37,8 +37,8 @@ export default class QuantityGraph extends PureComponent {
         const createdDate = moment(mutation.createdAt);
         if (
           createdDate.isSameOrAfter(interval) &&
-          (intervals[intervalIndex+1]
-            ? createdDate.isBefore(intervals[intervalIndex+1])
+          (intervals[intervalIndex + 1]
+            ? createdDate.isBefore(intervals[intervalIndex + 1])
             : true) &&
           (mutationDate ? createdDate.isAfter(mutationDate) : true)
         ) {
@@ -66,7 +66,14 @@ export default class QuantityGraph extends PureComponent {
       type: "line",
       data: chartData,
       options: {
-        legend: { display: false }
+        legend: { display: false },
+        scales: {
+          yAxes: [
+            {
+              ticks: { beginAtZero: true }
+            }
+          ]
+        }
       }
     });
   }
@@ -74,6 +81,7 @@ export default class QuantityGraph extends PureComponent {
   render() {
     return (
       <div>
+        <h4>Stock Monitor</h4>
         {this.props.fetching && <div>Loading transaction history..</div>}
 
         <canvas ref={this.chartArea} className="mt-3" />
