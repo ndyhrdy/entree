@@ -80,7 +80,7 @@ class ItemController extends Controller
             ->item($this->itemService->loadDefaultItemData($item))
             ->transformWith(new ItemTransformer)
             ->parseIncludes([
-                'mutations', 'createdBy'
+                'mutations', 'createdBy', 'mutations.mutable', 'mutations.mutable.unit',
             ])
             ->respond();
     }

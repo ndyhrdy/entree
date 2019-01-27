@@ -11,7 +11,7 @@ class ItemService
 
   public function getItemsForStore(Store $store)
   {
-    return $store->items()->with(['lastMutation'])->get();
+    return $store->items()->with(['lastMutation', 'lastMutation.mutable'])->get();
   }
 
   public function loadDefaultItemData(Item $item)
@@ -27,6 +27,7 @@ class ItemService
     )
   {
     $mutations = $item->mutations()
+      ->with(['mutable', 'mutable.unit'])
       ->whereDate('created_at', '>=', (new Carbon($startDate))->format('Y-m-d'))
       ->whereDate('created_at', '<=', (new Carbon($endDate))->format('Y-m-d'))
       ->get();
