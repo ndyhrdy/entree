@@ -1,6 +1,20 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Sarabun');
+@font-face {
+  font-family: 'Sarabun';
+  font-weight: 400;
+  src: url('../fonts/Sarabun-Light.ttf');
+}
+@font-face {
+  font-family: 'Sarabun';
+  font-weight: 300;
+  src: url('../fonts/Sarabun-Light.ttf');
+}
+@font-face {
+  font-family: 'Sarabun';
+  font-weight: 700;
+  src: url('../fonts/Sarabun-Bold.ttf');
+}
 
 // Variables
 @import 'variables';

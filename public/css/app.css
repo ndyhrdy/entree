@@ -1,4 +1,22 @@
-@import url(https://fonts.googleapis.com/css?family=Sarabun);/*!
+@font-face {
+  font-family: 'Sarabun';
+  font-weight: 400;
+  src: url(/fonts/Sarabun-Light.ttf?83ccca1df997a1919077b64c3d70ac30);
+}
+
+@font-face {
+  font-family: 'Sarabun';
+  font-weight: 300;
+  src: url(/fonts/Sarabun-Light.ttf?83ccca1df997a1919077b64c3d70ac30);
+}
+
+@font-face {
+  font-family: 'Sarabun';
+  font-weight: 700;
+  src: url(/fonts/Sarabun-Bold.ttf?4f70ff7dd351fe841b15de5a88a499aa);
+}
+
+/*!
  * Bootstrap v4.2.1 (https://getbootstrap.com/)
  * Copyright 2011-2018 The Bootstrap Authors
  * Copyright 2011-2018 Twitter, Inc.

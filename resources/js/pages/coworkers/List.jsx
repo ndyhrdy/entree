@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { fetchCoworkers, searchCoworkers } from "@/actions";
-import { fuzzySearch } from "@/helpers";
+import { fuzzySearch } from "@/helpers/misc";
 import ListItem from "./ListItem";
 
 export class CoworkersList extends Component {

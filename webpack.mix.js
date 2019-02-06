@@ -23,5 +23,4 @@ mix.react('resources/js/app.js', 'public/js')
       }
    })
    
-   .version()
-   .browserSync('entree.local');
+   .version();

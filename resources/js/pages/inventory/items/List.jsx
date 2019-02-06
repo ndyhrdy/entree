@@ -5,7 +5,7 @@ import { Add as AddIcon } from "styled-icons/material";
 
 import { fetchItems, searchItems } from "@/actions";
 import InventoryItemsListItem from "./ListItem";
-import { fuzzySearch } from "@/helpers";
+import { fuzzySearch } from "@/helpers/misc";
 
 export class InventoryItemsList extends Component {
   componentDidMount() {
