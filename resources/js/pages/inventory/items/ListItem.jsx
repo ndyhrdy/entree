@@ -49,7 +49,7 @@ export default class InventoryItemsListItem extends PureComponent {
                   <Fragment>
                     <Link
                       className="text-dark mr-2"
-                      to={"/inventory/adjustment/" + slug}>
+                      to={"/inventory/adjustments/new?_default-item=" + slug}>
                       Adjust Stock
                     </Link>
                     <Link

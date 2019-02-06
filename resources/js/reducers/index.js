@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 
 import activeStore from "./activeStore";
+import adjustments from "./adjustments";
 import coworkers from "./coworkers";
 import items from "./items";
 import prompt from "./prompt";
@@ -10,6 +11,7 @@ import user from "./user";
 
 export default combineReducers({
   activeStore,
+  adjustments,
   coworkers,
   items,
   prompt,

@@ -17,6 +17,11 @@ class Store extends Model
         return ['slug' => ['source' => 'name']];
     }
 
+    public function adjustments()
+    {
+        return $this->hasManyThrough('Entree\Item\Adjustment', 'Entree\Item\Item');
+    }
+
     public function items()
     {
         return $this->hasMany('Entree\Item\Item');

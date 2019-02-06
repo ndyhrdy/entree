@@ -2,10 +2,22 @@
 
 namespace Entree\Item;
 
+use Entree\Events\AdjustmentCreated;
 use Illuminate\Database\Eloquent\Model;
 
 class Adjustment extends Model
 {
+
+    use Mutable;
+
+    protected $dispatchesEvents = [
+        'created' => AdjustmentCreated::class,
+    ];
+    
+    public function createdBy()
+    {
+        return $this->belongsTo('Entree\User', 'created_by');
+    }
     
     public function item()
     {

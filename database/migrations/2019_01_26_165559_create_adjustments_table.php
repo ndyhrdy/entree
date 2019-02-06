@@ -19,9 +19,7 @@ class CreateAdjustmentsTable extends Migration
             $table->unsignedInteger('item_id');
             $table->string('adjustment_type');
             $table->double('quantity');
-            $table->unsignedInteger('unit_id');
-            $table->float('quantity_unit_ratio');
-            $table->double('base_unit_quantity');
+            $table->unsignedInteger('unit_index');
             $table->unsignedInteger('created_by');
             $table->timestamps();
         });
