@@ -15,7 +15,7 @@ class Item extends Model
     ];
 
     protected $with = [
-        'unit', 'createdBy',
+        'unit', 'unit2', 'unit3', 'createdBy',
     ];
 
     public function sluggable()

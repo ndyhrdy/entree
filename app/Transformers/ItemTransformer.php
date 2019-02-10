@@ -13,12 +13,12 @@ class ItemTransformer extends TransformerAbstract
         'createdBy',
         'lastMutation',
         'mutations',
-        'unit2',
-        'unit3',
     ];
 
     protected $defaultIncludes = [
         'unit',
+        'unit2',
+        'unit3',
     ];
     
     /**
@@ -34,6 +34,9 @@ class ItemTransformer extends TransformerAbstract
             'name' => $item->name,
             'description' => strlen(trim($item->description)) > 0 ? $item->description : 'No description',
             'currentQuantity' => $item->currentQuantity(),
+
+            'unit2Ratio' => $item->unit_2_ratio,
+            'unit3Ratio' => $item->unit_3_ratio,
             
             'createdAt' => $item->created_at->toIso8601String(),
         ];

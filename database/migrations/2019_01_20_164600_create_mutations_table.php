@@ -17,6 +17,7 @@ class CreateMutationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('item_id');
             $table->double('quantity');
+            $table->unsignedInteger('unit_id');
             $table->float('quantity_unit_ratio');
             $table->double('base_unit_quantity');
             $table->double('starting_quantity')->default(0);

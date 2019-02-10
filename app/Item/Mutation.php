@@ -12,5 +12,10 @@ class Mutation extends Model
     {
         return $this->morphTo();
     }
+
+    public function unit()
+    {
+        return $this->belongsTo('Entree\Item\Unit');
+    }
     
 }

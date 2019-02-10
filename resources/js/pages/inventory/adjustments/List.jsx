@@ -2,13 +2,42 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
+import moment from "moment";
 
 import { fetchAdjustments } from "@/actions";
 import InventoryAdjustmentsListItem from "./ListItem";
 
+const SORT_CREATED_AT_ASC = "SORT_CREATED_AT_ASC";
+const SORT_CREATED_AT_DESC = "SORT_CREATED_AT_DESC";
+
 export class InventoryAdjustmentsList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sort: SORT_CREATED_AT_DESC
+    };
+  }
+
   componentDidMount() {
     this.props.fetchAdjustments();
+  }
+
+  sort(adjustmentA, adjustmentB) {
+    switch (this.state.sort) {
+      case SORT_CREATED_AT_ASC:
+        return moment(adjustmentA.createdAt).isBefore(
+          moment(adjustmentB.createdAt)
+        )
+          ? -1
+          : 1;
+      case SORT_CREATED_AT_DESC:
+      default:
+        return moment(adjustmentA.createdAt).isAfter(
+          moment(adjustmentB.createdAt)
+        )
+          ? -1
+          : 1;
+    }
   }
 
   render() {
@@ -73,12 +102,16 @@ export class InventoryAdjustmentsList extends Component {
                   </td>
                 </tr>
               )}
-              {data.map((adjustment, index) => (
-                <InventoryAdjustmentsListItem
-                  key={"adjustments-item-" + index}
-                  {...adjustment}
-                />
-              ))}
+              {data
+                .sort((adjustmentA, adjustmentB) =>
+                  this.sort(adjustmentA, adjustmentB)
+                )
+                .map((adjustment, index) => (
+                  <InventoryAdjustmentsListItem
+                    key={"adjustments-item-" + index}
+                    {...adjustment}
+                  />
+                ))}
             </tbody>
           </table>
         </div>

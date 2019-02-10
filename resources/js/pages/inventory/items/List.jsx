@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
 
+import { LoadingIndicator } from "@/components";
 import { fetchItems, searchItems } from "@/actions";
 import InventoryItemsListItem from "./ListItem";
 import { fuzzySearch } from "@/helpers/misc";
@@ -56,8 +57,8 @@ export class InventoryItemsList extends Component {
             <tbody>
               {items.fetching && items.data.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="text-center">
-                    Loading inventory..
+                  <td colSpan={4} className="py-5">
+                    <LoadingIndicator size={80} label="Hang on, we're getting your inventory.." />
                   </td>
                 </tr>
               )}

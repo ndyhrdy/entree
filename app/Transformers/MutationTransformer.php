@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class MutationTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'mutable',
     ];
     
@@ -32,6 +32,11 @@ class MutationTransformer extends TransformerAbstract
 
             'createdAt' => $mutation->created_at->toIso8601String(),
         ];
+    }
+
+    public function includeUnit(Mutation $mutation)
+    {
+        return $this->item($mutation->unit, new ItemUnitTransformer);
     }
 
     public function includeMutable(Mutation $mutation)

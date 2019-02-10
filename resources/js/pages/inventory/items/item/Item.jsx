@@ -64,7 +64,7 @@ export class InventoryItemsItem extends Component {
                   <div className="mx-3 mb-3 text-muted small">Actions</div>
                   <Link
                     className="d-block px-3 py-2 border-top"
-                    to={"/inventory/adjustments/new?_default-item=" + item.slug}>
+                    to={"/inventory/adjustments/new?_default_item=" + item.slug}>
                     Adjust Stock
                   </Link>
                   <Link

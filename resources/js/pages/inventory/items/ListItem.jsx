@@ -49,7 +49,7 @@ export default class InventoryItemsListItem extends PureComponent {
                   <Fragment>
                     <Link
                       className="text-dark mr-2"
-                      to={"/inventory/adjustments/new?_default-item=" + slug}>
+                      to={"/inventory/adjustments/new?_default_item=" + slug}>
                       Adjust Stock
                     </Link>
                     <Link
@@ -78,7 +78,7 @@ export default class InventoryItemsListItem extends PureComponent {
             highlighted ? "0,0.[0000]" : "0.[0]a"
           )}
           {highlighted && (
-            <Link to={"/inventory/adjustment/" + slug}>
+            <Link to={"/inventory/adjustments/new?_default_item=" + slug}>
               <EditIcon size={16} className="ml-1" />
             </Link>
           )}

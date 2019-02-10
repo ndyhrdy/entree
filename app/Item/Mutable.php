@@ -13,6 +13,7 @@ trait Mutable
     $mutation = new Mutation;
     $mutation->item_id = $this->item->id;
     $mutation->quantity = $this->getMutationQuantity();
+    $mutation->unit_id = $this->getMutationUnit()->id;
     $mutation->quantity_unit_ratio = $this->getMutationUnitRatio();
     $mutation->base_unit_quantity = $mutation->quantity * $mutation->quantity_unit_ratio;
     $mutation->starting_quantity = $this->getCurrentQuantity();
@@ -42,6 +43,7 @@ trait Mutable
     switch ($this->unit_index) {
       case 2: return $this->item->unit2;
       case 3: return $this->item->unit3;
+      case 1:
       default: return $this->item->unit;
     }
   }
