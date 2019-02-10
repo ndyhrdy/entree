@@ -10,6 +10,10 @@ class Adjustment extends Model
 
     use Mutable;
 
+    protected $with = [
+        'mutation'
+    ];
+    
     protected $dispatchesEvents = [
         'created' => AdjustmentCreated::class,
     ];

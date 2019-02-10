@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 class MutationTransformer extends TransformerAbstract
 {
 
-    protected $defaultIncludes = [
+    protected $availableIncludes = [
         'mutable',
     ];
     

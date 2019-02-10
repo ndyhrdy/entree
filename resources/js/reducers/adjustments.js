@@ -1,6 +1,7 @@
 import {
   ADJUSTMENTS_FETCH,
   ADJUSTMENTS_POPULATE,
+  ADJUSTMENTS_PUSH,
   ADJUSTMENTS_SEARCH,
   ADJUSTMENTS_SET_ERROR
 } from "@/actions/types";
@@ -18,6 +19,8 @@ export default (state = defaultState, action) => {
       return { ...state, fetching: true, error: null };
     case ADJUSTMENTS_POPULATE:
       return { ...state, data: [...action.adjustments], fetching: false };
+    case ADJUSTMENTS_PUSH:
+      return { ...state, data: [...state.data, { ...action.adjustment }] };
     case ADJUSTMENTS_SEARCH:
       return { ...state, term: action.term };
     case ADJUSTMENTS_SET_ERROR:

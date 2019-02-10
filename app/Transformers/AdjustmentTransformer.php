@@ -7,6 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class AdjustmentTransformer extends TransformerAbstract
 {
+    protected $defaultIncludes = [
+        'mutation'
+    ];
+
     protected $availableIncludes = [
         'unit'
     ];
@@ -21,10 +25,12 @@ class AdjustmentTransformer extends TransformerAbstract
         return [
             'batchNo' => $adjustment->batch_no,
             'adjustmentType' => $adjustment->adjustment_type,
-            'quantity' => $adjustment->quantity,
-            'ratio' => $adjustment->quantity_unit_ratio,
-            'baseQuantity' => $adjustment->base_unit_quantity,
         ];
+    }
+
+    public function includeMutation(Adjustment $adjustment)
+    {
+        return $this->item($adjustment->mutation, new MutationTransformer);
     }
 
     public function includeUnit(Adjustment $adjustment)

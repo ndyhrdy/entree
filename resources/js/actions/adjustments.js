@@ -1,6 +1,7 @@
 import {
   ADJUSTMENTS_FETCH,
   ADJUSTMENTS_POPULATE,
+  ADJUSTMENTS_PUSH,
   ADJUSTMENTS_SEARCH,
   ADJUSTMENTS_SET_ERROR
 } from "./types";
@@ -26,6 +27,11 @@ export const fetchAdjustments = () => (dispatch, getState) => {
 export const populateAdjustments = adjustments => ({
   type: ADJUSTMENTS_POPULATE,
   adjustments
+});
+
+export const pushAdjustment = adjustment => ({
+  type: ADJUSTMENTS_PUSH,
+  adjustment
 });
 
 export const searchAdjustments = term => ({
