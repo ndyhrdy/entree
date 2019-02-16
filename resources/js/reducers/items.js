@@ -32,7 +32,7 @@ export default (state = defaultState, action) => {
           }))
         ],
         fetching: false,
-        lastLoadTimestamp: moment()
+        lastLoadTimestamp: moment().toDate(),
       };
     case ITEMS_SET_ERROR:
       return { ...state, fetching: false, error: action.error };

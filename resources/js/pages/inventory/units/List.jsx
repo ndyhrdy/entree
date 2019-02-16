@@ -2,13 +2,23 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
+import moment from "moment";
 
 import { fetchUnits } from "@/actions";
 import InventoryUnitsListItem from "./ListItem";
 
 export class InventoryUnitsList extends Component {
   componentDidMount() {
-    this.props.fetchUnits();
+    const {
+      fetchUnits,
+      units: { lastLoadTimestamp }
+    } = this.props;
+    if (
+      !lastLoadTimestamp ||
+      moment(lastLoadTimestamp).isBefore(moment().subtract("1", "day"))
+    ) {
+      return fetchUnits();
+    }
   }
 
   render() {
@@ -27,7 +37,11 @@ export class InventoryUnitsList extends Component {
               </div>
             </div>
           </div>
-          <table className="table table-hover">
+          <table
+            className={
+              "table" +
+              ((fetching || error) && data.length === 0 ? "" : " table-hover")
+            }>
             <thead>
               <tr>
                 <th>Unit</th>
@@ -37,8 +51,23 @@ export class InventoryUnitsList extends Component {
             <tbody>
               {fetching && data.length === 0 && (
                 <tr>
-                  <td colSpan={2} className="text-center">
+                  <td colSpan={2} className="text-center py-3">
                     Loading units..
+                  </td>
+                </tr>
+              )}
+              {!!error && data.length === 0 && (
+                <tr>
+                  <td colSpan={2} className="text-center py-3">
+                    Oops, we couldnt't get the information from the server.{" "}
+                    <a
+                      href="#"
+                      onClick={() => {
+                        this.props.fetchUnits();
+                        return false;
+                      }}>
+                      Retry
+                    </a>
                   </td>
                 </tr>
               )}

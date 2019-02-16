@@ -13,12 +13,13 @@ export class Home extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      menus: menus.slice(0)
+      menus: menus.slice(0),
+      highlighted: null
     };
   }
 
   render() {
-    const { menus } = this.state;
+    const { highlighted, menus } = this.state;
     const { activeStore, user } = this.props;
 
     if (!user.data || user.fetching) {
@@ -32,7 +33,12 @@ export class Home extends PureComponent {
             menu.requiresActiveStore && !activeStore.data ? null : (
               <div key={"menu-item-" + index} className="col-md-4">
                 <Link
-                  className="btn btn-light btn-block p-3 mb-4"
+                  className={
+                    "btn btn-block p-3 mb-4" +
+                    (highlighted === index ? " btn-dark" : "")
+                  }
+                  onMouseEnter={() => this.setState({ highlighted: index })}
+                  onMouseLeave={() => this.setState({ highlighted: null })}
                   to={menu.route}>
                   <div className="d-flex">
                     {menu.iconComponent}

@@ -38,12 +38,19 @@ export class InventoryAdjustmentsCreate extends Component {
           this.props.pushAdjustment(response.data.data);
 
           const query = parse(location.search.substr(1));
-          if (query._default_item && items.filter(item => item.slug === query._default_item).length > 0) {
-            this.props.selectItem(items.filter(item => item.slug === query._default_item)[0]);
+          if (
+            query._default_item &&
+            items.length === 1 &&
+            items[0].slug === query._default_item
+          ) {
+            this.props.selectItem(items[0]);
             return this.props.history.push(
-              "/inventory/items/" + query._default_item + "?_flow=create-adjustment-success"
+              "/inventory/items/" +
+                query._default_item +
+                "?_flow=create-adjustment-success"
             );
           }
+          this.props.fetchItems();
           return this.props.history.push(
             "/inventory/adjustments?_flow=create-success"
           );
@@ -143,7 +150,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchItems,
   pushAdjustment,
-  selectItem,
+  selectItem
 };
 
 export default connect(

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
+import moment from "moment";
 
 import { LoadingIndicator } from "@/components";
 import { fetchItems, searchItems } from "@/actions";
@@ -10,7 +11,16 @@ import { fuzzySearch } from "@/helpers/misc";
 
 export class InventoryItemsList extends Component {
   componentDidMount() {
-    this.props.fetchItems();
+    const {
+      items: { lastLoadTimestamp },
+      fetchItems
+    } = this.props;
+    if (
+      !lastLoadTimestamp ||
+      moment(lastLoadTimestamp).isBefore(moment().subtract(5, "minutes"))
+    ) {
+      return fetchItems();
+    }
   }
 
   render() {
@@ -45,12 +55,22 @@ export class InventoryItemsList extends Component {
               </div>
             </div>
           </div>
-          <table className="table table-hover">
+          <table
+            className={
+              "table" +
+              ((items.fetching || items.error) && items.data.length === 0
+                ? ""
+                : " table-hover")
+            }>
             <thead>
               <tr>
                 <th>Item</th>
-                <th className="text-right" style={{ width: 150 }}>Quantity</th>
-                <th className="text-right" style={{ width: 150 }}>Last Transaction</th>
+                <th className="text-right" style={{ width: 150 }}>
+                  Quantity
+                </th>
+                <th className="text-right" style={{ width: 150 }}>
+                  Last Transaction
+                </th>
                 <th style={{ width: 250 }}>Created</th>
               </tr>
             </thead>
@@ -58,7 +78,10 @@ export class InventoryItemsList extends Component {
               {items.fetching && items.data.length === 0 && (
                 <tr>
                   <td colSpan={4} className="py-5">
-                    <LoadingIndicator size={80} label="Hang on, we're getting your inventory.." />
+                    <LoadingIndicator
+                      size={80}
+                      label="Hang on, we're getting your inventory.."
+                    />
                   </td>
                 </tr>
               )}
