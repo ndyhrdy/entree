@@ -5,3 +5,4 @@ export { default as Main } from './Main';
 export { default as Navbar } from './Navbar/Navbar';
 export { default as Prompt } from './Prompt';
 export { default as StoreDependentView } from './StoreDependentView';
+export { default as UnitQuantityInput } from './UnitQuantityInput';

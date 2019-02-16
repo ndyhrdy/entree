@@ -5,7 +5,7 @@ import RecentTransactions from "./RecentTransactions";
 export default class Summary extends PureComponent {
   render() {
     return (
-      <Fragment>
+      <div className="mb-5">
         <div className="mb-3 bg-white rounded pt-4 pb-1 px-3">
           <QuantityGraph {...this.props} />
         </div>
@@ -15,7 +15,7 @@ export default class Summary extends PureComponent {
           </div>
           <div className="bg-white rounded py-4 ml-2" style={{ flex: 1 }} />
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

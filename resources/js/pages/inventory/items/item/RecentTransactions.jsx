@@ -75,7 +75,7 @@ export default class RecentTransactions extends PureComponent {
                       <div>
                         {numeral(tx.quantity).format("0,0.[0000]")}{' '}
                         <span className="text-muted small">
-                          {tx.mutable.data.unit.data.shortName}
+                          {tx.unit.data.shortName}
                         </span>
                       </div>
                     )}

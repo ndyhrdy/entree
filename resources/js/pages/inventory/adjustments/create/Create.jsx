@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { parse } from "querystring";
 
 import api, { routes } from "@/api";
-import { fetchItems, pushAdjustment } from "@/actions";
+import { fetchItems, pushAdjustment, selectItem } from "@/actions";
 import Items from "./Items";
 import TypeSelection from "./TypeSelection";
 
@@ -36,7 +36,15 @@ export class InventoryAdjustmentsCreate extends Component {
         })
         .then(response => {
           this.props.pushAdjustment(response.data.data);
-          this.props.history.push(
+
+          const query = parse(location.search.substr(1));
+          if (query._default_item && items.filter(item => item.slug === query._default_item).length > 0) {
+            this.props.selectItem(items.filter(item => item.slug === query._default_item)[0]);
+            return this.props.history.push(
+              "/inventory/items/" + query._default_item + "?_flow=create-adjustment-success"
+            );
+          }
+          return this.props.history.push(
             "/inventory/adjustments?_flow=create-success"
           );
         })
@@ -134,7 +142,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchItems,
-  pushAdjustment
+  pushAdjustment,
+  selectItem,
 };
 
 export default connect(
