@@ -5,6 +5,7 @@ import { Add as AddIcon } from "styled-icons/material";
 import moment from "moment";
 
 import { fetchAdjustments } from "@/actions";
+import { ColumnHeader } from "@/components/DataTable";
 import InventoryAdjustmentsListItem from "./ListItem";
 import ListEmpty from "./ListEmpty";
 
@@ -63,8 +64,8 @@ export class InventoryAdjustmentsList extends Component {
             {data.length > 0 && (
               <thead>
                 <tr>
-                  <th>Batch</th>
-                  <th style={{ width: 250 }}>Created</th>
+                  <ColumnHeader>Batch</ColumnHeader>
+                  <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
                 </tr>
               </thead>
             )}

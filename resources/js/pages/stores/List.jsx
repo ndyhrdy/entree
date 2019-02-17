@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import ListItem from "./ListItem";
+import { ColumnHeader } from "@/components/DataTable";
 
 export class StoresList extends PureComponent {
   constructor(props) {
@@ -35,9 +36,9 @@ export class StoresList extends PureComponent {
       <table className="table table-hover">
         <thead>
           <tr>
-            <th>Store</th>
-            <th style={{ width: 150 }}>Owner</th>
-            <th style={{ width: 150 }}>Created</th>
+            <ColumnHeader>Store</ColumnHeader>
+            <ColumnHeader style={{ width: 150 }}>Owner</ColumnHeader>
+            <ColumnHeader style={{ width: 150 }}>Created</ColumnHeader>
           </tr>
         </thead>
         <tbody>

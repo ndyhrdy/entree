@@ -1,10 +1,11 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Link, NavLink, Redirect, Route,Switch } from "react-router-dom";
+import { Link, NavLink, Redirect, Route, Switch } from "react-router-dom";
 
 import { fetchItems, selectItem } from "@/actions";
 import Description from "./Description";
 import Summary from "./Summary";
+import Transactions from "./Transactions";
 
 export class InventoryItemsItem extends Component {
   constructor(props) {
@@ -64,7 +65,9 @@ export class InventoryItemsItem extends Component {
                   <div className="mx-3 mb-3 text-muted small">Actions</div>
                   <Link
                     className="d-block px-3 py-2 border-top"
-                    to={"/inventory/adjustments/new?_default_item=" + item.slug}>
+                    to={
+                      "/inventory/adjustments/new?_default_item=" + item.slug
+                    }>
                     Adjust Stock
                   </Link>
                   <Link
@@ -86,14 +89,39 @@ export class InventoryItemsItem extends Component {
               </div>
               <div className="col-md-9">
                 <nav className="nav nav-pills mb-3">
-                  <NavLink exact to={'/inventory/items/' + item.slug} className="nav-item nav-link">Summary</NavLink>
-                  <NavLink to={'/inventory/items/' + item.slug + '/tx'} className="nav-item nav-link">Transactions</NavLink>
+                  <NavLink
+                    exact
+                    to={"/inventory/items/" + item.slug}
+                    className="nav-item nav-link">
+                    Summary
+                  </NavLink>
+                  <NavLink
+                    to={"/inventory/items/" + item.slug + "/tx"}
+                    className="nav-item nav-link">
+                    Transactions
+                  </NavLink>
                 </nav>
-              
-                <Switch>
-                  <Route exact path="/inventory/items/:slug" render={() => <Summary { ...item } />} />
 
-                  <Redirect to={'/inventory/items/' + item.slug} />
+                <Switch>
+                  <Route
+                    exact
+                    path="/inventory/items/:slug"
+                    render={() => <Summary {...item} />}
+                  />
+                  <Route
+                    exact
+                    path="/inventory/items/:slug/tx"
+                    render={() => (
+                      <Transactions
+                        baseUnit={item.unit.data}
+                        mutations={item.mutations ? item.mutations.data : []}
+                        fetching={item.fetching}
+                        error={item.error}
+                      />
+                    )}
+                  />
+
+                  <Redirect to={"/inventory/items/" + item.slug} />
                 </Switch>
               </div>
             </div>

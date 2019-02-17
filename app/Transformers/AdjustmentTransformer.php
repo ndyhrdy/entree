@@ -7,12 +7,10 @@ use League\Fractal\TransformerAbstract;
 
 class AdjustmentTransformer extends TransformerAbstract
 {
-    protected $defaultIncludes = [
-        'mutation'
-    ];
 
     protected $availableIncludes = [
-        'unit'
+        'mutation',
+        'unit',
     ];
     
     /**

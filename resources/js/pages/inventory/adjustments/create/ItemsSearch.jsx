@@ -46,7 +46,9 @@ export default class InventoryAdjustmentsCreateItemsSearch extends Component {
           type="text"
           className="form-control"
           placeholder={
-            items.fetching ? "Loading" : "Type to search for items to add.."
+            items.data.length === 0 && items.fetching
+              ? "Loading"
+              : "Type to search for items to add.."
           }
           disabled={(items.data.length === 0 && items.fetching) || isSaving}
           value={term}

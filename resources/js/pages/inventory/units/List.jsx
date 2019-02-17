@@ -5,6 +5,7 @@ import { Add as AddIcon } from "styled-icons/material";
 import moment from "moment";
 
 import { fetchUnits } from "@/actions";
+import { ColumnHeader } from "@/components/DataTable";
 import InventoryUnitsListItem from "./ListItem";
 
 export class InventoryUnitsList extends Component {
@@ -44,8 +45,8 @@ export class InventoryUnitsList extends Component {
             }>
             <thead>
               <tr>
-                <th>Unit</th>
-                <th style={{ width: 250 }}>Created</th>
+                <ColumnHeader>Unit</ColumnHeader>
+                <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
               </tr>
             </thead>
             <tbody>

@@ -4,6 +4,7 @@ import { ExpandMore, NavigateNext } from "styled-icons/material";
 import { Chart } from "chart.js";
 
 import { defaultOptions } from "@/helpers/graphs";
+import { LoadingIndicator } from "@/components";
 
 export default class QuantityGraph extends PureComponent {
   constructor(props) {
@@ -24,11 +25,24 @@ export default class QuantityGraph extends PureComponent {
     };
   }
 
+  componentDidMount() {
+    if (
+      !!this.props.mutations &&
+      !!this.chartArea
+    ) {
+      this.initGraph({
+        mutations: this.props.mutations.data,
+        selectedInterval: this.state.interval,
+        startDate: this.state.startDate,
+        endDate: this.state.endDate
+      });
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (
       !!nextProps.mutations &&
-      !!this.chartArea &&
-      nextProps.mutations.data.length > 0
+      !!this.chartArea
     ) {
       this.initGraph({
         mutations: nextProps.mutations.data,
@@ -105,12 +119,12 @@ export default class QuantityGraph extends PureComponent {
       ]
     };
     if (this.chart) {
-      this.chart.data = {...chartData};
+      this.chart.data = { ...chartData };
       return this.chart.update();
     }
     this.chart = new Chart(this.chartArea.current.getContext("2d"), {
       type: "line",
-      data: {...chartData},
+      data: { ...chartData },
       options: defaultOptions
     });
     return;
@@ -133,6 +147,7 @@ export default class QuantityGraph extends PureComponent {
 
   render() {
     const { interval, startDate, endDate } = this.state;
+    const { fetching, mutations } = this.props;
 
     return (
       <div>
@@ -175,9 +190,18 @@ export default class QuantityGraph extends PureComponent {
             </div>
           </div>
         </div>
-        {this.props.fetching && <div>Loading transaction history..</div>}
-
-        <canvas ref={this.chartArea} className="mt-3" />
+        {fetching && (!mutations || mutations.data.length === 0) && (
+          <LoadingIndicator className="py-5" size={60} />
+        )}
+        <canvas
+          ref={this.chartArea}
+          className={
+            "mt-3" +
+            (fetching && (!mutations || mutations.data.length === 0)
+              ? " d-none"
+              : "")
+          }
+        />
       </div>
     );
   }

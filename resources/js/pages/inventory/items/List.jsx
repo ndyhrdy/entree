@@ -5,6 +5,7 @@ import { Add as AddIcon } from "styled-icons/material";
 import moment from "moment";
 
 import { LoadingIndicator } from "@/components";
+import { ColumnHeader } from "@/components/DataTable";
 import { fetchItems, searchItems } from "@/actions";
 import InventoryItemsListItem from "./ListItem";
 import { fuzzySearch } from "@/helpers/misc";
@@ -64,14 +65,14 @@ export class InventoryItemsList extends Component {
             }>
             <thead>
               <tr>
-                <th>Item</th>
-                <th className="text-right" style={{ width: 150 }}>
+                <ColumnHeader>Item</ColumnHeader>
+                <ColumnHeader className="text-right" style={{ width: 150 }}>
                   Quantity
-                </th>
-                <th className="text-right" style={{ width: 150 }}>
+                </ColumnHeader>
+                <ColumnHeader className="text-right" style={{ width: 150 }}>
                   Last Transaction
-                </th>
-                <th style={{ width: 250 }}>Created</th>
+                </ColumnHeader>
+                <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
               </tr>
             </thead>
             <tbody>

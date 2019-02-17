@@ -11,11 +11,11 @@ class MutationTransformer extends TransformerAbstract
     protected $defaultIncludes = [
         'unit',
     ];
-    
+
     protected $availableIncludes = [
         'mutable',
     ];
-    
+
     /**
      * A Fractal transformer.
      *
@@ -25,9 +25,10 @@ class MutationTransformer extends TransformerAbstract
     {
         $mutableType = '';
         switch ($mutation->mutable_type) {
-            case Mutation::MUTABLE_TYPE_ADJUSTMENT: $mutableType = 'Stock Adjustment'; break;
+            case Mutation::MUTABLE_TYPE_ADJUSTMENT:$mutableType = 'Stock Adjustment';
+                break;
         }
-        
+
         return [
             'quantity' => $mutation->quantity,
             'baseUnitQuantity' => $mutation->base_unit_quantity,
@@ -45,11 +46,6 @@ class MutationTransformer extends TransformerAbstract
 
     public function includeMutable(Mutation $mutation)
     {
-        switch ($mutation->mutable_type) {
-            case 'Entree\Item\Adjustment':
-                return $this->item($mutation->mutable, new AdjustmentTransformer);
-            default:
-                return null;
-        }
+        return $this->item($mutation->mutable, new MutableTransformer);
     }
 }

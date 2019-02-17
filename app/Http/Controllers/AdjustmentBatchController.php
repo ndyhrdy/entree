@@ -43,6 +43,7 @@ class AdjustmentBatchController extends Controller
                     ->getAdjustmentBatchesForStore($this->activeStore)
                 )
             ->transformWith(new AdjustmentBatchTransformer)
+            ->parseIncludes('mutation')
             ->respond();
     }
 

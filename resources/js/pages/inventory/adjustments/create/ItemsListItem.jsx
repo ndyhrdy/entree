@@ -21,7 +21,7 @@ export default class InventoryAdjustmentsCreateItemsListItem extends PureCompone
     const { item, adjustmentType, disabled, onUpdate, onRemove } = this.props;
     const endingQuantity =
       adjustmentType === "balance"
-        ? item.quantity
+        ? item.quantity * item.selectedUnit.ratio
         : item.currentQuantity +
           item.quantity *
             item.selectedUnit.ratio *
@@ -44,7 +44,11 @@ export default class InventoryAdjustmentsCreateItemsListItem extends PureCompone
             {adjustmentType === "issue" && (
               <RemoveIcon size={16} className="ml-1 mr-3" />
             )}
-            <UnitQuantityInput item={item} onChange={item => onUpdate(item)} disabled={disabled} />
+            <UnitQuantityInput
+              item={item}
+              onChange={item => onUpdate(item)}
+              disabled={disabled}
+            />
             <NavigateNextIcon size={16} className="ml-3" />
           </div>
         </td>
