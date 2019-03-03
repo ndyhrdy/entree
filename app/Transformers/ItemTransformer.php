@@ -34,6 +34,7 @@ class ItemTransformer extends TransformerAbstract
             'name' => $item->name,
             'description' => strlen(trim($item->description)) > 0 ? $item->description : 'No description',
             'currentQuantity' => $item->currentQuantity(),
+            'isStockMonitored' => (bool) $item->is_stock_monitored,
 
             'unit2Ratio' => $item->unit_2_ratio,
             'unit3Ratio' => $item->unit_3_ratio,

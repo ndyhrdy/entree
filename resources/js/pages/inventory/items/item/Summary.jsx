@@ -6,9 +6,11 @@ export default class Summary extends PureComponent {
   render() {
     return (
       <div className="mb-5">
-        <div className="mb-3 bg-white rounded pt-4 pb-1 px-3">
-          <QuantityGraph {...this.props} />
-        </div>
+        {!!this.props.isStockMonitored && (
+          <div className="mb-3 bg-white rounded pt-4 pb-1 px-3">
+            <QuantityGraph {...this.props} />
+          </div>
+        )}
         <div className="mb-3 d-flex align-items-stretch">
           <div className="bg-white rounded py-4 mr-2" style={{ flex: 1 }}>
             <RecentTransactions {...this.props} />

@@ -35,7 +35,9 @@ class Item extends Model
 
     public function currentQuantity()
     {
-        return optional($this->lastMutation)->ending_quantity ?: 0;
+        return $this->is_stock_monitored ? 
+            (optional($this->lastMutation)->ending_quantity ?: 0) : 
+            null;
     }
 
     public function lastMutation()

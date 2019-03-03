@@ -79,7 +79,7 @@ export default class ItemSettingsForm extends Component {
 
     return (
       <div className="row">
-        <div className="col-lg-6">
+        <div className="col-lg-9">
           <div className="form">
             {!!errors.server && errors.server.length > 0 && (
               <div className="alert alert-danger">{errors.server}</div>

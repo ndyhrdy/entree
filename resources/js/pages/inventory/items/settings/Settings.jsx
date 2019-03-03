@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink, Link, Redirect, Route, Switch } from "react-router-dom";
 
 import { fetchItems, selectItem, fillItemSelection } from "@/actions";
 import Form from "./Form";
@@ -56,7 +56,39 @@ export class InventoryItemsSettings extends Component {
               </li>
               <li className="breadcrumb-item active">Settings</li>
             </ol>
-            <Form {...item} onSaved={newItem => this.onItemSaved(newItem)} />
+            <div className="row">
+              <div className="col-lg-3">
+                <div className="list-group">
+                  <NavLink
+                    className="list-group-item list-group-item-action"
+                    to={"/inventory/items/" + item.slug + "/settings"}>
+                    General Settings
+                  </NavLink>
+                  <NavLink
+                    className="list-group-item list-group-item-action"
+                    to={"/inventory/items/" + item.slug + "/settings/stock"}>
+                    Stock Management
+                  </NavLink>
+                </div>
+              </div>
+              <div className="col-lg-9">
+                <Switch>
+                  <Route
+                    exact
+                    path={"/inventory/items/" + item.slug + "/settings"}
+                    render={() => (
+                      <Form
+                        {...item}
+                        onSaved={newItem => this.onItemSaved(newItem)}
+                      />
+                    )}
+                  />
+                  <Redirect
+                    to={"/inventory/items/" + item.slug + "/settings"}
+                  />
+                </Switch>
+              </div>
+            </div>
           </Fragment>
         ) : (
           <div>Loading item..</div>

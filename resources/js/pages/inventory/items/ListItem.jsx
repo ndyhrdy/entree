@@ -25,7 +25,8 @@ export default class InventoryItemsListItem extends PureComponent {
       },
       createdAt,
       currentQuantity,
-      lastMutation
+      lastMutation,
+      isStockMonitored
     } = this.props;
     const { highlighted } = this.state;
 
@@ -47,11 +48,13 @@ export default class InventoryItemsListItem extends PureComponent {
                 <span className="text-muted mr-2">SKU {sku}</span>
                 {highlighted && (
                   <Fragment>
-                    <Link
-                      className="text-dark mr-2"
-                      to={"/inventory/adjustments/new?_default_item=" + slug}>
-                      Adjust Stock
-                    </Link>
+                    {!!isStockMonitored && (
+                      <Link
+                        className="text-dark mr-2"
+                        to={"/inventory/adjustments/new?_default_item=" + slug}>
+                        Adjust Stock
+                      </Link>
+                    )}
                     <Link
                       className="text-dark mr-2"
                       to={"/inventory/purchase/" + slug}>
@@ -74,15 +77,21 @@ export default class InventoryItemsListItem extends PureComponent {
           </div>
         </td>
         <td className="text-right">
-          {numeral(currentQuantity).format(
-            highlighted ? "0,0.[0000]" : "0.[0]a"
+          {isStockMonitored ? (
+            <Fragment>
+              {numeral(currentQuantity).format(
+                highlighted ? "0,0.[0000]" : "0.[0]a"
+              )}
+              {highlighted && (
+                <Link to={"/inventory/adjustments/new?_default_item=" + slug}>
+                  <EditIcon size={16} className="ml-1" />
+                </Link>
+              )}
+              <div className="small text-muted">{unitName}</div>
+            </Fragment>
+          ) : (
+            "N/A"
           )}
-          {highlighted && (
-            <Link to={"/inventory/adjustments/new?_default_item=" + slug}>
-              <EditIcon size={16} className="ml-1" />
-            </Link>
-          )}
-          <div className="small text-muted">{unitName}</div>
         </td>
         <td className="text-right">
           {lastMutation
