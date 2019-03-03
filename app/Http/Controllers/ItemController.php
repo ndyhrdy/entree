@@ -3,26 +3,25 @@
 namespace Entree\Http\Controllers;
 
 use Entree\Item\Item;
-use Illuminate\Http\Request;
 use Entree\Services\ItemService;
 use Entree\Services\StoreService;
 use Entree\Transformers\ItemTransformer;
-use Entree\Transformers\MutationTransformer;
+use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
 
     private $itemService;
     private $storeService;
-    
+
     public function __construct()
     {
         $this->middleware('auth');
-        
+
         $this->itemService = new ItemService;
         $this->storeService = new StoreService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -34,23 +33,13 @@ class ItemController extends Controller
             ->collection(
                 $this->itemService->getItemsForStore(
                     $this->storeService->getActiveStoreForUser(auth()->user())
-                    )
                 )
+            )
             ->transformWith(new ItemTransformer)
             ->parseIncludes([
                 'createdBy', 'lastMutation',
             ])
             ->respond();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -86,17 +75,6 @@ class ItemController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Entree\Item\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -105,7 +83,11 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
+            return abort(403, 'Unauthenticated');
+        }
+        $item = $this->itemService->updateItem($item, $request->all(), $request->context);
+        return $this->show($item, $request);
     }
 
     /**

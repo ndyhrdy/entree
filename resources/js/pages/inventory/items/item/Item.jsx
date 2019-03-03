@@ -82,8 +82,8 @@ export class InventoryItemsItem extends Component {
                   </Link>
                   <Link
                     className="d-block px-3 py-2 border-top"
-                    to={"/inventory/items/" + item.slug + "/edit"}>
-                    Edit
+                    to={"/inventory/items/" + item.slug + "/settings"}>
+                    Settings
                   </Link>
                 </div>
               </div>

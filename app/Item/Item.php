@@ -11,7 +11,7 @@ class Item extends Model
     use Sluggable, SoftDeletes;
 
     protected $dates = [
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $with = [
@@ -20,7 +20,7 @@ class Item extends Model
 
     public function sluggable()
     {
-        return ['slug' => ['source' => ['sku', 'name']]];
+        return ['slug' => ['source' => ['sku', 'name'], 'onUpdate' => true]];
     }
 
     public function createdBy()
