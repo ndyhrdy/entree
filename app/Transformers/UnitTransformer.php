@@ -15,6 +15,7 @@ class UnitTransformer extends TransformerAbstract
     public function transform(Unit $unit)
     {
         return [
+            'id' => $unit->id,
             'name' => $unit->name,
             'pluralName' => $unit->plural_name,
             'shortName' => $unit->short_name,

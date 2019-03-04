@@ -67,8 +67,8 @@ export default class InventoryItemsListItem extends PureComponent {
                     </Link>
                     <Link
                       className="text-dark mr-2"
-                      to={"/inventory/items/" + slug + "/edit"}>
-                      Edit
+                      to={"/inventory/items/" + slug + "/settings"}>
+                      Settings
                     </Link>
                   </Fragment>
                 )}

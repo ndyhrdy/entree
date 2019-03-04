@@ -4,6 +4,7 @@ import { NavLink, Link, Redirect, Route, Switch } from "react-router-dom";
 
 import { fetchItems, selectItem, fillItemSelection } from "@/actions";
 import Form from "./Form";
+import Stock from "./Stock";
 
 export class InventoryItemsSettings extends Component {
   resolveItem() {
@@ -60,6 +61,7 @@ export class InventoryItemsSettings extends Component {
               <div className="col-lg-3">
                 <div className="list-group">
                   <NavLink
+                    exact
                     className="list-group-item list-group-item-action"
                     to={"/inventory/items/" + item.slug + "/settings"}>
                     General Settings
@@ -78,6 +80,16 @@ export class InventoryItemsSettings extends Component {
                     path={"/inventory/items/" + item.slug + "/settings"}
                     render={() => (
                       <Form
+                        {...item}
+                        onSaved={newItem => this.onItemSaved(newItem)}
+                      />
+                    )}
+                  />
+                  <Route
+                    exact
+                    path={"/inventory/items/" + item.slug + "/settings/stock"}
+                    render={() => (
+                      <Stock
                         {...item}
                         onSaved={newItem => this.onItemSaved(newItem)}
                       />
