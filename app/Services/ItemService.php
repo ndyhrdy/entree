@@ -55,7 +55,6 @@ class ItemService
             'description' => 'nullable|string',
             'isStockMonitored' => 'nullable|boolean',
             'unit' => 'nullable|exists:units,id',
-            'unit3' => 'nullable|exists:units,id',
             'unit2Ratio' => 'nullable|numeric|min:0',
             'unit3Ratio' => 'nullable|numeric|min:0',
         ]);

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Prompt } from "react-router-dom";
 import { CancelToken, isCancel } from "axios";
-import { CheckCircle } from "styled-icons/material";
+import { CheckCircle, InfoOutline } from "styled-icons/material";
 
 import api, { routes } from "@/api";
 import { fetchUnits } from "@/actions";
@@ -136,6 +136,18 @@ class InventoryItemSettingsStock extends Component {
               this item.
             </div>
           </div>
+
+          <div className="alert alert-info">
+            <div className="d-flex align-items-center mb-2">
+              <InfoOutline size={22} />
+              <div className="h5 mb-0 ml-2">About Stock Monitoring</div>
+            </div>
+            <p className="mb-0">
+              When stock monitoring for an item is enabled, please note that you
+              will not be allowed to make an outgoing transaction for the item
+              if the resulting quantity will be less than zero.
+            </p>
+          </div>
         </FormSection>
         <FormSection title="Units of Measurement">
           <div className="form-group">
@@ -159,7 +171,7 @@ class InventoryItemSettingsStock extends Component {
                   selectedUnit={unit2}
                   availableUnits={availableUnits}
                   disabled={fetchingUnits || saving}
-                  onSelect={unit2 => this.setState({ unit2 })}
+                  onSelect={unit2 => this.setState({ unit2, isDirty: true })}
                   showNull
                 />
               </div>
@@ -179,7 +191,7 @@ class InventoryItemSettingsStock extends Component {
                 </div>
               </div>
             </div>
-            {unit.id === unit2.id && (
+            {!!unit2 && unit.id === unit2.id && (
               <div className="form-text small text-danger">
                 Are you sure? Using same units will be ambiguous when making
                 transactions.
@@ -194,7 +206,7 @@ class InventoryItemSettingsStock extends Component {
                   selectedUnit={unit3}
                   availableUnits={availableUnits}
                   disabled={fetchingUnits || saving}
-                  onSelect={unit3 => this.setState({ unit3 })}
+                  onSelect={unit3 => this.setState({ unit3, isDirty: true })}
                   showNull
                 />
               </div>
@@ -214,7 +226,8 @@ class InventoryItemSettingsStock extends Component {
                 </div>
               </div>
             </div>
-            {(unit.id === unit3.id || unit2.id === unit3.id) && (
+            {((!!unit3 && unit.id === unit3.id) ||
+              (!!unit2 && !!unit3 && unit2.id === unit3.id)) && (
               <div className="form-text small text-danger">
                 Are you sure? Using same units will be ambiguous when making
                 transactions.
