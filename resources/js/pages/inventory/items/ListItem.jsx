@@ -17,6 +17,7 @@ export default class InventoryItemsListItem extends PureComponent {
       name,
       sku,
       slug,
+      images,
       unit: {
         data: { shortName: unitName }
       },
@@ -36,12 +37,14 @@ export default class InventoryItemsListItem extends PureComponent {
         onMouseLeave={() => this.setState({ highlighted: false })}>
         <td>
           <div className="d-flex">
-            <img
-              src={"https://picsum.photos/50?nonce=" + sku}
-              alt={name}
-              className="rounded mr-3"
-              style={{ height: 50, width: 50 }}
-            />
+            {!!images && images.length > 0 && (
+              <img
+                src={images[0]}
+                alt={name}
+                className="rounded mr-3"
+                style={{ height: 50, width: 50 }}
+              />
+            )}
             <div>
               <Link to={"/inventory/items/" + slug}>{name}</Link>
               <div className="small">

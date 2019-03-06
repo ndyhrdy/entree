@@ -28,6 +28,8 @@ class ItemTransformer extends TransformerAbstract
      */
     public function transform(Item $item)
     {
+        $images = $item->getMedia();
+        
         return [
             'slug' => $item->slug,
             'sku' => $item->sku,
@@ -35,6 +37,9 @@ class ItemTransformer extends TransformerAbstract
             'description' => strlen(trim($item->description)) > 0 ? $item->description : 'No description',
             'currentQuantity' => $item->currentQuantity(),
             'isStockMonitored' => (bool) $item->is_stock_monitored,
+            'images' => $images->map(function ($image) {
+                return $image->getUrl();
+            })->toArray(),
 
             'unit2Ratio' => $item->unit_2_ratio,
             'unit3Ratio' => $item->unit_3_ratio,

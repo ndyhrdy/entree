@@ -5,10 +5,12 @@ namespace Entree\Item;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Item extends Model
+class Item extends Model implements HasMedia
 {
-    use Sluggable, SoftDeletes;
+    use HasMediaTrait, Sluggable, SoftDeletes;
 
     protected $dates = [
         'deleted_at',
@@ -35,9 +37,9 @@ class Item extends Model
 
     public function currentQuantity()
     {
-        return $this->is_stock_monitored ? 
-            (optional($this->lastMutation)->ending_quantity ?: 0) : 
-            null;
+        return $this->is_stock_monitored ?
+        (optional($this->lastMutation)->ending_quantity ?: 0):
+        null;
     }
 
     public function lastMutation()
