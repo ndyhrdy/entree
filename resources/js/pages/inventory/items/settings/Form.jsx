@@ -4,10 +4,12 @@ import { isCancel, CancelToken } from "axios";
 import { CheckCircle } from "styled-icons/material";
 
 import api, { routes } from "@/api";
+import { FormSection } from "@/components";
+import InventoryItemSettingsImages from "./Images";
 
 let cancelRequest = null;
 
-export default class ItemSettingsForm extends Component {
+export default class InventoryItemSettingsForm extends Component {
   constructor(props) {
     super(props);
 
@@ -15,6 +17,7 @@ export default class ItemSettingsForm extends Component {
       sku: props.sku,
       name: props.name,
       description: props.description,
+      images: props.images,
 
       isDirty: false,
       errors: {},
@@ -68,24 +71,25 @@ export default class ItemSettingsForm extends Component {
 
   render() {
     const {
-      sku,
-      name,
       description,
-      saving,
-      saved,
       errors,
-      isDirty
+      images,
+      isDirty,
+      name,
+      saved,
+      saving,
+      sku
     } = this.state;
 
     return (
-      <div className="row">
-        <div className="col-lg-9">
-          <h3 className="mb-4">General Settings</h3>
-          <div className="form">
-            {!!errors.server && errors.server.length > 0 && (
-              <div className="alert alert-danger">{errors.server}</div>
-            )}
+      <div>
+        <h3 className="mb-4">General Settings</h3>
+        <div className="form">
+          {!!errors.server && errors.server.length > 0 && (
+            <div className="alert alert-danger">{errors.server}</div>
+          )}
 
+          <FormSection title="Item Details">
             <div className="form-group">
               <label className="form-label">SKU</label>
               <input
@@ -144,21 +148,25 @@ export default class ItemSettingsForm extends Component {
                 <div className="invalid-feedback">{errors.description[0]}</div>
               )}
             </div>
+          </FormSection>
 
-            <div className="mt-4 d-flex align-items-center">
-              <button
-                type="button"
-                className="btn btn-primary"
-                disabled={saving}
-                onClick={() => this.onSave()}>
-                {saving ? "Saving.." : "Save Changes"}
-              </button>
-              {!!saved && (
-                <div className="ml-3 text-success d-flex align-items-center">
-                  <CheckCircle size={24} className="mr-1" /> Saved!
-                </div>
-              )}
-            </div>
+          <FormSection title="Images">
+            <InventoryItemSettingsImages images={images} />
+          </FormSection>
+
+          <div className="mt-4 d-flex align-items-center">
+            <button
+              type="button"
+              className="btn btn-primary"
+              disabled={saving}
+              onClick={() => this.onSave()}>
+              {saving ? "Saving.." : "Save Changes"}
+            </button>
+            {!!saved && (
+              <div className="ml-3 text-success d-flex align-items-center">
+                <CheckCircle size={24} className="mr-1" /> Saved!
+              </div>
+            )}
           </div>
         </div>
         <Prompt when={isDirty} message="Your changes will be lost. Continue?" />

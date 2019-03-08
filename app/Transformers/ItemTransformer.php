@@ -38,7 +38,10 @@ class ItemTransformer extends TransformerAbstract
             'currentQuantity' => $item->currentQuantity(),
             'isStockMonitored' => (bool) $item->is_stock_monitored,
             'images' => $images->map(function ($image) {
-                return $image->getUrl();
+                return [
+                    'id' => $image->id,
+                    'url' => $image->getUrl(),
+                ];
             })->toArray(),
 
             'unit2Ratio' => $item->unit_2_ratio,

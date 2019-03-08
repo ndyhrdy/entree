@@ -41,7 +41,7 @@ export class InventoryItemsSettings extends Component {
     const item = this.resolveItem();
 
     return (
-      <div className="container py-4">
+      <div className="container py-5">
         {item ? (
           <Fragment>
             <ol className="breadcrumb mb-4">
