@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
+import { parse } from "querystring";
 import moment from "moment";
 
 import { fetchUnits } from "@/actions";
+import { Alert } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
 import InventoryUnitsListItem from "./ListItem";
 
@@ -24,9 +26,19 @@ export class InventoryUnitsList extends Component {
 
   render() {
     const { data, fetching, error } = this.props.units;
+    const {
+      location: { search }
+    } = this.props;
+    const query = parse(search.substr(1));
 
     return (
       <div className="container py-4">
+        {query._flow === "edit-success" && (
+          <Alert type="success" className="mb-4">
+            Changes saved!
+          </Alert>
+        )}
+
         <div className="card">
           <div className="card-header">
             <div className="d-flex justify-content-between align-items-center">

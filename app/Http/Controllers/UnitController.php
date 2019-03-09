@@ -5,7 +5,10 @@ namespace Entree\Http\Controllers;
 use Entree\Item\Unit;
 use Illuminate\Http\Request;
 use Entree\Services\UnitService;
+use Entree\Services\StoreService;
+use Exceptions\NotStaffException;
 use Entree\Transformers\UnitTransformer;
+use Illuminate\Validation\ValidationException;
 
 class UnitController extends Controller
 {
@@ -24,7 +27,7 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $storeService = new \Entree\Services\StoreService;
+        $storeService = new StoreService;
         $units = $this->unitService->getUnitsForStore(
             $storeService->getActiveStoreForUser(auth()->user())
         );
@@ -43,13 +46,12 @@ class UnitController extends Controller
     public function store(Request $request)
     {
         try {
-            $storeService = new \Entree\Services\StoreService;
-            $unit = $this->unitService->createUnitForStore(
-                $storeService->getActiveStoreForUser(auth()->user()),
+            $storeService = new StoreService;
+            $unit = $this->unitService->createUnit(
                 $request->all(),
                 auth()->user()
             );
-        } catch (\Illuminate\Validation\ValidationException $exception) {
+        } catch (ValidationException $exception) {
             return response([
                 'message' => 'Invalid data',
                 'errors' => $exception->errors(),
@@ -73,17 +75,6 @@ class UnitController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Entree\Item\Unit  $unit
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Unit $unit)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -92,7 +83,21 @@ class UnitController extends Controller
      */
     public function update(Request $request, Unit $unit)
     {
-        //
+        try {
+            $storeService = new StoreService;
+            $unit = $this->unitService->updateUnit(
+                $unit,
+                $request->all(),
+                auth()->user()
+            );
+        } catch (ValidationException $exception) {
+            return response([
+                'message' => 'Invalid data',
+                'errors' => $exception->errors(),
+            ], 422);
+        }
+        
+        return $this->index();
     }
 
     /**
