@@ -1,5 +1,10 @@
 import moment from "moment";
-import { UNITS_FETCH, UNITS_POPULATE, UNITS_SET_ERROR } from "../actions/types";
+import {
+  UNITS_FETCH,
+  UNITS_POPULATE,
+  UNITS_SET_ERROR,
+  UNITS_REMOVE
+} from "../actions/types";
 
 const defaultState = {
   data: [],
@@ -21,6 +26,11 @@ export default (state = defaultState, action) => {
       };
     case UNITS_SET_ERROR:
       return { ...state, fetching: false, error: action.error };
+    case UNITS_REMOVE:
+      return {
+        ...state,
+        data: [...state.data.filter(unit => unit.id !== action.unitId)]
+      };
     default:
       return state;
   }

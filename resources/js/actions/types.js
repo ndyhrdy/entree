@@ -22,6 +22,7 @@ export const STORES_FETCH = "STORES_FETCH";
 export const STORES_POPULATE = "STORES_POPULATE";
 export const STORES_SET_ERROR = "STORES_SET_ERROR";
 export const UNITS_FETCH = "UNITS_FETCH";
+export const UNITS_REMOVE = "UNITS_REMOVE";
 export const UNITS_POPULATE = "UNITS_POPULATE";
 export const UNITS_SET_ERROR = "UNITS_SET_ERROR";
 export const USER_CLEAR = "USER_CLEAR";

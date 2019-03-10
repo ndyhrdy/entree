@@ -2,11 +2,13 @@
 
 namespace Entree\Services;
 
+use Entree\Exceptions\NoActiveStoreException;
+use Entree\Exceptions\NotStaffException;
+use Entree\Exceptions\UnitNotDeletableException;
 use Entree\Item\Unit;
 use Entree\Store\Store;
+use Entree\Transformers\ItemTransformer;
 use Entree\User;
-use Exceptions\NoActiveStoreException;
-use Exceptions\NotStaffException;
 use Illuminate\Validation\Rule;
 use Validator;
 
@@ -39,7 +41,7 @@ class UnitService
                 'required',
                 'string',
                 Rule::unique('units', 'name')->where(function ($query) use ($store) {
-                    return $query->where('store_id', $store->id);
+                    return $query->where('store_id', $store->id)->whereNull('deleted_at');
                 }),
             ],
             'shortName' => 'nullable|string',
@@ -79,7 +81,7 @@ class UnitService
                 'required',
                 'string',
                 Rule::unique('units', 'name')->ignore($data['id'], 'id')->where(function ($query) use ($unit) {
-                    return $query->where('store_id', $unit->store->id);
+                    return $query->where('store_id', $unit->store->id)->whereNull('deleted_at');
                 }),
             ],
             'shortName' => 'nullable|string',
@@ -104,7 +106,7 @@ class UnitService
 
     public function setUnitAsDefaultForStore(
         $store,
-        \Entree\Item\Unit $defaultUnit
+        Unit $defaultUnit
     ) {
         $store->units->each(function ($unit) use ($defaultUnit) {
             if ($unit->id != $defaultUnit->id && $unit->is_default) {
@@ -118,6 +120,25 @@ class UnitService
         });
 
         return $defaultUnit;
+    }
+
+    public function deleteUnit(Unit $unit, User $deleteUser)
+    {
+        $storeService = new StoreService;
+        if (!$storeService->storeHasStaff($unit->store, $deleteUser)) {
+            throw new NotStaffException;
+        }
+        $assignedItemsAsPrimary = $unit->itemsAsPrimary;
+        if ($assignedItemsAsPrimary->count() > 0) {
+            throw new UnitNotDeletableException(
+                'Some items have this unit assigned as their primary unit.',
+                fractal()->collection($assignedItemsAsPrimary)->transformWith(new ItemTransformer)->toArray()['data']
+            );
+        }
+
+        $unit->delete();
+
+        return response('Unit deleted');
     }
 
 }

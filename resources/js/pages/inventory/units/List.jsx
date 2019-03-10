@@ -5,10 +5,11 @@ import { Add as AddIcon } from "styled-icons/material";
 import { parse } from "querystring";
 import moment from "moment";
 
-import { fetchUnits } from "@/actions";
+import { fetchUnits, showPrompt, hidePrompt } from "@/actions";
 import { Alert } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
 import InventoryUnitsListItem from "./ListItem";
+import ConfirmDelete from "./ConfirmDelete";
 
 export class InventoryUnitsList extends Component {
   componentDidMount() {
@@ -24,6 +25,12 @@ export class InventoryUnitsList extends Component {
     }
   }
 
+  handleDelete(unit) {
+    return this.props.showPrompt(
+      <ConfirmDelete onDismiss={() => this.props.hidePrompt()} unit={unit} />
+    );
+  }
+
   render() {
     const { data, fetching, error } = this.props.units;
     const {
@@ -36,6 +43,11 @@ export class InventoryUnitsList extends Component {
         {query._flow === "edit-success" && (
           <Alert type="success" className="mb-4">
             Changes saved!
+          </Alert>
+        )}
+        {query._flow === "create-success" && (
+          <Alert type="success" className="mb-4">
+            New unit created!
           </Alert>
         )}
 
@@ -85,7 +97,11 @@ export class InventoryUnitsList extends Component {
                 </tr>
               )}
               {data.map((unit, index) => (
-                <InventoryUnitsListItem key={"units-item-" + index} {...unit} />
+                <InventoryUnitsListItem
+                  key={"units-item-" + index}
+                  {...unit}
+                  onDelete={() => this.handleDelete(unit)}
+                />
               ))}
             </tbody>
           </table>
@@ -100,7 +116,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchUnits
+  fetchUnits,
+  showPrompt,
+  hidePrompt
 };
 
 export default connect(

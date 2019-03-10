@@ -22,6 +22,7 @@ api.interceptors.response.use(
       window.alert("Your session has ended. Please log in.");
       window.location.href = window.appConfig.baseURL + "/login";
     }
+    return Promise.reject(error);
   }
 );
 

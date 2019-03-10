@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import moment from "moment";
+import { Edit as EditIcon, Delete as DeleteIcon } from "styled-icons/material";
 import { Link } from "react-router-dom";
 
 export default class InventoryUnitsListItem extends PureComponent {
@@ -18,7 +19,8 @@ export default class InventoryUnitsListItem extends PureComponent {
       isDefault,
       shortName,
       createdAt,
-      isCreatedAutomatically
+      isCreatedAutomatically,
+      onDelete
     } = this.props;
     const { highlighted } = this.state;
 
@@ -44,8 +46,19 @@ export default class InventoryUnitsListItem extends PureComponent {
                     shortName.replace(" ", "") +
                     "/edit"
                   }>
-                  Edit
+                  <EditIcon size={12} /> Edit
                 </Link>
+                {!isDefault && (
+                  <a
+                    href="#"
+                    className="text-danger ml-2"
+                    onClick={e => {
+                      e.preventDefault();
+                      return onDelete();
+                    }}>
+                    <DeleteIcon size={12} /> Delete
+                  </a>
+                )}
               </span>
             )}
           </div>

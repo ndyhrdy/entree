@@ -22,5 +22,20 @@ class Unit extends Model
     {
         return $this->belongsTo('Entree\User');
     }
-    
+
+    public function itemsAsPrimary()
+    {
+        return $this->hasMany('Entree\Item\Item', 'unit_id');
+    }
+
+    public function itemsAsSecondary()
+    {
+        return $this->hasMany('Entree\Item\Item', 'unit_2_id');
+    }
+
+    public function itemsAsTertiary()
+    {
+        return $this->hasMany('Entree\Item\Item', 'unit_3_id');
+    }
+
 }

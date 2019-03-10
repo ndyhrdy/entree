@@ -112,7 +112,7 @@ export class InventoryUnitsEdit extends Component {
         <div className="row">
           <div className="col-lg-6 col-md-9">
             <Alert type="info">
-              <h4>A note on editing units</h4>
+              <h5>A note on editing units</h5>
               <div>
                 If a transaction has been made on an item with this unit as the
                 assigned unit, modifying this unit will also change the units

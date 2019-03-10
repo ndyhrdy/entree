@@ -8,6 +8,7 @@ use Entree\Services\UnitService;
 use Entree\Services\StoreService;
 use Exceptions\NotStaffException;
 use Entree\Transformers\UnitTransformer;
+use Exceptions\UnitNotDeletableException;
 use Illuminate\Validation\ValidationException;
 
 class UnitController extends Controller
@@ -84,7 +85,6 @@ class UnitController extends Controller
     public function update(Request $request, Unit $unit)
     {
         try {
-            $storeService = new StoreService;
             $unit = $this->unitService->updateUnit(
                 $unit,
                 $request->all(),
@@ -108,6 +108,11 @@ class UnitController extends Controller
      */
     public function destroy(Unit $unit)
     {
-        //
+        $this->unitService->deleteUnit(
+            $unit,
+            auth()->user()
+        );
+    
+        return $this->index();
     }
 }

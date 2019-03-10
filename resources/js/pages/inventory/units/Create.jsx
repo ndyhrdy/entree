@@ -31,8 +31,10 @@ export class InventoryUnitsCreate extends Component {
         .post(routes.units, this.state.data)
         .then(response => {
           this.setState({ isDirty: false });
-          populateUnits([...response.data.data]);
-          return this.props.history.push("/inventory/units");
+          this.props.populateUnits([...response.data.data]);
+          return this.props.history.push(
+            "/inventory/units?_flow=create-success"
+          );
         })
         .catch(error => {
           this.setState({ isSaving: false });
