@@ -9,6 +9,20 @@ export const routes = {
   units: "/units"
 };
 
-export default axios.create({
+const api = axios.create({
   baseURL: window.appConfig.apiBaseURL
 });
+
+api.interceptors.response.use(
+  response => {
+    return response;
+  },
+  error => {
+    if (error.response.status === 401) {
+      window.alert("Your session has ended. Please log in.");
+      window.location.href = window.appConfig.baseURL + "/login";
+    }
+  }
+);
+
+export default api;
