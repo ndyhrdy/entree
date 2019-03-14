@@ -86,7 +86,7 @@ class ItemController extends Controller
         if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
             return abort(403, 'Unauthenticated');
         }
-        $item = $this->itemService->updateItem($item, $request->all(), $request->context);
+        $item = $this->itemService->updateItemFromRequest($item, $request);
         return $this->show($item, $request);
     }
 

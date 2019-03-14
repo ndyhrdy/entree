@@ -4,8 +4,6 @@ import { isCancel, CancelToken } from "axios";
 import { CheckCircle } from "styled-icons/material";
 
 import api, { routes } from "@/api";
-import { FormSection } from "@/components";
-import InventoryItemSettingsImages from "./Images";
 
 let cancelRequest = null;
 
@@ -73,12 +71,12 @@ export default class InventoryItemSettingsForm extends Component {
     const {
       description,
       errors,
-      images,
       isDirty,
       name,
       saved,
       saving,
-      sku
+      sku,
+      slug
     } = this.state;
 
     return (
@@ -89,70 +87,64 @@ export default class InventoryItemSettingsForm extends Component {
             <div className="alert alert-danger">{errors.server}</div>
           )}
 
-          <FormSection title="Item Details">
-            <div className="form-group">
-              <label className="form-label">SKU</label>
-              <input
-                type="text"
-                className={
-                  "form-control" +
-                  (errors.sku && errors.sku.length > 0 ? " is-invalid" : "")
-                }
-                value={sku}
-                disabled={saving}
-                onChange={e => this.handleChange("sku", e.target.value)}
-              />
-              {errors.sku && errors.sku.length > 0 ? (
-                <div className="invalid-feedback">{errors.sku[0]}</div>
-              ) : (
-                <div className="form-text text-muted">
-                  A unique code to identify this item
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="form-label">Item Name</label>
-              <input
-                type="text"
-                className={
-                  "form-control" +
-                  (errors.name && errors.name.length > 0 ? " is-invalid" : "")
-                }
-                value={name}
-                disabled={saving}
-                onChange={e => this.handleChange("name", e.target.value)}
-              />
-              {errors.name && errors.name.length > 0 ? (
-                <div className="invalid-feedback">{errors.name[0]}</div>
-              ) : (
-                <div className="form-text text-muted">
-                  Make sure it's descriptive
-                </div>
-              )}
-            </div>
-            <div className="form-group">
-              <label className="form-label">Description</label>
-              <textarea
-                className={
-                  "form-control" +
-                  (errors.description && errors.description.length > 0
-                    ? " is-invalid"
-                    : "")
-                }
-                rows={3}
-                value={description}
-                disabled={saving}
-                onChange={e => this.handleChange("description", e.target.value)}
-              />
-              {errors.description && errors.description.length > 0 && (
-                <div className="invalid-feedback">{errors.description[0]}</div>
-              )}
-            </div>
-          </FormSection>
-
-          <FormSection title="Images">
-            <InventoryItemSettingsImages images={images} />
-          </FormSection>
+          <div className="form-group">
+            <label className="form-label">SKU</label>
+            <input
+              type="text"
+              className={
+                "form-control" +
+                (errors.sku && errors.sku.length > 0 ? " is-invalid" : "")
+              }
+              value={sku}
+              disabled={saving}
+              onChange={e => this.handleChange("sku", e.target.value)}
+            />
+            {errors.sku && errors.sku.length > 0 ? (
+              <div className="invalid-feedback">{errors.sku[0]}</div>
+            ) : (
+              <div className="form-text text-muted">
+                A unique code to identify this item
+              </div>
+            )}
+          </div>
+          <div className="form-group">
+            <label className="form-label">Item Name</label>
+            <input
+              type="text"
+              className={
+                "form-control" +
+                (errors.name && errors.name.length > 0 ? " is-invalid" : "")
+              }
+              value={name}
+              disabled={saving}
+              onChange={e => this.handleChange("name", e.target.value)}
+            />
+            {errors.name && errors.name.length > 0 ? (
+              <div className="invalid-feedback">{errors.name[0]}</div>
+            ) : (
+              <div className="form-text text-muted">
+                Make sure it's descriptive
+              </div>
+            )}
+          </div>
+          <div className="form-group">
+            <label className="form-label">Description</label>
+            <textarea
+              className={
+                "form-control" +
+                (errors.description && errors.description.length > 0
+                  ? " is-invalid"
+                  : "")
+              }
+              rows={3}
+              value={description}
+              disabled={saving}
+              onChange={e => this.handleChange("description", e.target.value)}
+            />
+            {errors.description && errors.description.length > 0 && (
+              <div className="invalid-feedback">{errors.description[0]}</div>
+            )}
+          </div>
 
           <div className="mt-4 d-flex align-items-center">
             <button

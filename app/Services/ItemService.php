@@ -5,6 +5,8 @@ namespace Entree\Services;
 use Carbon\Carbon;
 use Entree\Item\Item;
 use Entree\Store\Store;
+use Image;
+use Storage;
 use Validator;
 
 class ItemService
@@ -47,9 +49,9 @@ class ItemService
             ->get();
     }
 
-    public function updateItem(Item $item, $data = [], $context = 'general')
+    public function updateItemFromRequest(Item $item, $request)
     {
-        $validator = Validator::make($data, [
+        $validator = Validator::make($request->all(), [
             'sku' => 'nullable|string',
             'name' => 'nullable|string',
             'description' => 'nullable|string',
@@ -57,6 +59,8 @@ class ItemService
             'unit' => 'nullable|exists:units,id',
             'unit2Ratio' => 'nullable|numeric|min:0',
             'unit3Ratio' => 'nullable|numeric|min:0',
+            'image' => 'nullable|image',
+            'crop' => 'required_with:image|json',
         ]);
         $validator->sometimes('unit2', 'exists:units,id', function ($input) {
             return $input->unit2 != 0;
@@ -66,19 +70,34 @@ class ItemService
         });
         $validator->validate();
 
-        $item->sku = isset($data['sku']) ? trim($data['sku']) : $item->sku;
-        $item->name = isset($data['name']) ? trim($data['name']) : $item->name;
-        $item->description = isset($data['description']) ? trim($data['description']) : $item->description;
-        $item->is_stock_monitored = isset($data['isStockMonitored']) ? (bool) $data['isStockMonitored'] : $item->is_stock_monitored;
-        $item->unit_id = isset($data['unit']) ? $data['unit'] : $item->unit_id;
-        $item->unit_2_id = isset($data['unit2']) ? ($data['unit2'] != 0 ? $data['unit2'] : null) : $item->unit_2_id;
-        $item->unit_3_id = isset($data['unit3']) ? ($data['unit3'] != 0 ? $data['unit3'] : null) : $item->unit_3_id;
-        $item->unit_2_ratio = isset($data['unit2Ratio']) ? $data['unit2Ratio'] : $item->unit_2_ratio;
-        $item->unit_3_ratio = isset($data['unit3Ratio']) ? $data['unit3Ratio'] : $item->unit_3_ratio;
+        $item->sku = isset($request->sku) ? trim($request->sku) : $item->sku;
+        $item->name = isset($request->name) ? trim($request->name) : $item->name;
+        $item->description = isset($request->description) ? trim($request->description) : $item->description;
+        $item->is_stock_monitored = isset($request->isStockMonitored) ? (bool) $request->isStockMonitored : $item->is_stock_monitored;
+        $item->unit_id = isset($request->unit) ? $request->unit : $item->unit_id;
+        $item->unit_2_id = isset($request->unit2) ? ($request->unit2 != 0 ? $request->unit2 : null) : $item->unit_2_id;
+        $item->unit_3_id = isset($request->unit3) ? ($request->unit3 != 0 ? $request->unit3 : null) : $item->unit_3_id;
+        $item->unit_2_ratio = isset($request->unit2Ratio) ? $request->unit2Ratio : $item->unit_2_ratio;
+        $item->unit_3_ratio = isset($request->unit3Ratio) ? $request->unit3Ratio : $item->unit_3_ratio;
         $item->save();
+
+        if ($request->hasFile('image')) {
+            $this->addImage($item, Image::make($request->file('image')), $request->crop);
+        }
 
         $item->refresh();
         return $item;
+    }
+
+    public function addImage(Item $item, $image, $crop)
+    {
+        $crop = json_decode($crop);
+        $image->crop($crop->width, $crop->height, $crop->x, $crop->y);
+        $filename = storage_path('app/tmp/' . 'image_' . time() . '-' . str_random(32) . '.jpg');
+        $image->save($filename);
+
+        $item->addMedia($filename)->toMediaCollection('images');
+        Storage::delete($filename);
     }
 
 }

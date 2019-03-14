@@ -4,7 +4,6 @@ namespace Entree\Transformers;
 
 use Entree\Item\Item;
 use League\Fractal\TransformerAbstract;
-use League\Fractal\ParamBag;
 
 class ItemTransformer extends TransformerAbstract
 {
@@ -20,7 +19,7 @@ class ItemTransformer extends TransformerAbstract
         'unit2',
         'unit3',
     ];
-    
+
     /**
      * A Fractal transformer.
      *
@@ -28,8 +27,8 @@ class ItemTransformer extends TransformerAbstract
      */
     public function transform(Item $item)
     {
-        $images = $item->getMedia();
-        
+        $images = $item->getMedia('images');
+
         return [
             'slug' => $item->slug,
             'sku' => $item->sku,
@@ -40,13 +39,14 @@ class ItemTransformer extends TransformerAbstract
             'images' => $images->map(function ($image) {
                 return [
                     'id' => $image->id,
-                    'url' => $image->getUrl(),
+                    'url' => $image->getFullUrl(),
+                    'thumbUrl' => $image->getFullUrl('thumb'),
                 ];
             })->toArray(),
 
             'unit2Ratio' => $item->unit_2_ratio,
             'unit3Ratio' => $item->unit_3_ratio,
-            
+
             'createdAt' => $item->created_at->toIso8601String(),
         ];
     }
@@ -80,5 +80,5 @@ class ItemTransformer extends TransformerAbstract
     {
         return $this->item($item->createdBy, new UserTransformer);
     }
-    
+
 }

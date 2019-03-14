@@ -1,19 +1,32 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useDropzone } from "react-dropzone";
+import { CloudUpload as CloudUploadIcon } from "styled-icons/material";
 
-export default () => {
-  const onDrop = useCallback(acceptedFiles => {
-    // Do something with the files
-  }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+export default props => {
+  const onDrop = acceptedFiles => props.onAddedFiles(acceptedFiles);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: "image/*",
+    onDrop
+  });
 
   return (
-    <div {...getRootProps()}>
+    <div
+      {...getRootProps()}
+      className={[
+        "dropzone py-5 px-4 d-flex flex-column align-items-center rounded",
+        isDragActive ? "active" : null,
+        isDragActive && props.activeClassName ? props.activeClassName : null,
+        props.className
+      ].join(" ")}>
       <input {...getInputProps()} />
+      <CloudUploadIcon size={48} />
       {isDragActive ? (
-        <p>Drop the files here ...</p>
+        <div>{props.activeLabel || "Drop the files here..."}</div>
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <div>
+          {props.label ||
+            "Drag and drop some files here, or click to select files"}
+        </div>
       )}
     </div>
   );

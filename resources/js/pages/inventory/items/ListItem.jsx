@@ -39,7 +39,7 @@ export default class InventoryItemsListItem extends PureComponent {
           <div className="d-flex">
             {!!images && images.length > 0 && (
               <img
-                src={images[0].url}
+                src={images[0].thumbUrl || images[0].url}
                 alt={name}
                 className="rounded mr-3"
                 style={{ height: 50, width: 50 }}

@@ -1,28 +1,33 @@
-
 // Fonts
 @font-face {
-  font-family: 'Sarabun';
+  font-family: "Sarabun";
   font-weight: 400;
-  src: url('../fonts/Sarabun-Light.ttf');
+  src: url("../fonts/Sarabun-Light.ttf");
 }
 @font-face {
-  font-family: 'Sarabun';
+  font-family: "Sarabun";
   font-weight: 300;
-  src: url('../fonts/Sarabun-Light.ttf');
+  src: url("../fonts/Sarabun-Light.ttf");
 }
 @font-face {
-  font-family: 'Sarabun';
+  font-family: "Sarabun";
   font-weight: 700;
-  src: url('../fonts/Sarabun-Bold.ttf');
+  src: url("../fonts/Sarabun-Bold.ttf");
 }
 
 // Variables
-@import 'variables';
+@import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "~bootstrap/scss/bootstrap";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+// Image cropper
+@import "~react-image-crop/lib/ReactCrop";
+
+.dropzone {
+  border: $gray-300 5px dashed;
+  &.active {
+    background-color: $primary;
+    color: $gray-100;
+  }
 }

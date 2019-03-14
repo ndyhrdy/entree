@@ -5,6 +5,7 @@ import { NavLink, Link, Redirect, Route, Switch } from "react-router-dom";
 import { fetchItems, selectItem, fillItemSelection } from "@/actions";
 import Form from "./Form";
 import Stock from "./Stock";
+import Images from "./Images";
 
 export class InventoryItemsSettings extends Component {
   resolveItem() {
@@ -71,6 +72,12 @@ export class InventoryItemsSettings extends Component {
                     to={"/inventory/items/" + item.slug + "/settings/stock"}>
                     Stock Management
                   </NavLink>
+                  <NavLink
+                    exact
+                    className="list-group-item list-group-item-action"
+                    to={"/inventory/items/" + item.slug + "/settings/images"}>
+                    Images
+                  </NavLink>
                 </div>
               </div>
               <div className="col-lg-9">
@@ -94,6 +101,11 @@ export class InventoryItemsSettings extends Component {
                         onSaved={newItem => this.onItemSaved(newItem)}
                       />
                     )}
+                  />
+                  <Route
+                    exact
+                    path={"/inventory/items/" + item.slug + "/settings/images"}
+                    render={() => <Images {...item} />}
                   />
                   <Redirect
                     to={"/inventory/items/" + item.slug + "/settings"}

@@ -16,7 +16,9 @@ export class Navbar extends Component {
       <nav className="navbar navbar-expand-md bg-dark navbar-dark navbar-laravel">
         <div className="container">
           <div className="navbar-brand" to="/">
-            <Link to="/"><AppsIcon size={20} className="mr-2 mb-1 text-white" /></Link>
+            <Link to="/">
+              <AppsIcon size={20} className="mr-2 mb-1 text-white" />
+            </Link>
             {activeStore.data ? (
               <span>
                 {activeStore.data.name}{" "}
@@ -66,6 +68,13 @@ export class Navbar extends Component {
                       onSwitch={store => this.props.switchActiveStore(store)}
                     />
 
+                    <div className="dropdown-divider" />
+                    <Link to="/stores" className="dropdown-item">
+                      Manage Stores
+                    </Link>
+                    <Link to="/account" className="dropdown-item">
+                      Account Settings
+                    </Link>
                     <div className="dropdown-divider" />
                     <Logout />
                   </div>

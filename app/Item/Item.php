@@ -5,6 +5,7 @@ namespace Entree\Item;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\Models\Media;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
@@ -23,6 +24,11 @@ class Item extends Model implements HasMedia
     public function sluggable()
     {
         return ['slug' => ['source' => ['sku', 'name'], 'onUpdate' => true]];
+    }
+
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')->width(200);
     }
 
     public function createdBy()
