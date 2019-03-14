@@ -5,7 +5,7 @@ import { NavLink, Link, Redirect, Route, Switch } from "react-router-dom";
 import { fetchItems, selectItem, fillItemSelection } from "@/actions";
 import Form from "./Form";
 import Stock from "./Stock";
-import Images from "./Images";
+import Images from "./images/Images";
 
 export class InventoryItemsSettings extends Component {
   resolveItem() {

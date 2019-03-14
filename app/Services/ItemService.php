@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Entree\Item\Item;
 use Entree\Store\Store;
 use Image;
+use Spatie\MediaLibrary\Models\Media;
 use Storage;
 use Validator;
 
@@ -61,6 +62,7 @@ class ItemService
             'unit3Ratio' => 'nullable|numeric|min:0',
             'image' => 'nullable|image',
             'crop' => 'required_with:image|json',
+            'makeDefaultImage' => 'nullable|exists:media,id',
         ]);
         $validator->sometimes('unit2', 'exists:units,id', function ($input) {
             return $input->unit2 != 0;
@@ -85,6 +87,10 @@ class ItemService
             $this->addImage($item, Image::make($request->file('image')), $request->crop);
         }
 
+        if (isset($request->makePrimaryImage)) {
+            $this->setDefaultImage($item, $request->makePrimaryImage);
+        }
+
         $item->refresh();
         return $item;
     }
@@ -98,6 +104,15 @@ class ItemService
 
         $item->addMedia($filename)->toMediaCollection('images');
         Storage::delete($filename);
+    }
+
+    public function setDefaultImage(Item $item, $imageId)
+    {
+        $itemImages = $item->getMedia('images');
+        $newOrder = $itemImages->sortBy(function ($image) use ($imageId) {
+            return $image->id === $imageId ? 0 : 1;
+        })->values()->pluck('id')->toArray();
+        Media::setNewOrder($newOrder, $item->id);
     }
 
 }
