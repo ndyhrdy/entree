@@ -60,9 +60,10 @@ class ItemService
             'unit' => 'nullable|exists:units,id',
             'unit2Ratio' => 'nullable|numeric|min:0',
             'unit3Ratio' => 'nullable|numeric|min:0',
-            'image' => 'nullable|image',
+            'image' => 'nullable|image|max:2048',
             'crop' => 'required_with:image|json',
-            'makeDefaultImage' => 'nullable|exists:media,id',
+            'makePrimaryImage' => 'nullable|exists:media,id',
+            'deleteImage' => 'nullable|exists:media,id',
         ]);
         $validator->sometimes('unit2', 'exists:units,id', function ($input) {
             return $input->unit2 != 0;
@@ -90,6 +91,9 @@ class ItemService
         if (isset($request->makePrimaryImage)) {
             $this->setDefaultImage($item, $request->makePrimaryImage);
         }
+        if (isset($request->deleteImage)) {
+            $this->deleteImage($item, $request->deleteImage);
+        }
 
         $item->refresh();
         return $item;
@@ -113,6 +117,11 @@ class ItemService
             return $image->id === $imageId ? 0 : 1;
         })->values()->pluck('id')->toArray();
         Media::setNewOrder($newOrder, $item->id);
+    }
+
+    public function deleteImage(Item $item, $imageId)
+    {
+        $item->getMedia('images')->where('id', $imageId)->first()->delete();
     }
 
 }

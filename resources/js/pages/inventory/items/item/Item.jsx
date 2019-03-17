@@ -58,6 +58,13 @@ export class InventoryItemsItem extends Component {
             </div>
             <div className="row">
               <div className="col-md-3">
+                {item.images.length > 0 && (
+                  <img
+                    src={item.images[0].thumbUrl}
+                    alt={item.name}
+                    className="w-100 rounded mb-3"
+                  />
+                )}
                 <div className="mb-3 bg-white rounded pt-4 pb-1 px-3">
                   <Description {...item} />
                 </div>

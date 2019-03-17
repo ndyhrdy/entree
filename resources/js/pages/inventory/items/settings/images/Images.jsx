@@ -70,7 +70,7 @@ class InventoryItemSettingsImages extends Component {
     return this.onProcessImage(image, "makePrimary");
   }
 
-  onDelete(image) {
+  onDeleteImage(image) {
     return this.onProcessImage(image, "delete");
   }
 
@@ -97,12 +97,16 @@ class InventoryItemSettingsImages extends Component {
   render() {
     const { error, processing, uploading, uploadProgress } = this.state;
     const { images } = this.props;
+    const errorMessage =
+      !!error && !!error.errors && !!error.errors.image
+        ? error.errors.image[0]
+        : error;
 
     return (
       <div>
         <h3 className="mb-4">Images</h3>
         <div className="form">
-          {!!error && <div className="alert alert-danger">{error}</div>}
+          {!!error && <div className="alert alert-danger">{errorMessage}</div>}
           {images.length === 0 && (
             <div className="alert alert-info">
               <div>This item doesn't have an image yet.</div>
@@ -119,7 +123,7 @@ class InventoryItemSettingsImages extends Component {
           ) : (
             <FileDrop
               className="mb-4"
-              label="Drop an image here, or click to select image"
+              label="Drop an image here, or click to select image (max 2MB)"
               inactiveLabel="Drop the image here"
               onAddedFiles={addedImages => this.onAddedImage(addedImages[0])}
             />
