@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 import InventoryItemsList from "./List";
 import InventoryItemsItem from "./item/Item";
+import InventoryItemsCreate from "./create/Create";
 import InventoryItemsSettings from "./settings/Settings";
 
 export default class InventoryItems extends PureComponent {
@@ -10,6 +11,11 @@ export default class InventoryItems extends PureComponent {
     return (
       <Switch>
         <Route exact path="/inventory/items" component={InventoryItemsList} />
+        <Route
+          exact
+          path="/inventory/items/new"
+          component={InventoryItemsCreate}
+        />
         <Route
           path="/inventory/items/:slug/settings"
           component={InventoryItemsSettings}

@@ -50,7 +50,12 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->itemService->createItemForStoreFromRequest(
+            $request, 
+            $this->storeService->getActiveStoreForUser($request->user())
+        );
+        
+        return $this->index();
     }
 
     /**

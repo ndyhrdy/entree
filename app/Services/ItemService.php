@@ -50,6 +50,56 @@ class ItemService
             ->get();
     }
 
+    public function createItemForStoreFromRequest($request, Store $store)
+    {
+        $validator = Validator::make($request->all(), [
+            'sku' => 'required|string|unique:items',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'isStockMonitored' => 'boolean',
+            'primaryUnit.id' => 'required|exists:units,id',
+            'initialQuantity' => 'required_if:isStockMonitored,true|numeric|min:0',
+        ]);
+        $validator->validate();
+
+        $item = new Item;
+        $item->store_id = $store->id;
+        $item->sku = $request->sku;
+        $item->name = $request->name;
+        $item->description = $request->description ?: '';
+        $item->is_stock_monitored = $request->isStockMonitored;
+        $item->unit_id = $request->primaryUnit['id'];
+        $item->created_by = $request->user()->id;
+        $item->save();
+
+        if ($request->initialQuantity > 0) {
+            $item = $this->setInitialStock($item, $request->initialQuantity, 1);
+        }
+
+        return $item;
+    }
+
+    public function setInitialStock($item, $quantity, $unitIndex)
+    {
+        $adjustmentService = new AdjustmentService;
+        $adjustmentService->createAdjustmentForStore(
+            [
+                'adjustmentType' => 'balance',
+                'items' => [
+                    [
+                        'slug' => $item->slug, 
+                        'quantity' => $quantity, 
+                        'selectedUnit' => [
+                            'index' => $unitIndex
+                        ] 
+                    ]
+                ]
+            ], 
+            $item->store, 
+            $item->createdBy);
+        return $item;
+    }
+
     public function updateItemFromRequest(Item $item, $request)
     {
         $validator = Validator::make($request->all(), [

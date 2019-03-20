@@ -47,7 +47,7 @@ class Item extends Model implements HasMedia
         (optional($this->lastMutation)->ending_quantity ?: 0):
         null;
     }
-
+    
     public function lastMutation()
     {
         return $this->hasOne('Entree\Item\Mutation')->orderBy('created_at', 'desc');
