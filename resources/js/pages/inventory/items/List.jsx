@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Add as AddIcon } from "styled-icons/material";
+import { Add as AddIcon, ExpandMore } from "styled-icons/material";
 import moment from "moment";
 import Swal from "sweetalert2";
 import SwalReact from "sweetalert2-react-content";
@@ -11,10 +11,19 @@ import { ColumnHeader } from "@/components/DataTable";
 import { fetchItems, searchItems } from "@/actions";
 import InventoryItemsListItem from "./ListItem";
 import { fuzzySearch, getFlowFromQueryString } from "@/helpers/misc";
+import { default as sortData, types as sortTypes } from "./sort";
 
 const alert = SwalReact(Swal);
 
 export class InventoryItemsList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sort: sortTypes[0]
+    };
+  }
+
   componentDidMount() {
     const {
       items: { lastLoadTimestamp },
@@ -42,6 +51,7 @@ export class InventoryItemsList extends Component {
 
   render() {
     const { items, searchItems } = this.props;
+    const { sort } = this.state;
     const data =
       items.term.length > 0
         ? fuzzySearch({
@@ -65,8 +75,30 @@ export class InventoryItemsList extends Component {
                   placeholder="Search items.."
                 />
               </div>
-              <div>
-                <Link to="/inventory/items/new" className="btn btn-primary">
+              <div className="d-flex align-items-center">
+                <div>Sort by</div>
+                <div className="dropdown ml-2">
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary dropdown-toggle"
+                    data-toggle="dropdown">
+                    {sort.label} <ExpandMore size="16" />
+                  </button>
+                  <ul className="dropdown-menu dropdown-menu-right">
+                    {sortTypes.map(sortType => (
+                      <button
+                        type="button"
+                        className="dropdown-item"
+                        onClick={() => this.setState({ sort: sortType })}
+                        key={sortType.key}>
+                        {sortType.label}
+                      </button>
+                    ))}
+                  </ul>
+                </div>
+                <Link
+                  to="/inventory/items/new"
+                  className="btn btn-primary ml-2">
                   <AddIcon size={24} /> Add Item
                 </Link>
               </div>
@@ -102,7 +134,7 @@ export class InventoryItemsList extends Component {
                   </td>
                 </tr>
               )}
-              {data.map((item, index) => (
+              {sortData(data, sort).map((item, index) => (
                 <InventoryItemsListItem key={"items-item-" + index} {...item} />
               ))}
             </tbody>
