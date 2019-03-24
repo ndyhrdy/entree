@@ -58,7 +58,6 @@ class ItemService
             'description' => 'nullable|string',
             'isStockMonitored' => 'boolean',
             'primaryUnit.id' => 'required|exists:units,id',
-            'initialQuantity' => 'required_if:isStockMonitored,true|numeric|min:0',
         ]);
         $validator->validate();
 
@@ -72,31 +71,6 @@ class ItemService
         $item->created_by = $request->user()->id;
         $item->save();
 
-        if ($request->initialQuantity > 0) {
-            $item = $this->setInitialStock($item, $request->initialQuantity, 1);
-        }
-
-        return $item;
-    }
-
-    public function setInitialStock($item, $quantity, $unitIndex)
-    {
-        $adjustmentService = new AdjustmentService;
-        $adjustmentService->createAdjustmentForStore(
-            [
-                'adjustmentType' => 'balance',
-                'items' => [
-                    [
-                        'slug' => $item->slug, 
-                        'quantity' => $quantity, 
-                        'selectedUnit' => [
-                            'index' => $unitIndex
-                        ] 
-                    ]
-                ]
-            ], 
-            $item->store, 
-            $item->createdBy);
         return $item;
     }
 

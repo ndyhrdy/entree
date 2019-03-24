@@ -6,7 +6,7 @@ import { ExpandMore as ExpandMoreIcon } from "styled-icons/material";
 
 import api, { routes } from "@/api";
 import { fetchUnits, populateItems } from "@/actions";
-import { Alert, FormSection, QuantityInput, UnitPicker } from "@/components";
+import { Alert, FormSection, UnitPicker } from "@/components";
 
 let cancelRequest;
 
@@ -21,7 +21,6 @@ class InventoryItemsCreate extends Component {
 
       isStockMonitored: false,
       primaryUnit: null,
-      initialQuantity: 0,
 
       isDirty: false,
       saving: false,
@@ -52,7 +51,6 @@ class InventoryItemsCreate extends Component {
           name,
           description,
           isStockMonitored,
-          initialQuantity,
           primaryUnit
         } = this.state;
         const response = await api.post(
@@ -62,7 +60,6 @@ class InventoryItemsCreate extends Component {
             name,
             description,
             isStockMonitored,
-            initialQuantity,
             primaryUnit
           },
           {
@@ -108,7 +105,6 @@ class InventoryItemsCreate extends Component {
     const {
       description,
       errors,
-      initialQuantity,
       isDirty,
       isStockMonitored,
       name,
@@ -231,30 +227,11 @@ class InventoryItemsCreate extends Component {
                 </div>
 
                 {isStockMonitored && (
-                  <div className="form-group">
-                    <label>Set Initial Quantity</label>
-                    <div className="row">
-                      <div className="col-6">
-                        <div className="row no-gutters align-items-center">
-                          <div className="col-6">
-                            <QuantityInput
-                              disabled={saving}
-                              value={initialQuantity}
-                              onChange={initialQuantity =>
-                                this.setState({
-                                  initialQuantity,
-                                  isDirty: true
-                                })
-                              }
-                            />
-                          </div>
-                          <div className="col-6 pl-3">
-                            {!!primaryUnit && primaryUnit.pluralName}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <Alert type="info">
+                    You can set this item's initial stock quantity by creating a
+                    stock adjustment for this item with <strong>Balance</strong>{" "}
+                    type.
+                  </Alert>
                 )}
                 <div className="form-group">
                   <label>Primary Unit</label>

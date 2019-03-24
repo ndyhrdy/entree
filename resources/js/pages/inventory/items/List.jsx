@@ -3,24 +3,40 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
 import moment from "moment";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
 import { LoadingIndicator } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
 import { fetchItems, searchItems } from "@/actions";
 import InventoryItemsListItem from "./ListItem";
-import { fuzzySearch } from "@/helpers/misc";
+import { fuzzySearch, getFlowFromQueryString } from "@/helpers/misc";
+
+const alert = SwalReact(Swal);
 
 export class InventoryItemsList extends Component {
   componentDidMount() {
     const {
       items: { lastLoadTimestamp },
-      fetchItems
+      fetchItems,
+      location: { search }
     } = this.props;
     if (
       !lastLoadTimestamp ||
       moment(lastLoadTimestamp).isBefore(moment().subtract(5, "minutes"))
     ) {
-      return fetchItems();
+      fetchItems();
+    }
+
+    const flow = getFlowFromQueryString(search);
+    if (flow === "create-success") {
+      alert.fire({
+        type: "success",
+        title: "Hi-five!",
+        text: "You've added a spanking new item!",
+        timer: 3000,
+        showConfirmButton: false
+      });
     }
   }
 
