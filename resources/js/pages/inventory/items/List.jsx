@@ -78,7 +78,7 @@ export class InventoryItemsList extends Component {
             <tbody>
               {items.fetching && items.data.length === 0 && (
                 <tr>
-                  <td colSpan={4} className="py-5">
+                  <td colSpan={4}>
                     <LoadingIndicator
                       size={80}
                       label="Hang on, we're getting your inventory.."

@@ -2,13 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Prompt } from "react-router-dom";
 import { CancelToken, isCancel } from "axios";
-import { CheckCircle, InfoOutline } from "styled-icons/material";
+import { InfoOutline } from "styled-icons/material";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
 import api, { routes } from "@/api";
 import { fetchUnits } from "@/actions";
 import { FormSection, UnitPicker } from "@/components";
 
 let cancelRequest;
+const alert = SwalReact(Swal);
 
 class InventoryItemSettingsStock extends Component {
   constructor(props) {
@@ -25,7 +28,6 @@ class InventoryItemSettingsStock extends Component {
 
       isDirty: false,
       saving: false,
-      saved: false,
       errors: {}
     };
   }
@@ -35,11 +37,11 @@ class InventoryItemSettingsStock extends Component {
   }
 
   handleChange(field, value) {
-    return this.setState({ [field]: value, isDirty: true, saved: false });
+    return this.setState({ [field]: value, isDirty: true });
   }
 
   onSave() {
-    const { onSaved, slug } = this.props;
+    const { onSaved, name, slug } = this.props;
     const {
       isStockMonitored,
       unit,
@@ -70,12 +72,23 @@ class InventoryItemSettingsStock extends Component {
           }
         );
         const { data: item } = response.data;
-        this.setState({ isDirty: false, saved: true, saving: false });
-        return onSaved(item);
+        return this.setState({ isDirty: false, saving: false }, () => {
+          alert.fire({
+            type: "success",
+            title: "Changes saved!",
+            text:
+              "Stock settings for " + name + " has been saved successfully.",
+            showConfirmButton: false,
+            timer: 3000
+          });
+          return onSaved(item);
+        });
       } catch (e) {
         if (isCancel(e)) {
           return;
         }
+        if (e.response && e.response.data.message)
+          alert.fire("Oops!", e.response.data.message, "error");
         return this.setState({
           saving: false,
           errors: e.response
@@ -92,7 +105,6 @@ class InventoryItemSettingsStock extends Component {
       isDirty,
       isStockMonitored,
       saving,
-      saved,
       unit,
       unit2,
       unit3,
@@ -238,16 +250,11 @@ class InventoryItemSettingsStock extends Component {
         <div className="mt-4 d-flex align-items-center">
           <button
             type="button"
-            disabled={saving}
+            disabled={fetchingUnits || saving}
             className="btn btn-primary"
             onClick={() => this.onSave()}>
             {saving ? "Saving.." : "Save Changes"}
           </button>
-          {!!saved && (
-            <div className="ml-3 text-success d-flex align-items-center">
-              <CheckCircle size={24} className="mr-1" /> Saved!
-            </div>
-          )}
         </div>
         <Prompt
           when={isDirty}

@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Prompt } from "react-router-dom";
 import { isCancel, CancelToken } from "axios";
-import { CheckCircle } from "styled-icons/material";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
 import api, { routes } from "@/api";
 
 let cancelRequest = null;
+const alert = SwalReact(Swal);
 
 export default class InventoryItemSettingsForm extends Component {
   constructor(props) {
@@ -19,16 +21,12 @@ export default class InventoryItemSettingsForm extends Component {
 
       isDirty: false,
       errors: {},
-      saving: false,
-      saved: false
+      saving: false
     };
   }
 
   handleChange(field, value) {
-    return this.setState(
-      { [field]: value, isDirty: true, saved: false },
-      () => {}
-    );
+    return this.setState({ [field]: value, isDirty: true }, () => {});
   }
 
   async onSave() {
@@ -47,13 +45,22 @@ export default class InventoryItemSettingsForm extends Component {
         }
       );
 
-      return this.setState({ saving: false, saved: true, isDirty: false }, () =>
-        this.props.onSaved(response.data.data)
-      );
+      return this.setState({ saving: false, isDirty: false }, () => {
+        alert.fire({
+          title: "Changes saved!",
+          text: "Settings for " + name + " has been saved successfully.",
+          type: "success",
+          timer: 3000,
+          showConfirmButton: false
+        });
+        return this.props.onSaved(response.data.data);
+      });
     } catch (e) {
       if (isCancel(e)) {
         return;
       }
+      if (e.response && e.response.data.message)
+        alert.fire("Oops!", e.response.data.message, "error");
       return this.setState({
         saving: false,
         errors: e.response
@@ -68,16 +75,7 @@ export default class InventoryItemSettingsForm extends Component {
   }
 
   render() {
-    const {
-      description,
-      errors,
-      isDirty,
-      name,
-      saved,
-      saving,
-      sku,
-      slug
-    } = this.state;
+    const { description, errors, isDirty, name, saving, sku } = this.state;
 
     return (
       <div>
@@ -154,11 +152,6 @@ export default class InventoryItemSettingsForm extends Component {
               onClick={() => this.onSave()}>
               {saving ? "Saving.." : "Save Changes"}
             </button>
-            {!!saved && (
-              <div className="ml-3 text-success d-flex align-items-center">
-                <CheckCircle size={24} className="mr-1" /> Saved!
-              </div>
-            )}
           </div>
         </div>
         <Prompt when={isDirty} message="Your changes will be lost. Continue?" />

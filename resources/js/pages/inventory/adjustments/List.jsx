@@ -5,6 +5,7 @@ import { Add as AddIcon } from "styled-icons/material";
 import moment from "moment";
 
 import { fetchAdjustments } from "@/actions";
+import { LoadingIndicator } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
 import InventoryAdjustmentsListItem from "./ListItem";
 import ListEmpty from "./ListEmpty";
@@ -74,7 +75,10 @@ export class InventoryAdjustmentsList extends Component {
                 <tr>
                   <td colSpan={2}>
                     {fetching ? (
-                      <div className="text-center">Loading..</div>
+                      <LoadingIndicator
+                        size={80}
+                        label="Hang on, we're getting your adjustment history.."
+                      />
                     ) : (
                       <ListEmpty />
                     )}
