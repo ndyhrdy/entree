@@ -9,6 +9,16 @@ export const fuzzySearch = ({ list, keys = ["name"], term }) => {
   return fuse.search(term);
 };
 
+export const getFromQueryString = (queryString, field) => {
+  if (!queryString) {
+    return null;
+  }
+  const query = parse(
+    startsWith(queryString, "?") ? queryString.substr(1) : queryString
+  );
+  return query["_" + field] || null;
+};
+
 export const getFlowFromQueryString = queryString => {
   if (!queryString) {
     return null;

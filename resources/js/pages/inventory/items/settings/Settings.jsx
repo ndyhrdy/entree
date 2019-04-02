@@ -1,11 +1,16 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { NavLink, Link, Redirect, Route, Switch } from "react-router-dom";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
 import { fetchItems, selectItem, fillItemSelection } from "@/actions";
-import Form from "./Form";
-import Stock from "./Stock";
+import { getFromQueryString } from "@/helpers/misc";
+import General from "./general/General";
+import Stock from "./stock/Stock";
 import Images from "./images/Images";
+
+const alert = SwalReact(Swal);
 
 export class InventoryItemsSettings extends Component {
   resolveItem() {
@@ -14,6 +19,38 @@ export class InventoryItemsSettings extends Component {
         item => item.slug === this.props.match.params.slug
       )[0] || null
     );
+  }
+
+  handleInitialAlert() {
+    const {
+      location: { pathname, search }
+    } = this.props;
+    const alertType = getFromQueryString(search, "alert");
+    let alertProps = null;
+    switch (alertType) {
+      case "sku-change-success":
+        alertProps = {
+          title: "Hi-five!",
+          text: "This item's SKU has been changed!"
+        };
+        break;
+      case "name-change-success":
+        alertProps = {
+          title: "Hi-five!",
+          text: "This item's name has been changed!"
+        };
+        break;
+    }
+    if (alertProps) {
+      alert.fire({
+        type: "success",
+        timer: 3000,
+        showConfirmButton: false,
+        ...alertProps
+      });
+      return this.props.history.push(pathname);
+    }
+    return;
   }
 
   selectItem() {
@@ -26,16 +63,20 @@ export class InventoryItemsSettings extends Component {
 
   onItemSaved(item) {
     this.props.fillItemSelection(item);
-    if (item.slug !== this.props.match.params.slug) {
-      window.location.href = "/inventory/items/" + item.slug + "/settings";
-    }
   }
 
   componentDidMount() {
+    this.handleInitialAlert();
     if (!this.resolveItem()) {
       return this.props.fetchItems().then(() => this.selectItem());
     }
     return this.selectItem();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.location.search !== prevProps.location.search) {
+      this.handleInitialAlert();
+    }
   }
 
   render() {
@@ -85,9 +126,10 @@ export class InventoryItemsSettings extends Component {
                   <Route
                     exact
                     path={"/inventory/items/" + item.slug + "/settings"}
-                    render={() => (
-                      <Form
-                        {...item}
+                    render={route => (
+                      <General
+                        {...route}
+                        item={{ ...item }}
                         onSaved={newItem => this.onItemSaved(newItem)}
                       />
                     )}

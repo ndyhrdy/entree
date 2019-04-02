@@ -2,11 +2,13 @@ import api, { routes } from "../api";
 import {
   ITEMS_FETCH,
   ITEMS_POPULATE,
+  ITEMS_REMOVE,
   ITEMS_SET_ERROR,
   ITEMS_SEARCH,
   ITEMS_SELECT,
   ITEMS_FILL_SELECTION,
-  ITEMS_SET_SELECTION_ERROR
+  ITEMS_SET_SELECTION_ERROR,
+  ITEMS_PUSH
 } from "./types";
 
 export const fetchItems = () => (dispatch, getState) => {
@@ -47,5 +49,15 @@ export const selectItem = item => (dispatch, getState) => {
 
 export const fillItemSelection = item => ({
   type: ITEMS_FILL_SELECTION,
+  item
+});
+
+export const pushItem = item => ({
+  type: ITEMS_PUSH,
+  item
+});
+
+export const removeItem = item => ({
+  type: ITEMS_REMOVE,
   item
 });

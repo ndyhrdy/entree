@@ -101,8 +101,12 @@ class ItemController extends Controller
      * @param  \Entree\Item\Item  $item
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Item $item)
+    public function destroy(Item $item, Request $request)
     {
-        //
+        if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
+            return abort(403, 'Unauthenticated');
+        }
+        $this->itemService->deleteItem($item);
+        return $this->index();
     }
 }

@@ -148,4 +148,9 @@ class ItemService
         $item->getMedia('images')->where('id', $imageId)->first()->delete();
     }
 
+    public function deleteItem(Item $item)
+    {
+        return $item->delete();
+    }
+
 }

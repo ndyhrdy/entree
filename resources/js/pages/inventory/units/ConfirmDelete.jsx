@@ -1,9 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import api, { routes } from "@/api";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
+import api, { routes } from "@/api";
 import { removeUnit } from "@/actions";
 import { Alert } from "@/components";
+
+const alert = SwalReact(Swal);
 
 class InventoryUnitsConfirmDelete extends Component {
   constructor(props) {
@@ -26,6 +30,13 @@ class InventoryUnitsConfirmDelete extends Component {
           .delete(routes.units + "/" + this.props.unit.id)
           .then(() => {
             this.props.removeUnit(this.props.unit.id);
+            alert.fire({
+              type: "success",
+              title: "Gone!",
+              text: this.props.unit.name + " has been deleted successfully.",
+              timer: 3000,
+              showConfirmButton: false
+            });
             return this.props.onDismiss();
           })
           .catch(error =>

@@ -3,10 +3,12 @@ import {
   ITEMS_FETCH,
   ITEMS_FILL_SELECTION,
   ITEMS_POPULATE,
+  ITEMS_REMOVE,
   ITEMS_SEARCH,
   ITEMS_SELECT,
   ITEMS_SET_ERROR,
-  ITEMS_SET_SELECTION_ERROR
+  ITEMS_SET_SELECTION_ERROR,
+  ITEMS_PUSH
 } from "../actions/types";
 
 const defaultState = {
@@ -32,7 +34,7 @@ export default (state = defaultState, action) => {
           }))
         ],
         fetching: false,
-        lastLoadTimestamp: moment().toDate(),
+        lastLoadTimestamp: moment().toDate()
       };
     case ITEMS_SET_ERROR:
       return { ...state, fetching: false, error: action.error };
@@ -66,6 +68,16 @@ export default (state = defaultState, action) => {
             ? { ...item, fetching: false, error: action.error }
             : item
         )
+      };
+    case ITEMS_PUSH:
+      return {
+        ...state,
+        data: [...state.data, action.item]
+      };
+    case ITEMS_REMOVE:
+      return {
+        ...state,
+        data: [...state.data.filter(item => item.slug !== action.item.slug)]
       };
     default:
       return state;
