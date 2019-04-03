@@ -8,7 +8,8 @@ import {
   ITEMS_SELECT,
   ITEMS_FILL_SELECTION,
   ITEMS_SET_SELECTION_ERROR,
-  ITEMS_PUSH
+  ITEMS_PUSH,
+  ITEMS_LIST_SET_VIEW_MODE
 } from "./types";
 
 export const fetchItems = () => (dispatch, getState) => {
@@ -60,4 +61,9 @@ export const pushItem = item => ({
 export const removeItem = item => ({
   type: ITEMS_REMOVE,
   item
+});
+
+export const setItemsListViewMode = mode => ({
+  type: ITEMS_LIST_SET_VIEW_MODE,
+  mode
 });

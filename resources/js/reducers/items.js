@@ -8,7 +8,8 @@ import {
   ITEMS_SELECT,
   ITEMS_SET_ERROR,
   ITEMS_SET_SELECTION_ERROR,
-  ITEMS_PUSH
+  ITEMS_PUSH,
+  ITEMS_LIST_SET_VIEW_MODE
 } from "../actions/types";
 
 const defaultState = {
@@ -16,6 +17,7 @@ const defaultState = {
   error: null,
   fetching: false,
   lastLoadTimestamp: null,
+  listViewMode: "list",
   term: ""
 };
 
@@ -78,6 +80,11 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         data: [...state.data.filter(item => item.slug !== action.item.slug)]
+      };
+    case ITEMS_LIST_SET_VIEW_MODE:
+      return {
+        ...state,
+        listViewMode: action.mode
       };
     default:
       return state;

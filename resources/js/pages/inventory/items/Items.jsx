@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import InventoryItemsList from "./List";
+import InventoryItemsList from "./list/List";
 import InventoryItemsItem from "./item/Item";
 import InventoryItemsCreate from "./create/Create";
 import InventoryItemsSettings from "./settings/Settings";
