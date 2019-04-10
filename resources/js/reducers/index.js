@@ -6,6 +6,7 @@ import coworkers from "./coworkers";
 import items from "./items";
 import prompt from "./prompt";
 import stores from "./stores";
+import suppliers from "./suppliers";
 import units from "./units";
 import user from "./user";
 
@@ -16,6 +17,7 @@ export default combineReducers({
   items,
   prompt,
   stores,
+  suppliers,
   units,
   user
 });

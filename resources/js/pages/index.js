@@ -6,3 +6,5 @@ export { default as StoresCreate } from "./stores/create/Create";
 export { default as Coworkers } from "./coworkers/Coworkers";
 
 export { default as Inventory } from "./inventory/Inventory";
+
+export { default as Purchasing } from "./purchasing/Purchasing";

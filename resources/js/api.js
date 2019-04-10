@@ -6,6 +6,7 @@ export const routes = {
   coworkers: "/coworkers",
   items: "/items",
   stores: "/stores",
+  suppliers: "/suppliers",
   units: "/units"
 };
 

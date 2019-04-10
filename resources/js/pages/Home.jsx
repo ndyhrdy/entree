@@ -2,7 +2,8 @@ import React, { Fragment, PureComponent } from "react";
 import { connect } from "react-redux";
 import {
   PhotoLibrary as InventoryIcon,
-  Group as GroupIcon
+  Group as GroupIcon,
+  ShoppingCart as ShoppingCartIcon
 } from "styled-icons/material";
 import moment from "moment";
 
@@ -94,6 +95,14 @@ const menus = [
     requiresActiveStore: true,
     route: "/inventory",
     iconComponent: <InventoryIcon size={36} />
+  },
+  {
+    title: "Purchasing",
+    subtitle: "Record purchase history from suppliers",
+    requiredCapability: "staff.view",
+    requiresActiveStore: true,
+    route: "/purchasing",
+    iconComponent: <ShoppingCartIcon size={36} />
   },
   {
     title: "Coworkers",
