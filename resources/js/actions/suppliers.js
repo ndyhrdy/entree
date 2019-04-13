@@ -1,4 +1,5 @@
 import { CancelToken, isCancel } from "axios";
+import moment from "moment";
 
 import {
   SUPPLIERS_FETCH,
@@ -11,7 +12,13 @@ import api, { routes } from "@/api";
 
 let cancelFetchSuppliersRequest;
 export const fetchSuppliers = (force = false) => async (dispatch, getState) => {
-  if (getState().suppliers.fetching && !force) {
+  if (
+    getState().suppliers.fetching &&
+    moment(getState().suppliers.lastLoadTimestamp).isAfter(
+      moment().subtract(1, "hours")
+    ) &&
+    !force
+  ) {
     return;
   }
   cancelFetchSuppliersRequest && cancelFetchSuppliersRequest();

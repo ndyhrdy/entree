@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
   SUPPLIERS_FETCH,
   SUPPLIERS_POPULATE,
@@ -9,7 +10,8 @@ import {
 const defaultState = {
   data: [],
   fetching: false,
-  fetchingError: null
+  fetchingError: null,
+  lastLoadTimestamp: null
 };
 
 export default (state = defaultState, action) => {
@@ -24,7 +26,8 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         data: action.suppliers,
-        fetching: defaultState.fetching
+        fetching: defaultState.fetching,
+        lastLoadTimestamp: moment().toDate()
       };
     case SUPPLIERS_PUSH:
       return { ...state, data: [...state.data, action.supplier] };

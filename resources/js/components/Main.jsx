@@ -8,7 +8,7 @@ import { Home, Stores, Coworkers, Inventory, Purchasing } from "../pages";
 
 export class Main extends PureComponent {
   componentDidMount() {
-    this.props.fetchAuthenticatedUser();
+    this.props.fetchAuthenticatedUser(true);
     this.props.fetchStores();
   }
 

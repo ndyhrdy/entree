@@ -2,16 +2,16 @@
 
 namespace Entree\Store;
 
-use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Model;
 
 class Store extends Model
 {
 
     use Sluggable;
-    
+
     protected $dates = ['accepted_at', 'last_switched_at'];
-    
+
     public function sluggable()
     {
         return ['slug' => ['source' => 'name']];
@@ -37,11 +37,16 @@ class Store extends Model
         return $this->hasMany('Entree\Store\StoreUser');
     }
 
+    public function suppliers()
+    {
+        return $this->hasMany('Entree\Purchase\Supplier');
+    }
+
     public function units()
     {
         return $this->hasMany('Entree\Item\Unit');
     }
-    
+
     public function users()
     {
         return $this->belongsToMany('Entree\User')->withTimestamps();
@@ -51,5 +56,5 @@ class Store extends Model
     {
         return 'slug';
     }
-    
+
 }

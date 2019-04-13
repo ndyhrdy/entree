@@ -16,7 +16,7 @@ class StoreService
         return $user->stores;
     }
 
-    public function getActiveStoreForUser(User $user)
+    public static function getActiveStoreForUser(User $user)
     {
         $storeUser = $user->storeUsers()->orderBy('last_switched_at', 'desc')->first();
         return $storeUser ? $storeUser->store : null;

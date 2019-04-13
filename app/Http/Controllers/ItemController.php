@@ -32,7 +32,7 @@ class ItemController extends Controller
         return fractal()
             ->collection(
                 $this->itemService->getItemsForStore(
-                    $this->storeService->getActiveStoreForUser(auth()->user())
+                    StoreService::getActiveStoreForUser(auth()->user())
                 )
             )
             ->transformWith(new ItemTransformer)
@@ -51,10 +51,10 @@ class ItemController extends Controller
     public function store(Request $request)
     {
         $this->itemService->createItemForStoreFromRequest(
-            $request, 
-            $this->storeService->getActiveStoreForUser($request->user())
+            $request,
+            StoreService::getActiveStoreForUser($request->user())
         );
-        
+
         return $this->index();
     }
 
@@ -67,7 +67,7 @@ class ItemController extends Controller
      */
     public function show(Item $item, Request $request)
     {
-        if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
+        if (!$this->storeService->storeHasItem(StoreService::getActiveStoreForUser($request->user()), $item)) {
             return abort(403, 'Unauthenticated');
         }
         return fractal()
@@ -88,7 +88,7 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
+        if (!$this->storeService->storeHasItem(StoreService::getActiveStoreForUser($request->user()), $item)) {
             return abort(403, 'Unauthenticated');
         }
         $item = $this->itemService->updateItemFromRequest($item, $request);
@@ -103,7 +103,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item, Request $request)
     {
-        if (!$this->storeService->storeHasItem($this->storeService->getActiveStoreForUser($request->user()), $item)) {
+        if (!$this->storeService->storeHasItem(StoreService::getActiveStoreForUser($request->user()), $item)) {
             return abort(403, 'Unauthenticated');
         }
         $this->itemService->deleteItem($item);

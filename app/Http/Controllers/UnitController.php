@@ -3,24 +3,22 @@
 namespace Entree\Http\Controllers;
 
 use Entree\Item\Unit;
-use Illuminate\Http\Request;
-use Entree\Services\UnitService;
 use Entree\Services\StoreService;
-use Exceptions\NotStaffException;
+use Entree\Services\UnitService;
 use Entree\Transformers\UnitTransformer;
-use Exceptions\UnitNotDeletableException;
+use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class UnitController extends Controller
 {
 
     private $unitService;
-    
+
     public function __construct()
     {
         $this->unitService = new UnitService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +28,7 @@ class UnitController extends Controller
     {
         $storeService = new StoreService;
         $units = $this->unitService->getUnitsForStore(
-            $storeService->getActiveStoreForUser(auth()->user())
+            StoreService::getActiveStoreForUser(auth()->user())
         );
         return fractal()
             ->collection($units)
@@ -96,7 +94,7 @@ class UnitController extends Controller
                 'errors' => $exception->errors(),
             ], 422);
         }
-        
+
         return $this->index();
     }
 
@@ -112,7 +110,7 @@ class UnitController extends Controller
             $unit,
             auth()->user()
         );
-    
+
         return $this->index();
     }
 }

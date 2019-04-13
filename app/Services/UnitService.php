@@ -31,7 +31,7 @@ class UnitService
                 throw new NotStaffException;
             }
         } else {
-            $store = $storeService->getActiveStoreForUser($createUser);
+            $store = StoreService::getActiveStoreForUser($createUser);
             if (!$store) {
                 throw new NoActiveStoreException;
             }

@@ -3,11 +3,11 @@
 namespace Entree\Http\Controllers;
 
 use Entree\Item\Adjustment;
-use Illuminate\Http\Request;
 use Entree\Item\AdjustmentBatch;
-use Entree\Services\StoreService;
 use Entree\Services\AdjustmentService;
+use Entree\Services\StoreService;
 use Entree\Transformers\AdjustmentBatchTransformer;
+use Illuminate\Http\Request;
 
 class AdjustmentBatchController extends Controller
 {
@@ -15,7 +15,7 @@ class AdjustmentBatchController extends Controller
     protected $adjustmentService;
     protected $storeService;
     protected $activeStore;
-    
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -23,7 +23,7 @@ class AdjustmentBatchController extends Controller
         $this->adjustmentService = new AdjustmentService;
         $this->storeService = new StoreService;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -31,8 +31,7 @@ class AdjustmentBatchController extends Controller
      */
     public function index()
     {
-        $this->activeStore = $this->storeService
-            ->getActiveStoreForUser(auth()->user());
+        $this->activeStore = StoreService::getActiveStoreForUser(auth()->user());
         if (!$this->activeStore) {
             return abort(403);
         }
@@ -41,7 +40,7 @@ class AdjustmentBatchController extends Controller
             ->collection(
                 $this->adjustmentService
                     ->getAdjustmentBatchesForStore($this->activeStore)
-                )
+            )
             ->transformWith(new AdjustmentBatchTransformer)
             ->parseIncludes('mutation')
             ->respond();
@@ -55,18 +54,17 @@ class AdjustmentBatchController extends Controller
      */
     public function store(Request $request)
     {
-        $this->activeStore = $this->storeService
-            ->getActiveStoreForUser(auth()->user());
+        $this->activeStore = StoreService::getActiveStoreForUser(auth()->user());
         if (!$this->activeStore) {
             return abort(403);
         }
-        
-        $adjustmentBatch = 
-            $this->adjustmentService->createAdjustmentForStore(
-                $request->all(), 
-                $this->activeStore, 
-                auth()->user()
-            );
+
+        $adjustmentBatch =
+        $this->adjustmentService->createAdjustmentForStore(
+            $request->all(),
+            $this->activeStore,
+            auth()->user()
+        );
         return $this->show($adjustmentBatch);
     }
 

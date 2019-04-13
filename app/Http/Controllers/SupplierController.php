@@ -2,7 +2,11 @@
 
 namespace Entree\Http\Controllers;
 
+use Auth;
 use Entree\Purchase\Supplier;
+use Entree\Services\StoreService;
+use Entree\Services\SupplierService;
+use Entree\Transformers\SupplierTransformer;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -14,7 +18,14 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $store = StoreService::getActiveStoreForUser(Auth::user());
+        return $store ?
+        fractal()
+            ->collection(SupplierService::getByStore($store))
+            ->transformWith(new SupplierTransformer)
+            ->parseIncludes(['createdBy'])
+            ->respond()
+        : abort(403, 'Unauthenticated');
     }
 
     /**

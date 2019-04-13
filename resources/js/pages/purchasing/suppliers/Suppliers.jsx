@@ -1,17 +1,20 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
+import { Redirect, Route, Switch } from "react-router-dom";
 
-class PurchasingSuppliers extends Component {
+import PurchasingSuppliersList from "./list/List";
+
+export default class PurchasingSuppliers extends PureComponent {
   render() {
-    return <div />;
+    return (
+      <Switch>
+        <Route
+          exact
+          path="/purchasing/suppliers"
+          component={PurchasingSuppliersList}
+        />
+
+        <Redirect to="/purchasing/suppliers" />
+      </Switch>
+    );
   }
 }
-
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(PurchasingSuppliers);

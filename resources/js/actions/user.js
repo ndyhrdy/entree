@@ -2,11 +2,11 @@ import { USER_FETCH, USER_SET, USER_SET_ERROR, USER_CLEAR } from "./types";
 import api, { routes } from "../api";
 import { setActiveStore } from "./stores";
 
-export const fetchAuthenticatedUser = ({ callback } = {}) => (
+export const fetchAuthenticatedUser = (force = false) => (
   dispatch,
   getState
 ) => {
-  if (getState().user.fetching) {
+  if (getState().user.fetching && !force) {
     return;
   }
 
