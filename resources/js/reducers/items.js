@@ -9,7 +9,8 @@ import {
   ITEMS_SET_ERROR,
   ITEMS_SET_SELECTION_ERROR,
   ITEMS_PUSH,
-  ITEMS_LIST_SET_VIEW_MODE
+  ITEMS_LIST_SET_VIEW_MODE,
+  ITEMS_CLEAR
 } from "../actions/types";
 
 const defaultState = {
@@ -85,6 +86,10 @@ export default (state = defaultState, action) => {
       return {
         ...state,
         listViewMode: action.mode
+      };
+    case ITEMS_CLEAR:
+      return {
+        ...defaultState
       };
     default:
       return state;

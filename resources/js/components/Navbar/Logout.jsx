@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { clearUser } from "@/actions";
+import { clearItems, clearUser } from "@/actions";
 
 export class NavbarLogout extends Component {
   constructor(props) {
@@ -16,6 +16,7 @@ export class NavbarLogout extends Component {
       axios
         .post(window.appConfig.baseURL + "/logout")
         .then(() => {
+          this.props.clearItems();
           this.props.clearUser();
           window.location.href =
             window.appConfig.baseURL + "/login?_flow=logged-out";
@@ -42,7 +43,7 @@ export class NavbarLogout extends Component {
 
 const mapStateToProps = state => ({});
 
-const mapDispatchToProps = { clearUser };
+const mapDispatchToProps = { clearUser, clearItems };
 
 export default connect(
   mapStateToProps,

@@ -8,7 +8,7 @@ export default () => {
         <div className="col-md-4">
           <img
             className="w-100"
-            src={window.appConfig.baseURL + "/svg/undraw_QA_engineers_dg5p.svg"}
+            src={window.appConfig.baseURL + "/svg/undraw_deliveries_131a.svg"}
           />
         </div>
       </div>
