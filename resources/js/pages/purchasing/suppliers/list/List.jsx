@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Add as AddIcon } from "styled-icons/material";
 
-import { fetchSuppliers } from "@/actions";
+import { fetchSuppliers, searchSuppliers } from "@/actions";
 import { LoadingIndicator } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
+import { fuzzySearch } from "@/helpers/misc";
 import Empty from "./Empty";
 import Item from "./Item";
 
@@ -14,12 +17,39 @@ class PurchasingSuppliersList extends Component {
   }
 
   render() {
-    const { suppliers, fetching, fetchingError } = this.props;
+    const {
+      suppliers,
+      fetching,
+      fetchingError,
+      searchSuppliers,
+      term
+    } = this.props;
+    const data =
+      term.length > 0
+        ? fuzzySearch({ list: suppliers, keys: ["name", "address"], term })
+        : [...suppliers];
 
     return (
       <div className="container py-4">
         <div className="card">
-          <div className="card-header" />
+          <div className="card-header d-flex justify-content-between align-items-center">
+            <div className="form-inline">
+              <input
+                value={term}
+                type="text"
+                className={
+                  "form-control" + (term.length > 0 ? " border-primary" : "")
+                }
+                placeholder="Search suppliers.."
+                onChange={e => searchSuppliers(e.target.value)}
+              />
+            </div>
+            <div>
+              <Link to="/purchasing/suppliers/new" className="btn btn-primary">
+                <AddIcon size={24} /> Add a Supplier
+              </Link>
+            </div>
+          </div>
           <table className="table">
             <thead>
               <tr>
@@ -45,7 +75,7 @@ class PurchasingSuppliersList extends Component {
                   </td>
                 </tr>
               )}
-              {suppliers.map((supplier, index) => (
+              {data.map((supplier, index) => (
                 <Item key={"supplier-list-item-" + index} {...supplier} />
               ))}
             </tbody>
@@ -59,11 +89,13 @@ class PurchasingSuppliersList extends Component {
 const mapStateToProps = state => ({
   suppliers: state.suppliers.data,
   fetching: state.suppliers.fetching,
-  error: state.suppliers.fetchingError
+  error: state.suppliers.fetchingError,
+  term: state.suppliers.searchTerm
 });
 
 const mapDispatchToProps = {
-  fetchSuppliers
+  fetchSuppliers,
+  searchSuppliers
 };
 
 PurchasingSuppliersList.propTypes = {

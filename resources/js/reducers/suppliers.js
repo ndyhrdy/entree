@@ -4,14 +4,16 @@ import {
   SUPPLIERS_POPULATE,
   SUPPLIERS_PUSH,
   SUPPLIERS_REMOVE,
-  SUPPLIERS_SET_FETCH_ERROR
+  SUPPLIERS_SET_FETCH_ERROR,
+  SUPPLIERS_SEARCH
 } from "../actions/types";
 
 const defaultState = {
   data: [],
   fetching: false,
   fetchingError: null,
-  lastLoadTimestamp: null
+  lastLoadTimestamp: null,
+  searchTerm: ""
 };
 
 export default (state = defaultState, action) => {
@@ -43,6 +45,11 @@ export default (state = defaultState, action) => {
         ...state,
         fetching: defaultState.fetching,
         fetchingError: action.error
+      };
+    case SUPPLIERS_SEARCH:
+      return {
+        ...state,
+        searchTerm: action.term
       };
     default:
       return state;
