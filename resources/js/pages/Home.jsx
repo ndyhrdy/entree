@@ -34,13 +34,18 @@ export class Home extends PureComponent {
 
     return (
       <Fragment>
-        <div className="bg-dark py-5">
+        <div className="py-5 bg-white">
           <div className="container my-5">
-            <div className="h1 text-white">
-              Good {timeOfDayString}, {user.data.name.split(" ")[0]}!
+            <div>
+              <div className="h1 bg-primary d-inline-block text-white px-3 py-2 mb-1">
+                Good {timeOfDayString},{" "}
+                <strong>{user.data.name.split(" ")[0]}</strong>!
+              </div>
             </div>
-            <div className="h4 text-muted">
-              Today is {moment().format("D MMMM YYYY")}
+            <div>
+              <div className="h4 bg-pink d-inline-block text-white px-3 py-2">
+                Today is {moment().format("D MMMM YYYY")}
+              </div>
             </div>
           </div>
         </div>

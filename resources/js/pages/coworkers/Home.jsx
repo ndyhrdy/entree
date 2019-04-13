@@ -37,8 +37,8 @@ export class CoworkersHome extends Component {
           <div className="mb-5">
             <h1>Your Coworkers</h1>
 
-            <div className="row mt-4">
-              <div className="col-md-6 mb-5">
+            <div className="row my-5 align-items-center justify-content-between">
+              <div className="col-md-6">
                 <InviteForm
                   onInviteSuccess={coworkersList => {
                     this.props.populateCoworkers(coworkersList);
@@ -46,10 +46,16 @@ export class CoworkersHome extends Component {
                   }}
                 />
               </div>
+              <div className="col-md-4">
+                <img
+                  src={appConfig.baseURL + "/svg/undraw_team_spirit_hrr4.svg"}
+                  alt="Teamwork"
+                  className="w-100"
+                />
+              </div>
             </div>
 
             <CoworkersList />
-
           </div>
           {query._flow === "create-store" && (
             <div className="d-flex justify-content-end align-items-center">

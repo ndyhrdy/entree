@@ -24,6 +24,22 @@
 // Image cropper
 @import "~react-image-crop/lib/ReactCrop";
 
+a {
+  color: darken($primary, 20%);
+}
+
+.navbar-gradient {
+  display: block;
+  height: 10px;
+  background: $pink;
+  background: -webkit-linear-gradient(to right, $primary, $pink);
+  background: linear-gradient(to right, $primary, $pink);
+}
+
+.bg-pink {
+  background-color: $pink;
+}
+
 .dropzone {
   border: $gray-300 5px dashed;
   &.active {

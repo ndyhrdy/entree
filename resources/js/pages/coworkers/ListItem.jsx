@@ -39,7 +39,9 @@ export class CoworkersListItem extends PureComponent {
         <td>
           <div>
             {isSelf ? "You" : name || email}
-            {isOwner && <span className="badge badge-info ml-1 text-white">Owner</span>}
+            {isOwner && (
+              <span className="badge bg-pink ml-1 text-white">Store Owner</span>
+            )}
           </div>
           {!!name && <div className="small text-muted">{email}</div>}
         </td>
