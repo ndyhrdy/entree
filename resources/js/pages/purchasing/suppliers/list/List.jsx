@@ -2,18 +2,42 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Add as AddIcon } from "styled-icons/material";
+import { Add as AddIcon, ExpandMore } from "styled-icons/material";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
-import { fetchSuppliers, searchSuppliers } from "@/actions";
-import { LoadingIndicator } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
-import { fuzzySearch } from "@/helpers/misc";
+import { fetchSuppliers, searchSuppliers } from "@/actions";
+import { fuzzySearch, getFlowFromQueryString } from "@/helpers/misc";
+import { LoadingIndicator } from "@/components";
 import Empty from "./Empty";
 import Item from "./Item";
+import sortData, { types as sortTypes } from "./sort";
+
+const alert = SwalReact(Swal);
 
 class PurchasingSuppliersList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sort: sortTypes[0]
+    };
+  }
+
   componentDidMount() {
     this.props.fetchSuppliers();
+    const flow = getFlowFromQueryString(this.props.location.search);
+    if (flow === "create-success") {
+      alert.fire({
+        type: "success",
+        title: "Hi-five!",
+        text: "You've added a new supplier!",
+        timer: 3000,
+        showConfirmButton: false
+      });
+      this.props.history.replace("/purchasing/suppliers");
+    }
   }
 
   render() {
@@ -24,6 +48,7 @@ class PurchasingSuppliersList extends Component {
       searchSuppliers,
       term
     } = this.props;
+    const { sort } = this.state;
     const data =
       term.length > 0
         ? fuzzySearch({ list: suppliers, keys: ["name", "address"], term })
@@ -44,10 +69,34 @@ class PurchasingSuppliersList extends Component {
                 onChange={e => searchSuppliers(e.target.value)}
               />
             </div>
-            <div>
-              <Link to="/purchasing/suppliers/new" className="btn btn-primary">
-                <AddIcon size={24} /> Add a Supplier
-              </Link>
+            <div className="d-flex align-items-center">
+              <div>Sort by</div>
+              <div className="dropdown ml-2">
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary dropdown-toggle"
+                  data-toggle="dropdown">
+                  {sort.label} <ExpandMore size="16" />
+                </button>
+                <ul className="dropdown-menu dropdown-menu-right">
+                  {sortTypes.map(sortType => (
+                    <button
+                      type="button"
+                      className="dropdown-item"
+                      onClick={() => this.setState({ sort: sortType })}
+                      key={sortType.key}>
+                      {sortType.label}
+                    </button>
+                  ))}
+                </ul>
+              </div>
+              <div className="ml-2">
+                <Link
+                  to="/purchasing/suppliers/new"
+                  className="btn btn-primary">
+                  <AddIcon size={24} /> Add a Supplier
+                </Link>
+              </div>
             </div>
           </div>
           <table className="table">
@@ -75,7 +124,7 @@ class PurchasingSuppliersList extends Component {
                   </td>
                 </tr>
               )}
-              {data.map((supplier, index) => (
+              {sortData(data, sort).map((supplier, index) => (
                 <Item key={"supplier-list-item-" + index} {...supplier} />
               ))}
             </tbody>

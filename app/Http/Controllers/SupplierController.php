@@ -46,7 +46,12 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $store = StoreService::getActiveStoreForUser(Auth::user());
+        if (!$store) {
+            return abort(403, 'Unauthenticated');
+        }
+        $supplier = SupplierService::createForStoreFromRequest($store, $request);
+        return $this->show($supplier);
     }
 
     /**
@@ -57,7 +62,15 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        $store = StoreService::getActiveStoreForUser(Auth::user());
+        if ($store->id != $supplier->store->id) {
+            return abort(403, 'Unauthenticated');
+        }
+        return fractal()
+            ->item($supplier)
+            ->transformWith(new SupplierTransformer)
+            ->parseIncludes(['createdBy'])
+            ->respond();
     }
 
     /**
