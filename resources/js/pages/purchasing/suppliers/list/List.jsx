@@ -28,14 +28,19 @@ class PurchasingSuppliersList extends Component {
   componentDidMount() {
     this.props.fetchSuppliers();
     const flow = getFlowFromQueryString(this.props.location.search);
-    if (flow === "create-success") {
-      alert.fire({
-        type: "success",
-        title: "Hi-five!",
-        text: "You've added a new supplier!",
-        timer: 3000,
-        showConfirmButton: false
-      });
+    if (flow) {
+      if (flow.includes("success")) {
+        alert.fire({
+          type: "success",
+          title: "Hi-five!",
+          text:
+            flow === "create-success"
+              ? "You've added a new supplier!"
+              : "Changes to supplier saved successfully!",
+          timer: 3000,
+          showConfirmButton: false
+        });
+      }
       this.props.history.replace("/purchasing/suppliers");
     }
   }

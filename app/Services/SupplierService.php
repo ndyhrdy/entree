@@ -38,4 +38,22 @@ class SupplierService
         return $supplier;
     }
 
+    public static function updateFromRequest(Supplier $supplier, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'address' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'email' => 'nullable|email',
+        ]);
+        $validator->validate();
+        $supplier->name = $request->name;
+        $supplier->address = $request->address;
+        $supplier->phone = $request->phone;
+        $supplier->email = $request->email;
+
+        $supplier->save();
+        return $supplier;
+    }
+
 }

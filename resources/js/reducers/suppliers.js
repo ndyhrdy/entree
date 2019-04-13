@@ -5,7 +5,8 @@ import {
   SUPPLIERS_PUSH,
   SUPPLIERS_REMOVE,
   SUPPLIERS_SET_FETCH_ERROR,
-  SUPPLIERS_SEARCH
+  SUPPLIERS_SEARCH,
+  SUPPLIERS_REPLACE
 } from "../actions/types";
 
 const defaultState = {
@@ -40,16 +41,25 @@ export default (state = defaultState, action) => {
           ...state.data.filter(supplier => supplier.id !== action.supplier.id)
         ]
       };
-    case SUPPLIERS_SET_FETCH_ERROR:
+    case SUPPLIERS_REPLACE:
       return {
         ...state,
-        fetching: defaultState.fetching,
-        fetchingError: action.error
+        data: [
+          ...state.data.map(supplier =>
+            supplier.id === action.supplier.id ? action.supplier : supplier
+          )
+        ]
       };
     case SUPPLIERS_SEARCH:
       return {
         ...state,
         searchTerm: action.term
+      };
+    case SUPPLIERS_SET_FETCH_ERROR:
+      return {
+        ...state,
+        fetching: defaultState.fetching,
+        fetchingError: action.error
       };
     default:
       return state;

@@ -7,7 +7,8 @@ import {
   SUPPLIERS_SET_FETCH_ERROR,
   SUPPLIERS_PUSH,
   SUPPLIERS_REMOVE,
-  SUPPLIERS_SEARCH
+  SUPPLIERS_SEARCH,
+  SUPPLIERS_REPLACE
 } from "./types";
 import api, { routes } from "@/api";
 
@@ -54,6 +55,11 @@ export const pushSupplier = supplier => ({
 
 export const removeSupplier = supplier => ({
   type: SUPPLIERS_REMOVE,
+  supplier
+});
+
+export const replaceSupplier = supplier => ({
+  type: SUPPLIERS_REPLACE,
   supplier
 });
 

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, Prompt } from "react-router-dom";
 import { CancelToken, isCancel } from "axios";
+import { trim } from "lodash";
 
 import { pushSupplier } from "@/actions";
 import { Alert } from "@/components";
@@ -75,6 +76,11 @@ class PurchasingSuppliersCreate extends Component {
 
   render() {
     const { dirty, name, address, phone, email, saving, errors } = this.state;
+    const hasSimilarName =
+      this.props.existingSuppliers.filter(
+        existingSupplier =>
+          trim(existingSupplier.name).toLowerCase() === name.toLowerCase()
+      ).length > 0;
     return (
       <div className="container py-5">
         <ol className="breadcrumb mb-4">
@@ -105,7 +111,15 @@ class PurchasingSuppliersCreate extends Component {
               {errors.name ? (
                 <div className="invalid-feedback">{errors.name[0]}</div>
               ) : (
-                <div className="form-text text-muted">Required.</div>
+                <div className="form-text text-muted">
+                  Required.{" "}
+                  {hasSimilarName && (
+                    <span className="text-info">
+                      Are you sure? One of your existing items has the same
+                      name.
+                    </span>
+                  )}
+                </div>
               )}
             </div>
             <div className="form-group">
@@ -183,7 +197,9 @@ class PurchasingSuppliersCreate extends Component {
 
 const pageTitle = "Add a Supplier";
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  existingSuppliers: state.suppliers.data
+});
 
 const mapDispatchToProps = {
   pushSupplier

@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
 import List from "./list/List";
+import Edit from "./edit/Edit";
 import Create from "./create/Create";
 
 export default class PurchasingSuppliers extends PureComponent {
@@ -13,6 +14,7 @@ export default class PurchasingSuppliers extends PureComponent {
     return (
       <Switch>
         <Route exact path={path} component={List} />
+        <Route exact path={path + "/:slug/:id/edit"} component={Edit} />
         <Route exact path={path + "/new"} component={Create} />
 
         <Redirect to={path} />

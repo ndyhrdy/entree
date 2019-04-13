@@ -57,7 +57,7 @@ export class Home extends PureComponent {
                   <Link
                     className={
                       "btn btn-block p-3 mb-4" +
-                      (highlighted === index ? " btn-dark" : "")
+                      (highlighted === index ? " btn-primary" : "")
                     }
                     onMouseEnter={() => this.setState({ highlighted: index })}
                     onMouseLeave={() => this.setState({ highlighted: null })}
@@ -66,7 +66,12 @@ export class Home extends PureComponent {
                       {menu.iconComponent}
                       <div className="ml-3 text-left">
                         <h5>{menu.title}</h5>
-                        <div className="text-muted">{menu.subtitle}</div>
+                        <div
+                          className={
+                            highlighted === index ? "text-white" : "text-muted"
+                          }>
+                          {menu.subtitle}
+                        </div>
                       </div>
                     </div>
                   </Link>
