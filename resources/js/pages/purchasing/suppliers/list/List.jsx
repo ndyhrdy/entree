@@ -141,7 +141,7 @@ class PurchasingSuppliersList extends Component {
 }
 
 const mapStateToProps = state => ({
-  suppliers: [], //state.suppliers.data,
+  suppliers: state.suppliers.data,
   fetching: state.suppliers.fetching,
   error: state.suppliers.fetchingError,
   term: state.suppliers.searchTerm
