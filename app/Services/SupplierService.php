@@ -56,4 +56,9 @@ class SupplierService
         return $supplier;
     }
 
+    public static function delete(Supplier $supplier)
+    {
+        return $supplier->delete();
+    }
+
 }

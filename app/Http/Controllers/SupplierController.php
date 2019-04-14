@@ -88,6 +88,7 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        SupplierService::delete($supplier);
+        return $this->index();
     }
 }

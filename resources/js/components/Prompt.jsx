@@ -11,7 +11,11 @@ export class Prompt extends Component {
     }
 
     return (
-      <div className="modal show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+      <div
+        className="modal show"
+        tabIndex="-1"
+        role="dialog"
+        style={{ display: "block" }}>
         <div
           className="bg-dark"
           style={{

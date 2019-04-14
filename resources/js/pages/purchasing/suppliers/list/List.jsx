@@ -7,12 +7,18 @@ import Swal from "sweetalert2";
 import SwalReact from "sweetalert2-react-content";
 
 import { ColumnHeader } from "@/components/DataTable";
-import { fetchSuppliers, searchSuppliers } from "@/actions";
+import {
+  fetchSuppliers,
+  searchSuppliers,
+  showPrompt,
+  hidePrompt
+} from "@/actions";
 import { fuzzySearch, getFlowFromQueryString } from "@/helpers/misc";
 import { LoadingIndicator } from "@/components";
 import Empty from "./Empty";
 import Item from "./Item";
 import sortData, { types as sortTypes } from "./sort";
+import ConfirmDelete from "./ConfirmDelete";
 
 const alert = SwalReact(Swal);
 
@@ -23,6 +29,15 @@ class PurchasingSuppliersList extends Component {
     this.state = {
       sort: sortTypes[0]
     };
+  }
+
+  handleDelete(supplier) {
+    return this.props.showPrompt(
+      <ConfirmDelete
+        onDismiss={() => this.props.hidePrompt()}
+        supplier={supplier}
+      />
+    );
   }
 
   componentDidMount() {
@@ -130,7 +145,11 @@ class PurchasingSuppliersList extends Component {
                 </tr>
               )}
               {sortData(data, sort).map((supplier, index) => (
-                <Item key={"supplier-list-item-" + index} {...supplier} />
+                <Item
+                  key={"supplier-list-item-" + index}
+                  {...supplier}
+                  onDelete={() => this.handleDelete(supplier)}
+                />
               ))}
             </tbody>
           </table>
@@ -149,7 +168,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchSuppliers,
-  searchSuppliers
+  searchSuppliers,
+  showPrompt,
+  hidePrompt
 };
 
 PurchasingSuppliersList.propTypes = {

@@ -12,7 +12,7 @@ export default class PurchasingSuppliersListItem extends PureComponent {
   }
 
   render() {
-    const { slug, id, name, createdAt, createdBy } = this.props;
+    const { slug, id, name, createdAt, createdBy, onDelete } = this.props;
     const { highlighted } = this.state;
     const singleURL = "/purchasing/suppliers/" + slug + "/" + id;
 
@@ -24,9 +24,18 @@ export default class PurchasingSuppliersListItem extends PureComponent {
           <Link to={singleURL}>{name}</Link>
           {highlighted && (
             <div className="small">
-              <Link className="text-muted" to={singleURL + "/edit"}>
+              <Link className="text-dark" to={singleURL + "/edit"}>
                 Edit
               </Link>
+              <a
+                href="#"
+                className="text-danger ml-2"
+                onClick={e => {
+                  e.preventDefault();
+                  return onDelete();
+                }}>
+                Delete
+              </a>
             </div>
           )}
         </td>
