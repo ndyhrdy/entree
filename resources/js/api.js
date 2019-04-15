@@ -5,6 +5,7 @@ export const routes = {
   authenticatedUser: "/user",
   coworkers: "/coworkers",
   items: "/items",
+  purchases: "/purchases",
   stores: "/stores",
   suppliers: "/suppliers",
   units: "/units"

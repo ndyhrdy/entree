@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, Redirect, Route, Switch } from "react-router-dom";
 
 import { StoreDependentView } from "@/components";
+import Purchases from "./purchases/Purchases";
 import Suppliers from "./suppliers/Suppliers";
 
 export default props => {
@@ -14,6 +15,9 @@ export default props => {
           </div>
           <div className="container">
             <nav className="nav nav-tabs" style={{ marginBottom: -1 }}>
+              <NavLink to="/purchasing/purchases" className="nav-item nav-link">
+                Purchases
+              </NavLink>
               <NavLink to="/purchasing/suppliers" className="nav-item nav-link">
                 Suppliers
               </NavLink>
@@ -23,9 +27,10 @@ export default props => {
       )}
 
       <Switch>
+        <Route path="/purchasing/purchases" component={Purchases} />
         <Route path="/purchasing/suppliers" component={Suppliers} />
 
-        <Redirect to="/purchasing/suppliers" />
+        <Redirect to="/purchasing/purchases" />
       </Switch>
     </StoreDependentView>
   );

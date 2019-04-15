@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth', 'prefix' => '/webapi'], function () {
     Route::resource('/adjustments', 'AdjustmentBatchController');
     Route::resource('/coworkers', 'CoworkerController');
     Route::resource('/items', 'ItemController');
+    Route::resource('/purchases', 'PurchaseController');
     Route::resource('/stores', 'StoreController');
     Route::resource('/suppliers', 'SupplierController');
     Route::resource('/units', 'UnitController');
