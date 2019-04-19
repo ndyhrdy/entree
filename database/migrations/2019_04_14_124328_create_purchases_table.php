@@ -18,11 +18,15 @@ class CreatePurchasesTable extends Migration
             $table->string('batch_no');
             $table->unsignedInteger('store_id');
             $table->unsignedInteger('supplier_id')->nullable();
+            $table->double('items_total');
             $table->double('tax');
             $table->string('tax_type')->default('percentage');
-            $table->double('items_total');
             $table->double('tax_total');
+            $table->double('discount');
+            $table->string('discount_type')->default('percentage');
+            $table->double('discount_total');
             $table->double('total_price');
+            $table->text('notes');
             $table->unsignedInteger('created_by');
             $table->timestamps();
         });

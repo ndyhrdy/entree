@@ -1,5 +1,7 @@
 export { default as Alert } from "./Alert";
+export { default as AutocompleteInput } from "./AutocompleteInput";
 export { default as DateRangePicker } from "./DateRangePicker";
+export { default as DiscountInput } from "./DiscountInput";
 export { default as FormSection } from "./FormSection";
 export { default as FileDrop } from "./FileDrop";
 export { default as ImageCropper } from "./ImageCropper";
@@ -9,5 +11,6 @@ export { default as Navbar } from "./Navbar/Navbar";
 export { default as Prompt } from "./Prompt";
 export { default as QuantityInput } from "./QuantityInput";
 export { default as StoreDependentView } from "./StoreDependentView";
+export { default as TaxInput } from "./TaxInput";
 export { default as UnitPicker } from "./UnitPicker";
 export { default as UnitQuantityInput } from "./UnitQuantityInput";

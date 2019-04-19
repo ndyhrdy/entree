@@ -408,7 +408,7 @@ h6,
 .h5,
 .h6 {
   margin-bottom: 0.5rem;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.2;
 }
 
@@ -11838,6 +11838,12 @@ a {
   color: #0426d0;
 }
 
+.btn.btn-primary {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2pt;
+}
+
 .navbar-gradient {
   display: block;
   height: 10px;
@@ -11848,6 +11854,11 @@ a {
 
 .bg-pink {
   background-color: #fc466b;
+}
+
+.shadowed-extra {
+  -webkit-box-shadow: 0px 6px 32px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 6px 32px 0px rgba(0, 0, 0, 0.1);
 }
 
 .dropzone {

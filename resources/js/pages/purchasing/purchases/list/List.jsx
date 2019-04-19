@@ -24,7 +24,7 @@ class PurchasingPurchasesList extends Component {
           <div className="card-header d-flex justify-content-between align-items-center">
             <div />
             <div>
-              <Link to="/purchasing/purchase/new" className="btn btn-primary">
+              <Link to="/purchasing/purchases/new" className="btn btn-primary">
                 <AddIcon size={24} /> Record a Purchase
               </Link>
             </div>

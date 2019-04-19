@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { forwardRef, PureComponent } from "react";
 import PropTypes from "prop-types";
 import {
   ExpandMore as ExpandMoreIcon,
@@ -6,7 +6,7 @@ import {
 } from "styled-icons/material";
 import numeral from "numeral";
 
-export default class UnitQuantityInput extends PureComponent {
+class UnitQuantityInput extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,12 +17,13 @@ export default class UnitQuantityInput extends PureComponent {
 
   render() {
     const { quantity, quantityFocused } = this.state;
-    const { item, disabled = false, onChange } = this.props;
+    const { item, disabled = false, onChange, innerRef } = this.props;
 
     return (
       <div className="input-group" style={{ flex: 1 }}>
         <input
           type="text"
+          ref={innerRef}
           className="form-control text-right"
           value={
             quantityFocused
@@ -84,8 +85,7 @@ export default class UnitQuantityInput extends PureComponent {
                     {item[unit.key].data.shortName}
                     {unit.index > 1 && (
                       <span className="text-muted ml-1">
-                        ({item[unit.key + "Ratio"]}{" "}
-                        {item[unit.key].data.shortName})
+                        ({item[unit.key + "Ratio"]} {item.unit.data.shortName})
                       </span>
                     )}
                   </button>
@@ -130,3 +130,7 @@ UnitQuantityInput.propTypes = {
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired
 };
+
+export default forwardRef((props, ref) => (
+  <UnitQuantityInput innerRef={ref} {...props} />
+));
