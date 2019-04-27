@@ -4,6 +4,7 @@ namespace Entree\Http\Controllers;
 
 use Auth;
 use Entree\Purchase\Purchase;
+use Entree\Services\PurchaseService;
 use Entree\Services\StoreService;
 use Entree\Transformers\PurchaseTransformer;
 use Illuminate\Http\Request;
@@ -22,20 +23,10 @@ class PurchaseController extends Controller
             return abort(403, 'Unauthenticated');
         }
         return fractal()
-            ->collection($store->purchases)
+            ->collection(PurchaseService::getByStore($store))
             ->transformWith(new PurchaseTransformer)
-            ->parseIncludes(['createdBy'])
+            ->parseIncludes(['createdBy', 'supplier'])
             ->respond();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -46,7 +37,12 @@ class PurchaseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $store = StoreService::getActiveStoreForUser(Auth::user());
+        if (!$store) {
+            return abort(403, 'Unauthenticated');
+        }
+        $purchase = PurchaseService::createForStore($store, collect($request->all()), Auth::user());
+        return $this->show($purchase);
     }
 
     /**
@@ -57,18 +53,11 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \Entree\Purchase\Purchase  $purchase
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Purchase $purchase)
-    {
-        //
+        return fractal()
+            ->item($purchase)
+            ->transformWith(new PurchaseTransformer)
+            ->parseIncludes(['createdBy', 'items'])
+            ->respond();
     }
 
     /**

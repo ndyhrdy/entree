@@ -2,6 +2,7 @@
 
 namespace Entree\Purchase;
 
+use Entree\Events\PurchaseItemCreated;
 use Entree\Item\Mutable;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,8 +11,8 @@ class PurchaseItem extends Model
 
     use Mutable;
 
-    protected $with = [
-        'mutation',
+    protected $dispatchesEvents = [
+        'created' => PurchaseItemCreated::class,
     ];
 
     public function item()

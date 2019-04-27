@@ -3,26 +3,68 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Add as AddIcon } from "styled-icons/material";
+import Swal from "sweetalert2";
+import SwalReact from "sweetalert2-react-content";
 
-import { fetchPurchases } from "@/actions";
+import { fetchPurchases, searchPurchases } from "@/actions";
 import { LoadingIndicator } from "@/components";
 import { ColumnHeader } from "@/components/DataTable";
 import Empty from "./Empty";
 import Item from "./Item";
+import { fuzzySearch, getFlowFromQueryString } from "@/helpers/misc";
+
+const alert = SwalReact(Swal);
 
 class PurchasingPurchasesList extends Component {
   componentDidMount() {
-    this.props.fetchPurchases();
+    const {
+      fetchPurchases,
+      location: { search }
+    } = this.props;
+
+    fetchPurchases();
+    const flow = getFlowFromQueryString(search);
+    if (flow === "create-success") {
+      alert.fire({
+        type: "success",
+        title: "Hi-five!",
+        text: "A new purchase has been recorded!",
+        timer: 3000,
+        showConfirmButton: false
+      });
+    }
   }
 
   render() {
-    const { purchases, fetching, fetchingError } = this.props;
+    const {
+      purchases,
+      fetching,
+      fetchingError,
+      searchPurchases,
+      searchTerm
+    } = this.props;
+    const data =
+      searchTerm.length > 0
+        ? fuzzySearch({
+            list: purchases,
+            term: searchTerm,
+            keys: ["batchNo", "supplier.data.name"]
+          })
+        : [...purchases];
 
     return (
       <div className="container py-4">
         <div className="card">
           <div className="card-header d-flex justify-content-between align-items-center">
-            <div />
+            <div>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={e => searchPurchases(e.target.value)}
+                className="form-control"
+                placeholder="Search.."
+              />
+            </div>
             <div>
               <Link to="/purchasing/purchases/new" className="btn btn-primary">
                 <AddIcon size={24} /> Record a Purchase
@@ -32,15 +74,18 @@ class PurchasingPurchasesList extends Component {
           <table className="table">
             {purchases.length > 0 && (
               <thead>
-                <ColumnHeader>Batch</ColumnHeader>
-                <ColumnHeader className="text-right" style={{ width: 250 }}>
-                  Total Purchase
-                </ColumnHeader>
-                <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
+                <tr>
+                  <ColumnHeader>Purchased From</ColumnHeader>
+                  <ColumnHeader>Batch</ColumnHeader>
+                  <ColumnHeader className="text-right" style={{ width: 250 }}>
+                    Total Purchase
+                  </ColumnHeader>
+                  <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
+                </tr>
               </thead>
             )}
             <tbody>
-              {purchases.length === 0 && (
+              {data.length === 0 && (
                 <tr>
                   <td colSpan={3}>
                     {fetching ? (
@@ -54,7 +99,7 @@ class PurchasingPurchasesList extends Component {
                   </td>
                 </tr>
               )}
-              {purchases.map(purchase => (
+              {data.map(purchase => (
                 <Item key={"purchase-item-" + purchase.batchNo} {...purchase} />
               ))}
             </tbody>
@@ -68,18 +113,21 @@ class PurchasingPurchasesList extends Component {
 const mapStateToProps = state => ({
   purchases: state.purchases.data,
   fetching: state.purchases.fetching,
-  fetchingError: state.purchases.fetchingError
+  fetchingError: state.purchases.fetchingError,
+  searchTerm: state.purchases.term
 });
 
 const mapDispatchToProps = {
-  fetchPurchases
+  fetchPurchases,
+  searchPurchases
 };
 
 PurchasingPurchasesList.propTypes = {
   purchases: PropTypes.array.isRequired,
   fetching: PropTypes.bool.isRequired,
   fetchingError: PropTypes.any,
-  fetchPurchases: PropTypes.func.isRequired
+  fetchPurchases: PropTypes.func.isRequired,
+  searchPurchases: PropTypes.func.isRequired
 };
 
 export default connect(

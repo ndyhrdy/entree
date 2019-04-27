@@ -40,7 +40,7 @@ class SupplierController extends Controller
         if (!$store) {
             return abort(403, 'Unauthenticated');
         }
-        $supplier = SupplierService::createForStoreFromRequest($store, $request);
+        $supplier = SupplierService::createForStore($store, $request->all(), Auth::user());
         return $this->show($supplier);
     }
 

@@ -7,7 +7,7 @@ export default class InventoryAdjustmentsCreateItemsList extends PureComponent {
     const { adjustmentType, disabled, items, onRemove, onUpdate } = this.props;
 
     return (
-      <table className="table table-sm">
+      <table className="table">
         <thead>
           <tr>
             <ColumnHeader>Item</ColumnHeader>

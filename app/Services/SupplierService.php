@@ -6,6 +6,7 @@ use Entree\Purchase\Supplier;
 use Entree\Store\Store;
 use Entree\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Validator;
 
 class SupplierService
@@ -16,9 +17,12 @@ class SupplierService
         return $store->suppliers;
     }
 
-    public static function createForStoreFromRequest(Store $store, Request $request, User $createdBy = null)
-    {
-        $validator = Validator::make($request->all(), [
+    public static function createForStore(
+        Store $store,
+        Collection $data,
+        User $createdBy
+    ) {
+        $validator = Validator::make($data->all(), [
             'name' => 'required|string',
             'address' => 'nullable|string',
             'phone' => 'nullable|string',
@@ -27,12 +31,12 @@ class SupplierService
         $validator->validate();
 
         $supplier = new Supplier;
-        $supplier->name = $request->name;
-        $supplier->address = $request->address;
-        $supplier->phone = $request->phone;
-        $supplier->email = $request->email;
+        $supplier->name = $data['name'];
+        $supplier->address = isset($data['address']) ? $data['address'] : '';
+        $supplier->phone = isset($data['phone']) ? $data['phone'] : '';
+        $supplier->email = isset($data['email']) ? $data['email'] : '';
         $supplier->store_id = $store->id;
-        $supplier->created_by = $createdBy ? $createdBy->id : $request->user()->id;
+        $supplier->created_by = $createdBy->id;
 
         $supplier->save();
         return $supplier;

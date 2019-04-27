@@ -3,7 +3,8 @@ import {
   PURCHASES_FETCH,
   PURCHASES_SET_FETCH_ERROR,
   PURCHASES_POPULATE,
-  PURCHASES_PUSH
+  PURCHASES_PUSH,
+  PURCHASES_SEARCH
 } from "./types";
 import api, { routes } from "@/api";
 
@@ -30,6 +31,11 @@ export const fetchPurchases = (force = false) => async (dispatch, getState) => {
 export const populatePurchases = purchases => ({
   type: PURCHASES_POPULATE,
   purchases
+});
+
+export const searchPurchases = term => ({
+  type: PURCHASES_SEARCH,
+  term
 });
 
 export const pushPurchase = purchase => ({

@@ -20,6 +20,7 @@ class CreatePurchaseItemsTable extends Migration
             $table->double('quantity');
             $table->unsignedInteger('unit_index');
             $table->double('base_price');
+            $table->double('discount');
             $table->string('discount_type')->default('percentage');
             $table->double('discount_total');
             $table->double('total_price');

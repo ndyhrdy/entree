@@ -86,7 +86,7 @@ class PurchasingPurchasesCreateItems extends PureComponent {
             </Fragment>
           )}
         />
-        <table className="table table-condensed">
+        <table className="table">
           <thead>
             <tr>
               <ColumnHeader className="pl-0">Item</ColumnHeader>

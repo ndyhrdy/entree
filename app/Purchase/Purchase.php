@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Purchase extends Model
 {
 
-    protected $dispatchesEvents = [
-        'created' => PurchaseCreated::class,
-    ];
-
     protected $withCount = [
         'items',
     ];

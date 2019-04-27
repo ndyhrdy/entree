@@ -9,7 +9,7 @@ class PurchaseTransformer extends TransformerAbstract
 {
 
     protected $availableIncludes = [
-        'supplier', 'createdBy',
+        'supplier', 'items', 'createdBy',
     ];
 
     /**
@@ -21,13 +21,21 @@ class PurchaseTransformer extends TransformerAbstract
     {
         return [
             'batchNo' => $purchase->batch_no,
-            'tax' => $purchase->tax,
-            'taxType' => $purchase->tax_type,
             'itemsCount' => $purchase->items_count,
             'itemsTotal' => $purchase->items_total,
+            'tax' => $purchase->tax,
+            'taxType' => $purchase->tax_type,
             'taxTotal' => $purchase->tax_total,
+            'discount' => $purchase->discount,
+            'discountType' => $purchase->discount_type,
+            'discountTotal' => $purchase->discount_total,
             'totalPrice' => $purchase->total_price,
         ];
+    }
+
+    public function includeItems(Purchase $purchase)
+    {
+        return $this->collection($purchase->items, new PurchaseItemTransformer);
     }
 
     public function includeSupplier(Purchase $purchase)

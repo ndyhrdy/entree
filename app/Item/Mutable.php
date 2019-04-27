@@ -14,7 +14,7 @@ trait Mutable
         $mutation->item_id = $this->item->id;
         $mutation->quantity = $this->getMutationQuantity();
         $mutation->unit_id = $this->getMutationUnit()->id;
-        $mutation->quantity_unit_ratio = optional($this->adjustment_type) == 'balance' ? 1 : $this->getMutationUnitRatio();
+        $mutation->quantity_unit_ratio = $this->getMutationUnitRatio();
         $mutation->base_unit_quantity = $mutation->quantity * $mutation->quantity_unit_ratio;
         $mutation->starting_quantity = $this->getCurrentQuantity();
         $mutation->ending_quantity = $mutation->starting_quantity + $mutation->base_unit_quantity;
@@ -70,6 +70,9 @@ trait Mutable
 
     public function getMutationUnitRatio()
     {
+        if (optional($this->adjustment_type) == 'balance') {
+            return 1;
+        }
         switch ($this->unit_index) {
             case 2:
                 return $this->item->unit_2_ratio;

@@ -38,8 +38,7 @@ export class Home extends PureComponent {
           <div className="container my-5">
             <div>
               <div className="h1 bg-primary d-inline-block text-white px-3 py-2 mb-1">
-                Good {timeOfDayString},{" "}
-                <strong>{user.data.name.split(" ")[0]}</strong>!
+                Good {timeOfDayString}, {user.data.name.split(" ")[0]}!
               </div>
             </div>
             <div>

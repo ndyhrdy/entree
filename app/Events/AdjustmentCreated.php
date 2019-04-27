@@ -22,7 +22,9 @@ class AdjustmentCreated
      */
     public function __construct(Adjustment $adjustment)
     {
-        $adjustment->createMutation();
+        if ($adjustment->item->is_stock_monitored) {
+            $adjustment->createMutation();
+        }
     }
 
     /**

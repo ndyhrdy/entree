@@ -2,10 +2,11 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { Link, Prompt } from "react-router-dom";
 import numeral from "numeral";
+import { isEmpty } from "lodash";
 
 import { fetchUnits, fetchSuppliers, pushPurchase } from "@/actions";
 import api, { routes } from "@/api";
-import { DiscountInput, TaxInput } from "@/components";
+import { Alert, DiscountInput, TaxInput } from "@/components";
 import { discountTypes } from "@/components/DiscountInput";
 import { taxTypes } from "@/components/TaxInput";
 import Items from "./Items";
@@ -53,7 +54,10 @@ class PurchasingPurchasesCreate extends Component {
       try {
         const response = await api.post(routes.purchases, {
           supplier,
-          items,
+          items: items.map(item => ({
+            ...item,
+            discountType: item.discountType.key
+          })),
           notes,
           discount,
           discountType: discountType.key,
@@ -62,7 +66,9 @@ class PurchasingPurchasesCreate extends Component {
         });
         const { data: purchase } = response.data;
         pushPurchase(purchase);
-        return history.replace("/purchasing/purchases?_flow=create-success");
+        return this.setState({ dirty: false }, () =>
+          history.replace("/purchasing/purchases?_flow=create-success")
+        );
       } catch (error) {
         return this.setState({
           saving: false,
@@ -110,6 +116,12 @@ class PurchasingPurchasesCreate extends Component {
         </ol>
 
         <h3 className="mb-4">Record New Purchase</h3>
+        {!isEmpty(errors) && (
+          <Alert type="danger">
+            <div>The following errors have occured while saving purchase</div>
+            <div>{errors.toString()}</div>
+          </Alert>
+        )}
         <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
           <SupplierSelection
             selection={supplier}
@@ -179,7 +191,8 @@ class PurchasingPurchasesCreate extends Component {
               <button
                 type="button"
                 className="btn btn-primary"
-                disabled={saving}>
+                disabled={saving}
+                onClick={() => this.handleSave()}>
                 {saving ? "Saving.." : "Save"}
               </button>
             </div>
@@ -217,7 +230,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchUnits,
-  fetchSuppliers
+  fetchSuppliers,
+  pushPurchase
 };
 
 export default connect(

@@ -26,7 +26,7 @@ class CreatePurchasesTable extends Migration
             $table->string('discount_type')->default('percentage');
             $table->double('discount_total');
             $table->double('total_price');
-            $table->text('notes');
+            $table->text('notes')->nullable();
             $table->unsignedInteger('created_by');
             $table->timestamps();
         });

@@ -88,14 +88,14 @@ export class InventoryAdjustmentsCreate extends Component {
 
         <h3 className="mb-4">Make Adjustment</h3>
 
-        <div className="mb-4 bg-white rounded px-3 py-3">
+        <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
           <TypeSelection
             selected={type !== null}
             onSelect={selection => this.setAdjustmentType(selection)}
           />
         </div>
         {type && (
-          <div className="mb-4 bg-white rounded px-3 py-3">
+          <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
             <Items
               adjustmentType={type}
               selectedItems={selectedItems}
