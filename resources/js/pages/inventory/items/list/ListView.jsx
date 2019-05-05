@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 
 import { LoadingIndicator } from "@/components";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 import ListViewItem from "./ListViewItem";
 import sortData from "./sort";
 
@@ -14,18 +14,18 @@ export default class InventoryItemsListListView extends PureComponent {
           "table" +
           ((fetching || error) && data.length === 0 ? "" : " table-hover")
         }>
-        <thead>
+        <TableHeader>
           <tr>
             <ColumnHeader>Item</ColumnHeader>
             <ColumnHeader className="text-right" style={{ width: 150 }}>
               Quantity
             </ColumnHeader>
-            <ColumnHeader className="text-right" style={{ width: 150 }}>
+            <ColumnHeader className="text-right" style={{ width: 200 }}>
               Last Transaction
             </ColumnHeader>
             <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
           </tr>
-        </thead>
+        </TableHeader>
         <tbody>
           {fetching && data.length === 0 && (
             <tr>

@@ -1,18 +1,18 @@
 // Fonts
 @font-face {
-  font-family: "Sarabun";
+  font-family: "Lato";
   font-weight: 400;
-  src: url("../fonts/Sarabun-Light.ttf");
+  src: url("../fonts/Lato-Regular.ttf");
 }
 @font-face {
-  font-family: "Sarabun";
+  font-family: "Lato";
   font-weight: 300;
-  src: url("../fonts/Sarabun-Light.ttf");
+  src: url("../fonts/Lato-Light.ttf");
 }
 @font-face {
-  font-family: "Sarabun";
+  font-family: "Lato";
   font-weight: 700;
-  src: url("../fonts/Sarabun-Bold.ttf");
+  src: url("../fonts/Lato-Bold.ttf");
 }
 
 // Variables
@@ -34,6 +34,15 @@ a {
     letter-spacing: 2pt;
   }
 }
+.table {
+  thead {
+    tr {
+      th {
+        letter-spacing: 1.3pt;
+      }
+    }
+  }
+}
 
 .navbar-gradient {
   display: block;
@@ -45,6 +54,9 @@ a {
 
 .bg-pink {
   background-color: $pink;
+}
+.text-pink {
+  color: $pink;
 }
 
 .shadowed-extra {

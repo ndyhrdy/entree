@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import { connect } from "react-redux";
 import ListItem from "./ListItem";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 
 export class StoresList extends PureComponent {
   constructor(props) {
@@ -34,13 +34,13 @@ export class StoresList extends PureComponent {
 
     return (
       <table className="table table-hover">
-        <thead>
+        <TableHeader>
           <tr>
             <ColumnHeader>Store</ColumnHeader>
             <ColumnHeader style={{ width: 150 }}>Owner</ColumnHeader>
             <ColumnHeader style={{ width: 150 }}>Created</ColumnHeader>
           </tr>
-        </thead>
+        </TableHeader>
         <tbody>
           {data.filter(filterFunction).map((store, index) => (
             <ListItem key={"store-item-" + index} {...store} />

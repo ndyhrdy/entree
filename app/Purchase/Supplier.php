@@ -10,6 +10,10 @@ class Supplier extends Model
 
     use SoftDeletes;
 
+    protected $with = [
+        'createdBy',
+    ];
+
     public function createdBy()
     {
         return $this->belongsTo('Entree\User', 'created_by');

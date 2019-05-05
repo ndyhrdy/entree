@@ -20,6 +20,7 @@ class PurchaseTransformer extends TransformerAbstract
     public function transform(Purchase $purchase)
     {
         return [
+            'id' => $purchase->id,
             'batchNo' => $purchase->batch_no,
             'itemsCount' => $purchase->items_count,
             'itemsTotal' => $purchase->items_total,

@@ -95,7 +95,7 @@ class PurchaseService
         $batchCountToday = $store->purchases()->whereDate('purchases.created_at', date('Y-m-d'))->get()->groupBy('batchNo')->count() + 1;
 
         return 'PUR' .
-        substr(strtoupper($store->name), 0, 6) .
+        substr(str_replace(' ', '', strtoupper($store->name)), 0, 6) .
         date('Ymd') .
         str_pad($batchCountToday, 4, '0', STR_PAD_LEFT);
     }

@@ -3,7 +3,7 @@ import moment from "moment";
 import numeral from "numeral";
 import { Link } from "react-router-dom";
 
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 
 export default class RecentTransactions extends PureComponent {
   constructor(props) {
@@ -39,12 +39,12 @@ export default class RecentTransactions extends PureComponent {
         <h4 className="px-3 mb-3">Recent Transactions</h4>
 
         <table className="table table-sm mb-3">
-          <thead>
+          <TableHeader>
             <tr>
               <ColumnHeader className="pl-3">Transaction</ColumnHeader>
               <ColumnHeader className="pr-3 text-right">Quantity</ColumnHeader>
             </tr>
-          </thead>
+          </TableHeader>
           <tbody>
             {transactions.length === 0 && (
               <tr>

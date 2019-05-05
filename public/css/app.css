@@ -1,19 +1,19 @@
 @font-face {
-  font-family: "Sarabun";
+  font-family: "Lato";
   font-weight: 400;
-  src: url(/fonts/Sarabun-Light.ttf?83ccca1df997a1919077b64c3d70ac30);
+  src: url(/fonts/Lato-Regular.ttf?7f690e503a254e0b8349aec0177e07aa);
 }
 
 @font-face {
-  font-family: "Sarabun";
+  font-family: "Lato";
   font-weight: 300;
-  src: url(/fonts/Sarabun-Light.ttf?83ccca1df997a1919077b64c3d70ac30);
+  src: url(/fonts/Lato-Light.ttf?5b761f2d1e4259ea6ac7ab3ebf7f3c49);
 }
 
 @font-face {
-  font-family: "Sarabun";
+  font-family: "Lato";
   font-weight: 700;
-  src: url(/fonts/Sarabun-Bold.ttf?4f70ff7dd351fe841b15de5a88a499aa);
+  src: url(/fonts/Lato-Bold.ttf?44dfe8cc676882243911a3197a50169e);
 }
 
 /*!
@@ -50,7 +50,7 @@
   --breakpoint-md: 768px;
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
-  --font-family-sans-serif: "Sarabun", sans-serif;
+  --font-family-sans-serif: "Lato", sans-serif;
   --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
@@ -83,11 +83,11 @@ section {
 
 body {
   margin: 0;
-  font-family: "Sarabun", sans-serif;
-  font-size: 0.9rem;
+  font-family: "Lato", sans-serif;
+  font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.6;
-  color: #212529;
+  color: #495057;
   text-align: left;
   background-color: #f6f6f6;
 }
@@ -414,36 +414,36 @@ h6,
 
 h1,
 .h1 {
-  font-size: 2.25rem;
+  font-size: 2.375rem;
 }
 
 h2,
 .h2 {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
 }
 
 h3,
 .h3 {
-  font-size: 1.575rem;
+  font-size: 1.6625rem;
 }
 
 h4,
 .h4 {
-  font-size: 1.35rem;
+  font-size: 1.425rem;
 }
 
 h5,
 .h5 {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
 }
 
 h6,
 .h6 {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .lead {
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   font-weight: 300;
 }
 
@@ -515,7 +515,7 @@ mark,
 
 .blockquote {
   margin-bottom: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
 }
 
 .blockquote-footer {
@@ -1936,7 +1936,7 @@ pre code {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #212529;
+  color: #495057;
 }
 
 .table th,
@@ -1986,7 +1986,7 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-  color: #212529;
+  color: #495057;
   background-color: rgba(0, 0, 0, 0.075);
 }
 
@@ -2285,7 +2285,7 @@ pre code {
   width: 100%;
   height: calc(1.6em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.6;
   color: #495057;
@@ -2363,14 +2363,14 @@ select.form-control:focus::-ms-value {
 .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
   padding-bottom: calc(0.5rem + 1px);
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.5;
 }
 
 .col-form-label-sm {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.5;
 }
 
@@ -2381,7 +2381,7 @@ select.form-control:focus::-ms-value {
   padding-bottom: 0.375rem;
   margin-bottom: 0;
   line-height: 1.6;
-  color: #212529;
+  color: #495057;
   background-color: transparent;
   border: solid transparent;
   border-width: 1px 0;
@@ -2396,7 +2396,7 @@ select.form-control:focus::-ms-value {
 .form-control-sm {
   height: calc(1.5em + 0.5rem + 2px);
   padding: 0.25rem 0.5rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -2404,7 +2404,7 @@ select.form-control:focus::-ms-value {
 .form-control-lg {
   height: calc(1.5em + 1rem + 2px);
   padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -2497,7 +2497,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.6;
   color: #fff;
   background-color: rgba(103, 178, 111, 0.9);
@@ -2643,7 +2643,7 @@ textarea.form-control.is-valid {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.6;
   color: #fff;
   background-color: rgba(227, 52, 47, 0.9);
@@ -2876,7 +2876,7 @@ textarea.form-control.is-invalid {
 .btn {
   display: inline-block;
   font-weight: 400;
-  color: #212529;
+  color: #495057;
   text-align: center;
   vertical-align: middle;
   -webkit-user-select: none;
@@ -2886,7 +2886,7 @@ textarea.form-control.is-invalid {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 0.375rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   border-radius: 0.25rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -2903,7 +2903,7 @@ textarea.form-control.is-invalid {
 }
 
 .btn:hover {
-  color: #212529;
+  color: #495057;
   text-decoration: none;
 }
 
@@ -3575,7 +3575,7 @@ fieldset:disabled a.btn {
 .btn-lg,
 .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -3583,7 +3583,7 @@ fieldset:disabled a.btn {
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -3659,8 +3659,8 @@ input[type="button"].btn-block {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 0.9rem;
-  color: #212529;
+  font-size: 0.95rem;
+  color: #495057;
   text-align: left;
   list-style: none;
   background-color: #fff;
@@ -3815,7 +3815,7 @@ input[type="button"].btn-block {
   display: block;
   padding: 0.5rem 1.5rem;
   margin-bottom: 0;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   color: #6c757d;
   white-space: nowrap;
 }
@@ -4093,7 +4093,7 @@ input[type="button"].btn-block {
           align-items: center;
   padding: 0.375rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.6;
   color: #495057;
@@ -4121,7 +4121,7 @@ input[type="button"].btn-block {
 .input-group-lg > .input-group-prepend > .btn,
 .input-group-lg > .input-group-append > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -4138,7 +4138,7 @@ input[type="button"].btn-block {
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -4171,7 +4171,7 @@ input[type="button"].btn-block {
 .custom-control {
   position: relative;
   display: block;
-  min-height: 1.44rem;
+  min-height: 1.52rem;
   padding-left: 1.5rem;
 }
 
@@ -4225,7 +4225,7 @@ input[type="button"].btn-block {
 
 .custom-control-label::before {
   position: absolute;
-  top: 0.22rem;
+  top: 0.26rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -4238,7 +4238,7 @@ input[type="button"].btn-block {
 
 .custom-control-label::after {
   position: absolute;
-  top: 0.22rem;
+  top: 0.26rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -4296,7 +4296,7 @@ input[type="button"].btn-block {
 }
 
 .custom-switch .custom-control-label::after {
-  top: calc(0.22rem + 2px);
+  top: calc(0.26rem + 2px);
   left: calc(-2.25rem + 2px);
   width: calc(1rem - 4px);
   height: calc(1rem - 4px);
@@ -4330,7 +4330,7 @@ input[type="button"].btn-block {
   width: 100%;
   height: calc(1.6em + 0.75rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-weight: 400;
   line-height: 1.6;
   color: #495057;
@@ -4377,7 +4377,7 @@ input[type="button"].btn-block {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
 }
 
 .custom-select-lg {
@@ -4385,7 +4385,7 @@ input[type="button"].btn-block {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
 }
 
 .custom-file {
@@ -4776,10 +4776,10 @@ input[type="button"].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.32rem;
-  padding-bottom: 0.32rem;
+  padding-top: 0.31rem;
+  padding-bottom: 0.31rem;
   margin-right: 1rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: inherit;
   white-space: nowrap;
 }
@@ -4831,7 +4831,7 @@ input[type="button"].btn-block {
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
@@ -5597,7 +5597,7 @@ input[type="button"].btn-block {
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
-  font-size: 1.125rem;
+  font-size: 1.1875rem;
   line-height: 1.5;
 }
 
@@ -5613,7 +5613,7 @@ input[type="button"].btn-block {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   line-height: 1.5;
 }
 
@@ -5850,7 +5850,7 @@ a.badge-dark.focus {
 }
 
 .alert-dismissible {
-  padding-right: 3.85rem;
+  padding-right: 3.925rem;
 }
 
 .alert-dismissible .close {
@@ -5999,7 +5999,7 @@ a.badge-dark.focus {
   display: flex;
   height: 1rem;
   overflow: hidden;
-  font-size: 0.675rem;
+  font-size: 0.7125rem;
   background-color: #e9ecef;
   border-radius: 0.25rem;
 }
@@ -6089,7 +6089,7 @@ a.badge-dark.focus {
 }
 
 .list-group-item-action:active {
-  color: #212529;
+  color: #495057;
   background-color: #e9ecef;
 }
 
@@ -6417,7 +6417,7 @@ a.badge-dark.focus {
 
 .close {
   float: right;
-  font-size: 1.35rem;
+  font-size: 1.425rem;
   font-weight: 700;
   line-height: 1;
   color: #000;
@@ -6751,7 +6751,7 @@ a.close.disabled {
   z-index: 1070;
   display: block;
   margin: 0;
-  font-family: "Sarabun", sans-serif;
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -6765,7 +6765,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   word-wrap: break-word;
   opacity: 0;
 }
@@ -6876,7 +6876,7 @@ a.close.disabled {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: "Sarabun", sans-serif;
+  font-family: "Lato", sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: 1.6;
@@ -6890,7 +6890,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.7875rem;
+  font-size: 0.83125rem;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: padding-box;
@@ -7032,7 +7032,7 @@ a.close.disabled {
 .popover-header {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-top-left-radius: calc(0.3rem - 1px);
@@ -7045,7 +7045,7 @@ a.close.disabled {
 
 .popover-body {
   padding: 0.5rem 0.75rem;
-  color: #212529;
+  color: #495057;
 }
 
 .carousel {
@@ -11444,7 +11444,7 @@ a.text-dark:focus {
 }
 
 .text-body {
-  color: #212529 !important;
+  color: #495057 !important;
 }
 
 .text-muted {
@@ -11844,6 +11844,10 @@ a {
   letter-spacing: 2pt;
 }
 
+.table thead tr th {
+  letter-spacing: 1.3pt;
+}
+
 .navbar-gradient {
   display: block;
   height: 10px;
@@ -11854,6 +11858,10 @@ a {
 
 .bg-pink {
   background-color: #fc466b;
+}
+
+.text-pink {
+  color: #fc466b;
 }
 
 .shadowed-extra {

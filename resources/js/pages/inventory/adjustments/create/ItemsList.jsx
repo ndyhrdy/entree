@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import ListItem from "./ItemsListItem";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 
 export default class InventoryAdjustmentsCreateItemsList extends PureComponent {
   render() {
@@ -8,7 +8,7 @@ export default class InventoryAdjustmentsCreateItemsList extends PureComponent {
 
     return (
       <table className="table">
-        <thead>
+        <TableHeader>
           <tr>
             <ColumnHeader>Item</ColumnHeader>
             <ColumnHeader className="text-right" style={{ width: 150 }}>
@@ -22,7 +22,7 @@ export default class InventoryAdjustmentsCreateItemsList extends PureComponent {
             </ColumnHeader>
             <ColumnHeader style={{ width: 120 }} />
           </tr>
-        </thead>
+        </TableHeader>
         <tbody>
           {items.length === 0 ? (
             <tr>

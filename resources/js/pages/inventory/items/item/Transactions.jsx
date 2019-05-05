@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import moment from "moment";
 import numeral from "numeral";
 import { DateRangePicker, LoadingIndicator } from "@/components";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 
 export default class InventoryItemsItemTransactions extends Component {
   constructor(props) {
@@ -30,7 +30,7 @@ export default class InventoryItemsItemTransactions extends Component {
           </div>
 
           <table className="table">
-            <thead>
+            <TableHeader>
               <tr>
                 <ColumnHeader className="pl-3">Transaction</ColumnHeader>
                 <ColumnHeader className="text-right" style={{ width: 120 }}>
@@ -42,7 +42,7 @@ export default class InventoryItemsItemTransactions extends Component {
                   Ending Balance
                 </ColumnHeader>
               </tr>
-            </thead>
+            </TableHeader>
             <tbody>
               {mutations.length === 0 && (
                 <tr>

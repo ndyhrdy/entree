@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, createRef } from "react";
 import { connect } from "react-redux";
 import { Link, Prompt } from "react-router-dom";
 import numeral from "numeral";
@@ -16,6 +16,7 @@ class PurchasingPurchasesCreate extends Component {
   constructor(props) {
     super(props);
 
+    this.itemsComponent = createRef();
     this.state = {
       items: [],
       notes: "",
@@ -127,77 +128,72 @@ class PurchasingPurchasesCreate extends Component {
             selection={supplier}
             suppliers={suppliers}
             loading={fetchingSuppliers}
-            onSelect={supplier => this.setState({ supplier, dirty: true })}
+            onSelect={supplier =>
+              this.setState({ supplier, dirty: true }, () =>
+                this.itemsComponent.current.focusSearch()
+              )
+            }
             onClear={() => this.setState({ supplier: null })}
           />
         </div>
-        {(!!supplier || items.length > 0) && (
-          <Fragment>
-            <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
-              <Items
-                items={items}
-                onChange={items => this.setState({ items })}
-              />
-              <div className="mt-3 row justify-content-end">
-                <div className="col-lg-4">
-                  <ExtraField label="Items Total">
-                    <div className="py-2">
-                      <strong>
-                        {numeral(itemsTotal).format("0,0.[0000]")}
-                      </strong>
-                    </div>
-                  </ExtraField>
-                  <ExtraField label="Discount">
-                    <DiscountInput
-                      value={discount}
-                      type={discountType}
-                      onChangeType={type =>
-                        this.setState({ discountType: type })
-                      }
-                      onChangeValue={value =>
-                        this.setState({ discount: value })
-                      }
-                    />
-                  </ExtraField>
-                  <ExtraField label="Tax" className="mb-3">
-                    <TaxInput
-                      value={tax}
-                      type={taxType}
-                      onChangeType={type => this.setState({ taxType: type })}
-                      onChangeValue={value => this.setState({ tax: value })}
-                    />
-                  </ExtraField>
-                  <ExtraField label="Grand Total">
-                    <div className="h3 text-right">
-                      {numeral(grandTotal).format("0,0.[0000]")}
-                    </div>
-                  </ExtraField>
+        <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
+          <Items
+            ref={this.itemsComponent}
+            items={items}
+            onChange={items => this.setState({ items })}
+          />
+          <div className="mt-3 row justify-content-end">
+            <div className="col-lg-4">
+              <ExtraField label="Items Total">
+                <div className="py-2">
+                  <strong>{numeral(itemsTotal).format("0,0.[0000]")}</strong>
                 </div>
-              </div>
+              </ExtraField>
+              <ExtraField label="Discount">
+                <DiscountInput
+                  value={discount}
+                  type={discountType}
+                  onChangeType={type => this.setState({ discountType: type })}
+                  onChangeValue={value => this.setState({ discount: value })}
+                />
+              </ExtraField>
+              <ExtraField label="Tax" className="mb-3">
+                <TaxInput
+                  value={tax}
+                  type={taxType}
+                  onChangeType={type => this.setState({ taxType: type })}
+                  onChangeValue={value => this.setState({ tax: value })}
+                />
+              </ExtraField>
+              <ExtraField label="Grand Total">
+                <div className="h3 text-right">
+                  {numeral(grandTotal).format("0,0.[0000]")}
+                </div>
+              </ExtraField>
             </div>
-            <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
-              <div className="h4 mb-3">
-                <span className="badge badge-primary">3</span> Add Notes{" "}
-                <small>(optional)</small>
-              </div>
-              <textarea
-                className="form-control"
-                rows={4}
-                value={notes}
-                onChange={e => this.setState({ notes: e.target.value })}
-              />
-            </div>
-            <div>
-              <button
-                type="button"
-                className="btn btn-primary"
-                disabled={saving}
-                onClick={() => this.handleSave()}>
-                {saving ? "Saving.." : "Save"}
-              </button>
-            </div>
-          </Fragment>
-        )}
+          </div>
+        </div>
+        <div className="mb-4 bg-white rounded px-3 py-3 shadowed-extra">
+          <div className="h4 mb-3">
+            <span className="badge badge-primary">3</span> Add Notes{" "}
+            <small>(optional)</small>
+          </div>
+          <textarea
+            className="form-control"
+            rows={4}
+            value={notes}
+            onChange={e => this.setState({ notes: e.target.value })}
+          />
+        </div>
+        <div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            disabled={saving || !supplier || items.length === 0}
+            onClick={() => this.handleSave()}>
+            {saving ? "Saving.." : "Save"}
+          </button>
+        </div>
 
         <Prompt
           when={dirty}

@@ -9,9 +9,13 @@ class PurchaseItemTransformer extends TransformerAbstract
 {
 
     protected $availableIncludes = [
-        'item', 'mutation'
+        'item',
     ];
-    
+
+    protected $defaultIncludes = [
+        'mutation',
+    ];
+
     /**
      * A Fractal transformer.
      *
@@ -34,9 +38,9 @@ class PurchaseItemTransformer extends TransformerAbstract
         return $this->item($purchaseItem->item, new ItemTransformer);
     }
 
-    public function includeMutation(Adjustment $adjustment)
+    public function includeMutation(PurchaseItem $purchaseItem)
     {
-        return $this->item($adjustment->mutation, new MutationTransformer);
+        return $this->item($purchaseItem->mutation, new MutationTransformer);
     }
-    
+
 }

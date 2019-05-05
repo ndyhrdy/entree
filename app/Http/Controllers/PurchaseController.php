@@ -53,10 +53,12 @@ class PurchaseController extends Controller
      */
     public function show(Purchase $purchase)
     {
+        $purchase->load(['items', 'items.item']);
+
         return fractal()
             ->item($purchase)
             ->transformWith(new PurchaseTransformer)
-            ->parseIncludes(['createdBy', 'items'])
+            ->parseIncludes(['createdBy', 'items', 'items.item', 'supplier'])
             ->respond();
     }
 

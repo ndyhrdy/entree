@@ -8,7 +8,8 @@ export default class PurchasingPurchasesCreateItemsListItem extends PureComponen
     super(props);
 
     this.state = {
-      unitPrice: props.item.unitPrice
+      unitPrice: props.item.unitPrice,
+      highlighted: false
     };
   }
 
@@ -26,15 +27,31 @@ export default class PurchasingPurchasesCreateItemsListItem extends PureComponen
   }
 
   render() {
-    const { item, onUpdate } = this.props;
-    const { unitPrice } = this.state;
+    const { item, onRemove, onUpdate } = this.props;
+    const { highlighted, unitPrice } = this.state;
 
     return (
-      <tr>
+      <tr
+        onMouseEnter={() => this.setState({ highlighted: true })}
+        onMouseLeave={() => this.setState({ highlighted: false })}>
         <td className="align-middle pl-0">
-          <span className="text-muted">{item.sku}</span> {item.name}
+          <div>
+            {item.sku}{" "}
+            {highlighted && (
+              <a
+                className="small text-danger"
+                href="#"
+                onClick={e => {
+                  e.preventDefault();
+                  onRemove();
+                }}>
+                Remove
+              </a>
+            )}
+          </div>
+          <div className="small">{item.name}</div>
         </td>
-        <td>
+        <td className="align-middle">
           <UnitQuantityInput
             ref={r => (this.quantityInput = r)}
             item={item}
@@ -43,7 +60,7 @@ export default class PurchasingPurchasesCreateItemsListItem extends PureComponen
             }
           />
         </td>
-        <td>
+        <td className="align-middle">
           <input
             ref={r => (this.unitPriceInput = r)}
             type="text"
@@ -71,7 +88,7 @@ export default class PurchasingPurchasesCreateItemsListItem extends PureComponen
             }}
           />
         </td>
-        <td>
+        <td className="align-middle">
           <DiscountInput
             value={item.discount}
             type={item.discountType}

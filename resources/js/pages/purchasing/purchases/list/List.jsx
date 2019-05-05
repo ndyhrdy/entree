@@ -8,7 +8,7 @@ import SwalReact from "sweetalert2-react-content";
 
 import { fetchPurchases, searchPurchases } from "@/actions";
 import { LoadingIndicator } from "@/components";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 import Empty from "./Empty";
 import Item from "./Item";
 import { fuzzySearch, getFlowFromQueryString } from "@/helpers/misc";
@@ -73,7 +73,7 @@ class PurchasingPurchasesList extends Component {
           </div>
           <table className="table">
             {purchases.length > 0 && (
-              <thead>
+              <TableHeader>
                 <tr>
                   <ColumnHeader>Purchased From</ColumnHeader>
                   <ColumnHeader>Batch</ColumnHeader>
@@ -82,7 +82,7 @@ class PurchasingPurchasesList extends Component {
                   </ColumnHeader>
                   <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
                 </tr>
-              </thead>
+              </TableHeader>
             )}
             <tbody>
               {data.length === 0 && (

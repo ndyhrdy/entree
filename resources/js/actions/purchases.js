@@ -4,7 +4,9 @@ import {
   PURCHASES_SET_FETCH_ERROR,
   PURCHASES_POPULATE,
   PURCHASES_PUSH,
-  PURCHASES_SEARCH
+  PURCHASES_SEARCH,
+  PURCHASES_SELECT,
+  PURCHASES_FILL_SELECTION
 } from "./types";
 import api, { routes } from "@/api";
 
@@ -40,5 +42,21 @@ export const searchPurchases = term => ({
 
 export const pushPurchase = purchase => ({
   type: PURCHASES_PUSH,
+  purchase
+});
+
+export const selectPurchase = purchase => async (dispatch, getState) => {
+  dispatch({ type: PURCHASES_SELECT, purchase });
+  try {
+    const response = await api.get(routes.purchases + "/" + purchase.id);
+    const { data: completePurchase } = response.data;
+    return dispatch(fillPurchaseSelection(completePurchase));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fillPurchaseSelection = purchase => ({
+  type: PURCHASES_FILL_SELECTION,
   purchase
 });

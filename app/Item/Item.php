@@ -18,7 +18,7 @@ class Item extends Model implements HasMedia
     ];
 
     protected $with = [
-        'unit', 'unit2', 'unit3', 'createdBy',
+        'unit', 'unit2', 'unit3', 'createdBy', 'media'
     ];
 
     public function sluggable()

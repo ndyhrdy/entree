@@ -15,6 +15,10 @@ class PurchaseItem extends Model
         'created' => PurchaseItemCreated::class,
     ];
 
+    protected $with = [
+        'mutation',
+    ];
+
     public function item()
     {
         return $this->belongsTo('Entree\Item\Item');

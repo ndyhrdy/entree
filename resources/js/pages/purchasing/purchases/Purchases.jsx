@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 
 import List from "./list/List";
 import Create from "./create/Create";
+import Purchase from "./purchase/Purchase";
 
 export default props => {
   const {
@@ -13,6 +14,7 @@ export default props => {
     <Switch>
       <Route exact path={path} component={List} />
       <Route exact path={path + "/new"} component={Create} />
+      <Route exact path={path + "/:batchNo"} component={Purchase} />
 
       <Redirect to={path} />
     </Switch>

@@ -1,5 +1,6 @@
 import React, { Fragment, PureComponent } from "react";
 import { AutocompleteInput } from "@/components";
+import { trim } from "lodash";
 
 export default class PurchasingPurchasesCreateSupplierSelection extends PureComponent {
   constructor(props) {
@@ -44,6 +45,14 @@ export default class PurchasingPurchasesCreateSupplierSelection extends PureComp
                 onSelect={onSelect}
                 loading={loading}
                 placeholderLoading="Getting your suppliers.."
+                renderResult={result => (
+                  <div>
+                    <div>{result.name}</div>
+                    <div className="text-muted small text-truncate">
+                      {result.address}
+                    </div>
+                  </div>
+                )}
               />
             </div>
             <div className="text-uppercase text-muted px-5">or</div>
@@ -62,8 +71,12 @@ export default class PurchasingPurchasesCreateSupplierSelection extends PureComp
                 />
                 <button
                   type="button"
+                  disabled={trim(supplierName).length === 0}
                   className="ml-2 btn btn-primary"
-                  onClick={() => onSelect({ name: supplierName })}>
+                  onClick={() =>
+                    trim(supplierName).length > 0 &&
+                    onSelect({ name: trim(supplierName) })
+                  }>
                   Add Supplier
                 </button>
               </div>

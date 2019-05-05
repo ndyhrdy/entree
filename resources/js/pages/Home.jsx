@@ -36,15 +36,11 @@ export class Home extends PureComponent {
       <Fragment>
         <div className="py-5 bg-white">
           <div className="container my-5">
-            <div>
-              <div className="h1 bg-primary d-inline-block text-white px-3 py-2 mb-1">
-                Good {timeOfDayString}, {user.data.name.split(" ")[0]}!
-              </div>
+            <div className="h1 text-primary">
+              Good {timeOfDayString}, {user.data.name.split(" ")[0]}
             </div>
-            <div>
-              <div className="h4 bg-pink d-inline-block text-white px-3 py-2">
-                Today is {moment().format("D MMMM YYYY")}
-              </div>
+            <div className="h3 text-muted">
+              Today is {moment().format("D MMMM YYYY")}
             </div>
           </div>
         </div>
@@ -66,7 +62,7 @@ export class Home extends PureComponent {
                     <div className="d-flex">
                       {menu.iconComponent}
                       <div className="ml-3 text-left">
-                        <h5>{menu.title}</h5>
+                        <h5 className="m-0">{menu.title}</h5>
                         <div
                           style={{ transition: "color 0.15s ease-in-out" }}
                           className={

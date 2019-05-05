@@ -34,6 +34,7 @@ class AutocompleteInput extends PureComponent {
     const {
       containerClassName,
       containerStyle = {},
+      inputClassName,
       disabled,
       emptyLabel,
       innerRef,
@@ -53,7 +54,7 @@ class AutocompleteInput extends PureComponent {
         <input
           ref={innerRef}
           type="text"
-          className="form-control"
+          className={"form-control " + inputClassName}
           placeholder={
             items.length === 0 && loading
               ? placeholderLoading || "Loading"
@@ -99,7 +100,7 @@ class AutocompleteInput extends PureComponent {
                     onMouseEnter={() => this.setState({ highlighted: index })}
                     onMouseLeave={() => this.setState({ highlighted: -1 })}
                     className={
-                      "btn btn-block px-3 py-2 d-flex m-0 rounded-0" +
+                      "btn btn-block text-left px-3 py-2 m-0 rounded-0" +
                       (index > 0 ? " border-top" : "") +
                       (highlighted === index ? " bg-light" : "")
                     }>
@@ -127,6 +128,7 @@ AutocompleteInput.propTypes = {
   disabled: PropTypes.bool,
   emptyLabel: PropTypes.string,
   items: PropTypes.array.isRequired,
+  inputClassName: PropTypes.string,
   loading: PropTypes.bool,
   onSelect: PropTypes.func.isRequired,
   placeholder: PropTypes.string,

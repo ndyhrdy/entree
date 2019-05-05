@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { fetchCoworkers, searchCoworkers } from "@/actions";
 import { fuzzySearch } from "@/helpers/misc";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 import ListItem from "./ListItem";
 
 export class CoworkersList extends Component {
@@ -39,12 +39,12 @@ export class CoworkersList extends Component {
           </div>
         </div>
         <table className="table table-hover">
-          <thead>
+          <TableHeader>
             <tr>
               <ColumnHeader>User</ColumnHeader>
               <ColumnHeader style={{ width: 250 }}>Joined</ColumnHeader>
             </tr>
-          </thead>
+          </TableHeader>
           <tbody>
             {coworkers.fetching && coworkers.data.length === 0 && (
               <tr>

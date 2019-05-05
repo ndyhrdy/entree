@@ -2,15 +2,30 @@ import React, { Fragment, PureComponent } from "react";
 import { connect } from "react-redux";
 
 import { fetchItems } from "@/actions";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 import { AutocompleteInput } from "@/components";
 import { discountTypes } from "@/components/DiscountInput";
 import ListItem from "./ItemsListItem";
 
 class PurchasingPurchasesCreateItems extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.focusSearch = this.focusSearch.bind(this);
+  }
+
   componentDidMount() {
     this.props.fetchItems();
-    this.searchBox.focus();
+    this.onSearchFocusShortcut = e => {
+      if (e.keyCode === 191) {
+        this.focusSearch();
+        e.preventDefault();
+      }
+    };
+    window.addEventListener("keydown", this.onSearchFocusShortcut);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("keydown", this.onSearchFocusShortcut);
   }
 
   handleAdd(item) {
@@ -31,9 +46,10 @@ class PurchasingPurchasesCreateItems extends PureComponent {
   }
 
   handleRemove(deleteItem) {
-    return this.props.onChange([
+    this.props.onChange([
       ...this.props.items.filter(item => item.slug !== deleteItem.slug)
     ]);
+    this.searchBox.focus();
   }
 
   handleUpdate(updateItem) {
@@ -42,6 +58,10 @@ class PurchasingPurchasesCreateItems extends PureComponent {
         item.slug === updateItem.slug ? updateItem : item
       )
     ]);
+  }
+
+  focusSearch() {
+    return this.searchBox.focus();
   }
 
   render() {
@@ -64,6 +84,8 @@ class PurchasingPurchasesCreateItems extends PureComponent {
           loading={fetchingAvailableItems}
           onSelect={item => this.handleAdd(item)}
           containerClassName="mb-3"
+          placeholder='Search items (Press "/" to focus)'
+          inputClassName="py-4"
           renderResult={result => (
             <Fragment>
               {result.images.length > 0 && (
@@ -87,9 +109,9 @@ class PurchasingPurchasesCreateItems extends PureComponent {
           )}
         />
         <table className="table">
-          <thead>
+          <TableHeader>
             <tr>
-              <ColumnHeader className="pl-0">Item</ColumnHeader>
+              <ColumnHeader>Item</ColumnHeader>
               <ColumnHeader style={{ width: 200 }} className="text-right">
                 Quantity
               </ColumnHeader>
@@ -99,11 +121,11 @@ class PurchasingPurchasesCreateItems extends PureComponent {
               <ColumnHeader style={{ width: 200 }} className="text-right">
                 Discount
               </ColumnHeader>
-              <ColumnHeader style={{ width: 150 }} className="text-right pr-0">
+              <ColumnHeader style={{ width: 150 }} className="text-right">
                 Subtotal
               </ColumnHeader>
             </tr>
-          </thead>
+          </TableHeader>
           <tbody>
             {items.length === 0 ? (
               <tr>
@@ -118,7 +140,7 @@ class PurchasingPurchasesCreateItems extends PureComponent {
                   item={item}
                   focusOnMount={index === 0}
                   onUpdate={item => this.handleUpdate(item)}
-                  onRemove={item => this.handleRemove(item)}
+                  onRemove={() => this.handleRemove(item)}
                 />
               ))
             )}
@@ -140,5 +162,9 @@ const mapDispatchToProps = {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  null,
+  {
+    forwardRef: true
+  }
 )(PurchasingPurchasesCreateItems);

@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import numeral from "numeral";
+import { Link } from "react-router-dom";
 
 export default props => {
   const {
@@ -15,7 +16,9 @@ export default props => {
     <tr>
       <td className="align-middle">{supplier.name}</td>
       <td>
-        <div>{batchNo}</div>
+        <div>
+          <Link to={"/purchasing/purchases/" + batchNo}>{batchNo}</Link>
+        </div>
         <div className="small">{itemsCount} items</div>
       </td>
       <td className="text-right align-middle">

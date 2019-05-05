@@ -8,7 +8,7 @@ import SwalReact from "sweetalert2-react-content";
 
 import { fetchUnits, showPrompt, hidePrompt } from "@/actions";
 import { LoadingIndicator } from "@/components";
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 import { getFlowFromQueryString } from "@/helpers/misc";
 import InventoryUnitsListItem from "./ListItem";
 import ConfirmDelete from "./ConfirmDelete";
@@ -71,12 +71,12 @@ export class InventoryUnitsList extends Component {
               "table" +
               ((fetching || error) && data.length === 0 ? "" : " table-hover")
             }>
-            <thead>
+            <TableHeader>
               <tr>
                 <ColumnHeader>Unit</ColumnHeader>
                 <ColumnHeader style={{ width: 250 }}>Created</ColumnHeader>
               </tr>
-            </thead>
+            </TableHeader>
             <tbody>
               {fetching && data.length === 0 && (
                 <tr>

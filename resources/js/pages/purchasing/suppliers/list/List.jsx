@@ -6,7 +6,7 @@ import { Add as AddIcon, ExpandMore } from "styled-icons/material";
 import Swal from "sweetalert2";
 import SwalReact from "sweetalert2-react-content";
 
-import { ColumnHeader } from "@/components/DataTable";
+import { Header as TableHeader, ColumnHeader } from "@/components/DataTable";
 import {
   fetchSuppliers,
   searchSuppliers,
@@ -120,7 +120,7 @@ class PurchasingSuppliersList extends Component {
             </div>
           </div>
           <table className="table">
-            <thead>
+            <TableHeader>
               <tr>
                 <ColumnHeader>Supplier</ColumnHeader>
                 <ColumnHeader style={{ width: 200 }}>
@@ -128,7 +128,7 @@ class PurchasingSuppliersList extends Component {
                 </ColumnHeader>
                 <ColumnHeader style={{ width: 200 }}>Created</ColumnHeader>
               </tr>
-            </thead>
+            </TableHeader>
             <tbody>
               {suppliers.length === 0 && (
                 <tr>
